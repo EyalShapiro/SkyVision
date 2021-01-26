@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% block title %} homepage {% endblock %}
+{% block content %}
+    
+    <div class="row" style="height: 90%; padding-left: 50px;padding-right: 50px;padding-top: 50px;">
+        <div class="col-md-7" style="background-color: #373737;padding-left: 25px;border-radius: 25px;height: 100%;"><br>
+            <div class="overflow-auto" style="height:95%;">
+                <div style="background-color: coral;border-radius: 25px;"><h1>mainpage</h1></div><br>
+                <div style="background-color: coral;border-radius: 25px;"><h1>mainpage</h1></div><br>
+                <div style="background-color: coral;border-radius: 25px;"><h1>mainpage</h1></div><br>
+                <div style="background-color: coral;border-radius: 25px;"><h1>mainpage</h1></div><br>
+                <div style="background-color: coral;border-radius: 25px;"><h1>mainpage</h1></div><br>
+                <div style="background-color: coral;border-radius: 25px;"><h1>mainpage</h1></div><br>
+                <div style="background-color: coral;border-radius: 25px;"><h1>mainpage</h1></div><br>
+                <div style="background-color: coral;border-radius: 25px;"><h1>mainpage</h1></div><br>
+                <div style="background-color: coral;border-radius: 25px;"><h1>mainpage</h1></div><br>
+                <div style="background-color: coral;border-radius: 25px;"><h1>mainpage</h1></div><br>
+                <div style="background-color: coral;border-radius: 25px;"><h1>mainpage</h1></div><br>
+                <div style="background-color: coral;border-radius: 25px;"><h1>mainpage</h1></div><br>
+                <div style="background-color: coral;border-radius: 25px;"><h1>mainpage</h1></div><br>
+                <div style="background-color: coral;border-radius: 25px;"><h1>mainpage</h1></div><br>
+            </div>
+
+        </div>
+        <div class="col-md-5" style="padding-left: 25px;height: 100%;">
+            <div class="col-md-12" style="background-color: #373737;border-radius: 25px;height: 100%;"><br>
+
+                <div style="border-radius: 25px;height:60%;">
+
+                    <img src="{{ url_for('video_feed') }}" style="border-radius:5px;max-width: 100%;max-height: 100%;">
+
+                </div><br>
+                
+                <div style="border-radius:25px;height:10%;">
+                    <label style="color: #a0a0a0; font-size: 26px;padding-right: 25px;"> Selected Output : </label><input type="number" style="background-color: #373737;color: #a0a0a0;font-size: 26px;padding-left: 25px;"/>
+                </div><br>
+
+                <br><br><br>
+
+                <div style="background-color: coral;border-radius: 25px;height:10%;">
+                
+                    <br>
+
+                    <div class="row" style="margin: 0 auto;display: flex;justify-content: center;">
+                        <div class="dropdown" style="padding-right: 5px;padding-left: 5px;">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: #00fff7;">
+                            <label style="color: black;">Input</label>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </div>
+
+                        <div class="dropdown" style="padding-right: 5px;padding-left: 5px;">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color:#ff9100">
+                            <label style="color: black;">Morph</label>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </div>
+
+                        <div class="dropdown" style="padding-right: 5px;padding-left: 5px;">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color:#11ff00">
+                            <label style="color: black;">Arithmetic</label>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </div>
+
+                        <div class="dropdown" style="padding-right: 5px;padding-left: 5px;">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color:#e100ff">
+                            <label style="color: black;">Contours</label>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </div>
+
+                        <div class="dropdown" style="padding-right: 5px;padding-left: 5px;">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color:#ff0000"v>
+                            <label style="color: black;">Draw</label>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </div>
+
+                        <div class="dropdown" style="padding-right: 5px;padding-left: 5px;">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color:#fff200">
+                            <label style="color: black;">Misc</label>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </div>
+
+                    </div><br>
+
+                </div><br>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
