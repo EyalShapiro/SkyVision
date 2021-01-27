@@ -1,5 +1,11 @@
 import cv2
 import numpy as np
+from colorutils import Color
+
+def hex_to_hsv(hex):
+    c = Color(hex=hex)
+    return c.hsv
+
 
 def vstack_images(image1,image2):
     return np.vstack((image1, image2))

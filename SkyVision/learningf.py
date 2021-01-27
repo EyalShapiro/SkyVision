@@ -1,26 +1,40 @@
 from flask import *
 import json
 import cv2
+import time
 
 from skyvision import *
+from SkyVision_Tools import *
+from skyvision_operations import *
+
+import copy
 
 app = Flask(__name__) # app
 app.secret_key = "#4416"
 
+operator = sky_operator()
+outputs = []
+required_out = 0
+
+error_pic = cv2.imread("ERR.jpg")
 
 def generate():
+    try:
+        camera.release()
+    except:
+        pass
+    time.sleep(1)
     camera = cv2.VideoCapture('http://192.168.1.4:4747/mjpegfeed')
     while(camera.isOpened()):
-        ret, frame = camera.read()
-        frame = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
 
-        height, width = frame.shape[:2]
-        frame = cv2.resize(frame,(width*3,height*3), interpolation = cv2.INTER_CUBIC)
+        outputs = operator.frames
+        
+        if required_out < len(outputs):
+            selected_out = outputs[required_out]
+        else:
+            selected_out = error_pic
 
-        if not ret:
-            continue
-
-        ret, encodedImage = cv2.imencode(".jpg", frame)
+        ret, encodedImage = cv2.imencode(".jpg", selected_out)
         if not ret:
             continue
 
@@ -30,55 +44,86 @@ def generate():
 def video_feed():
     return Response(generate(),mimetype = "multipart/x-mixed-replace; boundary=frame")
 
-@app.route("/")
+@app.route("/",methods=['GET', 'POST'])
 def home(): # home page
+    global required_out
+    if request.method == "GET":
+        try:
+            required_out = 0
+            with open('session.txt') as json_file:
+                operator.operations.clear()
+                data = json.load(json_file)
+                temp_operations = data["operations"]
+                counter = 0
+                for op in temp_operations:
+                    counter+=1
+                    textinputs = []
+                    for temp_input in op["text_in"]:
+                        textinputs.append(operation_TextInput(temp_input["name"],temp_input["text"],temp_input["style"],temp_input["textStyle"],temp_input["value"],temp_input["brake"]))
 
-    with open('session.txt') as json_file:
-        data = json.load(json_file)
-        session["counter"] = data["counter"]
-        session["data"] = data["data"]
+                    numinputs = []
+                    for temp_input in op["number_in"]:
+                        numinputs.append(operation_NumberInput(temp_input["name"],temp_input["text"],temp_input["style"],temp_input["textStyle"],temp_input["value"],temp_input["brake"]))
+                    
+                    radinputs = []
+                    for temp_input in op["radio_in"]:
+                        radinputs.append(operation_RadioInput(temp_input["name"],temp_input["text"],temp_input["options"],temp_input["style"],temp_input["textStyle"],temp_input["optionTextStyle"],temp_input["value"],temp_input["direction"],temp_input["brake"]))
 
-    session.permanent = True
-    return render_template("mainhtml.html")
+                    checkinputs = []
+                    for temp_input in op["check_in"]:
+                        checkinputs.append(operation_CheckboxInput(temp_input["name"],temp_input["text"],temp_input["options"],temp_input["style"],temp_input["textStyle"],temp_input["optionTextStyle"],temp_input["value"],temp_input["direction"],temp_input["brake"]))
 
-@app.route("/formas",methods=["POST","GET"]) # allow post and get
-def formas(): # home page
-    if request.method == "POST":
-        user = request.form["nm"]
-        session["user"] = user
-        session["counter"] = session["counter"] + 1
-        counter = session["counter"]
-        print("Detection -",user)
-        print("Counter -",counter)
-        for i in range(counter):
-            session["data"] = session["data"] + "<h1>P</h1><br/>"
-        return ('', 204)
-    else:
-        return render_template("formas.html")
+                    colorinputs = []
+                    for temp_input in op["color_in"]:
+                        colorinputs.append(operation_ColorInput(temp_input["name"],temp_input["text"],temp_input["style"],temp_input["textStyle"],temp_input["value"],temp_input["brake"]))
 
-@app.route('/ops',methods=['GET', 'POST'])
-def ops():
-    operations = [
-        str(operation("Image Input",OperationType.INPUT,text_inputs=[operation_TextInput("path","image path")])),
-        str(operation("Morphology EX",OperationType.MORPH,
-        text_inputs=[operation_NumberInput("src","Source",brake=False),operation_NumberInput("dst","Destination",text_style="margin-left:15px;")],
-        radio_inputs=[operation_RadioInput("oprtn","operation",["close","open"],option_text_style="font-size:28px;",radio_style="margin-left:20px;")],
-        checkbox_inputs=[operation_CheckboxInput("oprtn","operation",["close","open"],option_text_style="font-size:28px;",radio_style="margin-left:20px;"),
-        operation_ColorInput("clr"," Color: ",style="width:500px;")]
-        )),
-        str(operation("next",OperationType.CONTOURS,text_inputs=[operation_TextInput("id","next id")]))
-        ]
+                    operator.operations.append(operation(op["name"],op["type"],text_inputs=textinputs,number_inputs=numinputs,radio_inputs=radinputs,checkbox_inputs=checkinputs,color_inputs=colorinputs))
+            pass
+        except:
+            pass
+            # save_session()
+
+        session.permanent = True
+        return render_template("mainhtml.html",ops = operator.operations,curr_out = required_out)
+    elif request.method == "POST":
+        try:
+            if request.form["action"] == "Save":
+                operator.update()
+                save_session()
+            elif request.form["action"] == "Update":
+                required_out = int(request.form["outID"])
+                print("Req Out is",required_out)
+                operator.update()
+            else:
+                value = request.form["action"]
+                add_operation(value)
+                
+        except:
+            pass
+
+        return render_template("mainhtml.html",ops = operator.operations,curr_out = required_out)
+
+def add_operation(operation_name):
+    operator.update()
+    new_op = copy.deepcopy(sky_operations[request.form["action"]])
+    new_op.add_num(len(operator.operations))
+    operator.operations.append(new_op)
+    
+
+
+def save_session():
+    operations_dict = []
+    for op in operator.operations:
+        operations_dict.append(op.conv_dict())
         
-    return render_template("operations.html",ops = operations)
+    session["operations"] = operations_dict
 
-
-@app.route('/download_session')
-def download_session():
     r = jsonify(dict(session))
-    f = open("session.txt", "w")
-    f.write(r.get_data(as_text=True))
-    f.close()
-    return render_template("formas.html")
+    with open("session.txt", "w") as file:
+        file.write(r.get_data(as_text=True))
+        file.close()
+        print("Saved Session")
+
 
 if __name__ == "__main__":
     app.run(debug = True,host='0.0.0.0')

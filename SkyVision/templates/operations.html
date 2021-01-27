@@ -1,9 +1,0 @@
-{% extends "base.html" %}
-{% block title %} homepage {% endblock %}
-{% block content %}
-<form action="#" method="POST">
-    {% for operation in range(ops|length)%}
-        {{ops[operation]|safe}}
-    {% endfor %}
-</form>
-{% endblock %}
