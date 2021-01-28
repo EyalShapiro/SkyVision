@@ -75,34 +75,28 @@ class sky_operator:
         self.sources = []
 
     def process(self):
-        print("PROCESS----------------------")
         self.frames.clear()
         self.contours.clear()
 
         source_counter = 0
 
-        for op in self.operations:
+        for op in self.operations: # INPUT OPERATIONS
             if op.type == OperationType.INPUT:
-                print("Input Operation Name -",op.name)
                 if op.name == "Image input":
                     self.frames.append(cv2.imread(op.textInputs[0].value))
                 
                 if op.name == "IP input":
-                    print("READING CAMERA")
                     ret, frame = self.sources[source_counter].read()
                     self.frames.append(frame)
-                    print("READING CAMERA SUCCESS")
                     source_counter+=1
 
 
 
-            if op.type == OperationType.MORPH:
-                print("Morph Operation Name -",op.name)
+            if op.type == OperationType.MORPH: # MORPH OPERATIONS
+                pass
 
 
-
-            if op.type == OperationType.ARITHMETIC:
-                print("Arithmetic Operation Name -",op.name)
+            if op.type == OperationType.ARITHMETIC: # ARITHMETIC OPERATIONS
                 if op.name == "Bitwise AND":
                     src1 = int(op.numberInputs[0].value)
                     src1 = self.frames[src1]
@@ -122,8 +116,7 @@ class sky_operator:
 
 
 
-            if op.type == OperationType.COLORS:
-                print("Color Operation Name -",op.name)
+            if op.type == OperationType.COLORS: # COLOR OPERATIONS
                 if op.name == "Convert color":
                     src = int(op.numberInputs[0].value)
                     convert_type = op.radioInputs[0].value
@@ -174,10 +167,8 @@ class sky_operator:
                     self.contours.append(cntrs)
 
 
-            if op.type == OperationType.DRAW:
-                print("Draw Operation Name -",op.name)
+            if op.type == OperationType.DRAW: # DRAW OPERATIONS
                 if op.name == "Draw Contours":
-                    print("Drawing Contours")
                     src = int(op.numberInputs[0].value)
                     src = self.frames[src]
 
@@ -188,20 +179,17 @@ class sky_operator:
                     color = hex_to_rgb(request.form[op.colorInputs[0].inName])
 
                     cv2.drawContours(src,cnt,-1,color,thickness=thickness)
-                    print("Drawing Contours Success")
                     
 
 
-            if op.type == OperationType.MISC:
-                print("Misc Operation Name -",op.name)
-
+            if op.type == OperationType.MISC: # MISC OPERATIONS
+                pass
 
     def update(self):
         for src in self.sources:
             src.release()
         self.sources.clear()
 
-        # to get value use request.form[operation.value_type[index].inName]
         for op in self.operations:
             for t_in in op.textInputs:
                 t_in.value = request.form[t_in.inName]
@@ -214,34 +202,29 @@ class sky_operator:
             for clr_in in op.colorInputs:
                 clr_in.value = request.form[clr_in.inName]
 
-            if op.type == OperationType.INPUT:
-                print("Input Operation Name -",op.name)
+            if op.type == OperationType.INPUT: # INPUT OPERATIONS
                 if op.name == "IP input":
                     camera = cv2.VideoCapture(request.form[op.textInputs[0].inName])
                     self.sources.append(camera)
 
 
 
-            if op.type == OperationType.MORPH:
-                print("Morph Operation Name -",op.name)
+            if op.type == OperationType.MORPH: # MORPH OPERATIONS
+                pass
 
 
-
-            if op.type == OperationType.ARITHMETIC:
-                print("Arithmetic Operation Name -",op.name)
-
+            if op.type == OperationType.ARITHMETIC: # ARITHMETIC OPERATIONS
+                pass
 
 
-            if op.type == OperationType.COLORS:
-                print("Color Operation Name -",op.name)
+            if op.type == OperationType.COLORS: # COLOR OPERATIONS
+                pass
+
+            if op.type == OperationType.DRAW: # DRAW OPERATIONS
+                pass
 
 
-            if op.type == OperationType.DRAW:
-                print("Draw Operation Name -",op.name)
-                    
-
-
-            if op.type == OperationType.MISC:
-                print("Misc Operation Name -",op.name)
-
+            if op.type == OperationType.MISC: # MISC OPERATIONS
+                pass
+            
         self.process()
