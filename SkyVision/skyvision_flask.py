@@ -19,14 +19,9 @@ required_out = 0
 error_pic = cv2.imread("ERR.jpg")
 
 def generate():
-    try:
-        camera.release()
-    except:
-        pass
-    time.sleep(1)
-    camera = cv2.VideoCapture('http://192.168.1.4:4747/mjpegfeed')
-    while(camera.isOpened()):
-
+    time.sleep(3)
+    while(True):
+        operator.process()
         outputs = operator.frames
         
         if required_out < len(outputs):
@@ -88,6 +83,7 @@ def home(): # home page
     elif request.method == "POST":
         try:
             if request.form["action"] == "Save":
+                save_session()
                 operator.update()
                 save_session()
             elif request.form["action"] == "Update":
@@ -112,6 +108,7 @@ def add_operation(operation_name):
 
 
 def save_session():
+    print("Saving Session")
     operations_dict = []
     for op in operator.operations:
         operations_dict.append(op.conv_dict())

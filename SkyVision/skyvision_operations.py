@@ -3,15 +3,14 @@ from SkyVision_Tools import *
 from flask import *
 import cv2
 
+    # camera = cv2.VideoCapture('http://192.168.1.4:4747/mjpegfeed')
+
 sky_operations = {
-    "Image Input" : operation("Image input",OperationType.INPUT,
-        text_inputs=[operation_TextInput("imgPath","Image Path")],
-        # number_inputs=[operation_NumberInput("imgNath","Image Nath")],
-        # radio_inputs=[operation_RadioInput("imgZath","Image Zath",["One","Two","Three"])],
-        # checkbox_inputs=[operation_CheckboxInput("imgKath","Image Kath",["One","Two","Three","Four"])],
-        # color_inputs=[operation_ColorInput("imgDath","Image Dath")]
-    ),
-    # "Webcam Input" : operation("Webcam input",OperationType.INPUT,number_inputs=[operation_NumberInput("webcamID","Webcam ID")]),
+    "Image Input" : operation("Image input",OperationType.INPUT,text_inputs=[operation_TextInput("imgPath","Image Path")]),
+
+    "Webcam Input" : operation("Webcam input",OperationType.INPUT,number_inputs=[operation_NumberInput("webcamID","Webcam ID")]),
+
+    "IP Input" : operation("IP input",OperationType.INPUT,text_inputs=[operation_TextInput("webcamID","Webcam ID")]),
 
     "Color Mask" : operation("Color Mask",OperationType.COLORS,
         number_inputs=[
@@ -45,35 +44,55 @@ sky_operations = {
             operation_NumberInput("mask","Mask"),
             ],
         
+    ),
+
+    "Find Contours" : operation("Find Contours",OperationType.COLORS,
+        number_inputs=[
+            operation_NumberInput("src","Source"),
+            ],
+        
+    ),
+
+    "Draw Contours" : operation("Draw Contours",OperationType.DRAW,
+        number_inputs=[
+            operation_NumberInput("src","Source"),
+            operation_NumberInput("cnt","Contours"),
+            operation_NumberInput("thick","Thickness"),
+            ],
+        color_inputs=[
+            operation_ColorInput("clr","Color"),
+            ]
+        
     )
+
 }
 
 class sky_operator:
     def __init__(self):
         self.operations = []
         self.frames = []
-        self.live = True
+        self.contours = []
+        self.sources = []
 
-    def update(self):
+    def process(self):
+        print("PROCESS----------------------")
         self.frames.clear()
+        self.contours.clear()
 
-        # to get value use request.form[operation.value_type[index].inName]
+        source_counter = 0
+
         for op in self.operations:
-            for t_in in op.textInputs:
-                t_in.value = request.form[t_in.inName]
-            for n_in in op.numberInputs:
-                n_in.value = request.form[n_in.inName]
-            for r_in in op.radioInputs:
-                r_in.value = request.form[r_in.inName]
-            for c_in in op.checkboxInputs:
-                c_in.value = request.form.getlist(c_in.inName)
-            for clr_in in op.colorInputs:
-                clr_in.value = request.form[clr_in.inName]
-
             if op.type == OperationType.INPUT:
                 print("Input Operation Name -",op.name)
                 if op.name == "Image input":
-                    self.frames.append(cv2.imread(request.form[op.textInputs[0].inName]))
+                    self.frames.append(cv2.imread(op.textInputs[0].value))
+                
+                if op.name == "IP input":
+                    print("READING CAMERA")
+                    ret, frame = self.sources[source_counter].read()
+                    self.frames.append(frame)
+                    print("READING CAMERA SUCCESS")
+                    source_counter+=1
 
 
 
@@ -85,25 +104,29 @@ class sky_operator:
             if op.type == OperationType.ARITHMETIC:
                 print("Arithmetic Operation Name -",op.name)
                 if op.name == "Bitwise AND":
-                    src1 = int(request.form[op.numberInputs[0].inName])
+                    src1 = int(op.numberInputs[0].value)
                     src1 = self.frames[src1]
 
-                    src2 = int(request.form[op.numberInputs[1].inName])
+                    src2 = int(op.numberInputs[1].value)
                     src2 = self.frames[src2]
 
-                    mask = int(request.form[op.numberInputs[2].inName])
-                    mask = self.frames[mask]
+                    maskval = int(op.numberInputs[2].value)
+                    mask = self.frames[maskval]
 
-                    final = cv2.bitwise_and(src1,src2,mask=mask)
-                    self.frames.append(final)
+                    if maskval != -1:
+                        final = cv2.bitwise_and(src1,src2,mask=mask)
+                        self.frames.append(final)
+                    else:
+                        final = cv2.bitwise_and(src1,src2)
+                        self.frames.append(final)
 
 
 
             if op.type == OperationType.COLORS:
                 print("Color Operation Name -",op.name)
                 if op.name == "Convert color":
-                    src = int(request.form[op.numberInputs[0].inName])
-                    convert_type = request.form[op.radioInputs[0].inName]
+                    src = int(op.numberInputs[0].value)
+                    convert_type = op.radioInputs[0].value
 
                     if convert_type == "BGR2HSV":
                         frame_source = self.frames[src]
@@ -131,24 +154,94 @@ class sky_operator:
                         self.frames.append(frame_converted)
 
                 if op.name == "Color Mask":
-                    src = int(request.form[op.numberInputs[0].inName])
+                    src = int(op.numberInputs[0].value)
                     src = self.frames[src]
 
-                    lower = hex_to_hsv(request.form[op.colorInputs[0].inName])
+                    lower = hex_to_hsv(op.colorInputs[0].value)
                     lower = np.array([lower[0],lower[1]*255,lower[2]*255])
 
-                    higher = hex_to_hsv(request.form[op.colorInputs[1].inName])
+                    higher = hex_to_hsv(op.colorInputs[1].value)
                     higher = np.array([higher[0],higher[1]*255,higher[2]*255])
 
                     mask = cv2.inRange(src, lower, higher)
                     self.frames.append(mask)
 
+                if op.name == "Find Contours":
+                    src = int(op.numberInputs[0].value)
+                    src = self.frames[src]
+
+                    cntrs, _ = cv2.findContours(src,cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+                    self.contours.append(cntrs)
 
 
             if op.type == OperationType.DRAW:
                 print("Draw Operation Name -",op.name)
+                if op.name == "Draw Contours":
+                    print("Drawing Contours")
+                    src = int(op.numberInputs[0].value)
+                    src = self.frames[src]
 
+                    cnt = int(op.numberInputs[1].value)
+                    cnt = self.contours[cnt]
+
+                    thickness = int(op.numberInputs[2].value)
+                    color = hex_to_rgb(request.form[op.colorInputs[0].inName])
+
+                    cv2.drawContours(src,cnt,-1,color,thickness=thickness)
+                    print("Drawing Contours Success")
+                    
 
 
             if op.type == OperationType.MISC:
                 print("Misc Operation Name -",op.name)
+
+
+    def update(self):
+        for src in self.sources:
+            src.release()
+        self.sources.clear()
+
+        # to get value use request.form[operation.value_type[index].inName]
+        for op in self.operations:
+            for t_in in op.textInputs:
+                t_in.value = request.form[t_in.inName]
+            for n_in in op.numberInputs:
+                n_in.value = request.form[n_in.inName]
+            for r_in in op.radioInputs:
+                r_in.value = request.form[r_in.inName]
+            for c_in in op.checkboxInputs:
+                c_in.value = request.form.getlist(c_in.inName)
+            for clr_in in op.colorInputs:
+                clr_in.value = request.form[clr_in.inName]
+
+            if op.type == OperationType.INPUT:
+                print("Input Operation Name -",op.name)
+                if op.name == "IP input":
+                    camera = cv2.VideoCapture(request.form[op.textInputs[0].inName])
+                    self.sources.append(camera)
+
+
+
+            if op.type == OperationType.MORPH:
+                print("Morph Operation Name -",op.name)
+
+
+
+            if op.type == OperationType.ARITHMETIC:
+                print("Arithmetic Operation Name -",op.name)
+
+
+
+            if op.type == OperationType.COLORS:
+                print("Color Operation Name -",op.name)
+
+
+            if op.type == OperationType.DRAW:
+                print("Draw Operation Name -",op.name)
+                    
+
+
+            if op.type == OperationType.MISC:
+                print("Misc Operation Name -",op.name)
+
+        self.process()

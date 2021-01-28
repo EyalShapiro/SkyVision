@@ -6,6 +6,9 @@ def hex_to_hsv(hex):
     c = Color(hex=hex)
     return c.hsv
 
+def hex_to_rgb(hex):
+    c = Color(hex=hex)
+    return c.rgb
 
 def vstack_images(image1,image2):
     return np.vstack((image1, image2))

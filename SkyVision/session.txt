@@ -1,0 +1,129 @@
+{
+  "_permanent": true, 
+  "operations": [
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Image input", 
+      "number_in": [], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "imgPath1", 
+          "style": "", 
+          "text": "Image Path", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "F360render.PNG"
+        }
+      ], 
+      "type": 1
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Convert color", 
+      "number_in": [
+        {
+          "brake": true, 
+          "name": "src2", 
+          "style": "", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "0"
+        }
+      ], 
+      "radio_in": [
+        {
+          "brake": true, 
+          "direction": false, 
+          "name": "type3", 
+          "optionTextStyle": "font-size:18px;", 
+          "options": [
+            "BGR2HSV", 
+            "BGR2RGB", 
+            "BGR2GRAY", 
+            "HSV2RGB", 
+            "HSV2BGR", 
+            "GRAY2RGB"
+          ], 
+          "style": "margin-left:12px;", 
+          "text": "Type", 
+          "textStyle": "font-size:28px;", 
+          "value": "BGR2HSV"
+        }
+      ], 
+      "text_in": [], 
+      "type": 4
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [
+        {
+          "brake": true, 
+          "name": "lower4", 
+          "style": "", 
+          "text": "Lower", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "#1c1717"
+        }, 
+        {
+          "brake": true, 
+          "name": "higher5", 
+          "style": "", 
+          "text": "Higher", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "#4000ff"
+        }
+      ], 
+      "name": "Color Mask", 
+      "number_in": [
+        {
+          "brake": true, 
+          "name": "src3", 
+          "style": "", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "1"
+        }
+      ], 
+      "radio_in": [], 
+      "text_in": [], 
+      "type": 4
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Bitwise AND", 
+      "number_in": [
+        {
+          "brake": true, 
+          "name": "src14", 
+          "style": "", 
+          "text": "Source One", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "0"
+        }, 
+        {
+          "brake": true, 
+          "name": "src15", 
+          "style": "", 
+          "text": "Source Two", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "0"
+        }, 
+        {
+          "brake": true, 
+          "name": "mask6", 
+          "style": "", 
+          "text": "Mask", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "2"
+        }
+      ], 
+      "radio_in": [], 
+      "text_in": [], 
+      "type": 3
+    }
+  ]
+}
