@@ -1,3 +1,4 @@
+#code which turns operations to html
 def html_header(text,style = "",size = 1,brake = True): # make a html <h>
     return "<h" + str(size) + " style=\"" + style + "display:inline-block;\">" + text + "</h" + str(size) + ">" + ("<br/>" if brake else "")
 
