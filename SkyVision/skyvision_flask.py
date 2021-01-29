@@ -45,7 +45,7 @@ def home(): # home page
     if request.method == "GET":
         try:
             required_out = "None"
-            with open('session.txt') as json_file:
+            with open('session.json') as json_file:
                 operator.operations.clear()
                 data = json.load(json_file)
                 temp_operations = data["operations"]
