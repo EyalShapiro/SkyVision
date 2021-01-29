@@ -14,7 +14,7 @@ app.secret_key = "#4416"
 
 operator = sky_operator()
 outputs = []
-required_out = 0
+required_out = "None"
 
 error_pic = cv2.imread("ERR.jpg")
 
@@ -22,11 +22,11 @@ def generate():
     time.sleep(3)
     while(True):
         operator.process()
-        outputs = operator.frames
+        outputs = operator.values
         
-        if required_out < len(outputs):
+        try:
             selected_out = outputs[required_out]
-        else:
+        except:
             selected_out = error_pic
 
         ret, encodedImage = cv2.imencode(".jpg", selected_out)
@@ -44,7 +44,7 @@ def home(): # home page
     global required_out
     if request.method == "GET":
         try:
-            required_out = 0
+            required_out = "None"
             with open('session.txt') as json_file:
                 operator.operations.clear()
                 data = json.load(json_file)
@@ -72,7 +72,12 @@ def home(): # home page
                     for temp_input in op["color_in"]:
                         colorinputs.append(operation_ColorInput(temp_input["name"],temp_input["text"],temp_input["style"],temp_input["textStyle"],temp_input["value"],temp_input["brake"]))
 
-                    operator.operations.append(operation(op["name"],op["type"],text_inputs=textinputs,number_inputs=numinputs,radio_inputs=radinputs,checkbox_inputs=checkinputs,color_inputs=colorinputs))
+                    varOutputs = []
+                    for temp_output in op["var_out"]:
+                        varOutputs.append(operation_TextInput(temp_output["name"],temp_output["text"],temp_output["style"],temp_output["textStyle"],temp_output["value"],temp_output["brake"]))
+
+
+                    operator.operations.append(operation(op["name"],op["type"],text_inputs=textinputs,number_inputs=numinputs,radio_inputs=radinputs,checkbox_inputs=checkinputs,color_inputs=colorinputs,variable_outputs=varOutputs))
             pass
         except:
             pass
@@ -87,7 +92,7 @@ def home(): # home page
                 operator.update()
                 save_session()
             elif request.form["action"] == "Update":
-                required_out = int(request.form["outID"])
+                required_out = request.form["outID"]
                 print("Req Out is",required_out)
                 operator.update()
             else:
@@ -102,7 +107,7 @@ def home(): # home page
 def add_operation(operation_name):
     operator.update()
     new_op = copy.deepcopy(sky_operations[request.form["action"]])
-    new_op.add_num(len(operator.operations))
+    new_op.add_num(operator.inCounter)
     operator.operations.append(new_op)
     
 
@@ -116,7 +121,7 @@ def save_session():
     session["operations"] = operations_dict
 
     r = jsonify(dict(session))
-    with open("session.txt", "w") as file:
+    with open("session.json", "w") as file:
         file.write(r.get_data(as_text=True))
         file.close()
         print("Saved Session")

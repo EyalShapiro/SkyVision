@@ -171,7 +171,7 @@ class operation_ColorInput: # text input for operation
         return html_color(self.name,self.value,self.text,self.style,self.txtStyle,brake=self.br,)
 
 class operation: # main class for operation
-    def __init__(self, name, operation_Type,text_inputs = [],number_inputs = [],radio_inputs = [],checkbox_inputs = [],color_inputs = []):
+    def __init__(self, name, operation_Type,text_inputs = [],number_inputs = [],radio_inputs = [],checkbox_inputs = [],color_inputs = [],variable_outputs = []):
         self.name = name
         self.type = operation_Type
 
@@ -180,6 +180,7 @@ class operation: # main class for operation
         self.radioInputs = radio_inputs
         self.checkboxInputs = checkbox_inputs
         self.colorInputs = color_inputs
+        self.variableOutputs = variable_outputs
 
         #op_input.name = "name=\"" + op_input.inName + str(value) + "\""
     def add_num(self,num):
@@ -218,6 +219,13 @@ class operation: # main class for operation
             value = num + counter
             op_input.name = "name=\"" + op_input.inName + str(value) + "\""
             op_input.inName = op_input.inName + str(value)
+
+        for op_input in self.variableOutputs:
+            counter += 1
+
+            value = num + counter
+            op_input.name = "name=\"" + op_input.inName + str(value) + "\""
+            op_input.inName = op_input.inName + str(value)
         
 
     def conv_dict(self):
@@ -242,6 +250,12 @@ class operation: # main class for operation
         for op_input in self.colorInputs:
             color_in_dict.append(op_input.conv_dict())
 
+        
+        var_out_dict = []
+        for op_output in self.variableOutputs:
+            var_out_dict.append(op_output.conv_dict())
+
+
         ret_dict = {
             "name" : self.name,
             "type" : self.type,
@@ -250,6 +264,7 @@ class operation: # main class for operation
             "radio_in" : radio_in_dict,
             "check_in" : checkbox_in_dict,
             "color_in" : color_in_dict,
+            "var_out" : var_out_dict
         }
 
 
@@ -290,6 +305,9 @@ class operation: # main class for operation
 
         for color_input in self.colorInputs:
             retdiv += str(color_input)
+
+        for var_output in self.variableOutputs:
+            retdiv += str(var_output)
 
         # <- div contents end here
         retdiv += "</div></div>" # Close divs

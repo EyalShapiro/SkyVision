@@ -6,24 +6,25 @@ import cv2
     # camera = cv2.VideoCapture('http://192.168.1.4:4747/mjpegfeed')
 
 sky_operations = {
-    "Image Input" : operation("Image input",OperationType.INPUT,text_inputs=[operation_TextInput("imgPath","Image Path")]),
+    "Image Input" : operation("Image input",OperationType.INPUT,text_inputs=[operation_TextInput("imgPath","Image Path")],variable_outputs=[operation_TextInput("outName","Output name")]),
 
-    "Webcam Input" : operation("Webcam input",OperationType.INPUT,number_inputs=[operation_NumberInput("webcamID","Webcam ID")]),
+    "Webcam Input" : operation("Webcam input",OperationType.INPUT,number_inputs=[operation_NumberInput("webcamID","Webcam ID")],variable_outputs=[operation_TextInput("outName","Output name")]),
 
-    "IP Input" : operation("IP input",OperationType.INPUT,text_inputs=[operation_TextInput("webcamID","Webcam ID")]),
+    "IP Input" : operation("IP input",OperationType.INPUT,text_inputs=[operation_TextInput("webcamID","Webcam ID")],variable_outputs=[operation_TextInput("outName","Output name")]),
 
     "Color Mask" : operation("Color Mask",OperationType.COLORS,
-        number_inputs=[
-            operation_NumberInput("src","Source")],
+        text_inputs=[
+            operation_TextInput("src","Source")],
         color_inputs=[
             operation_ColorInput("lower","Lower"),
-            operation_ColorInput("higher","Higher"),
-        ]
+            operation_ColorInput("higher","Higher")],
+        variable_outputs=[
+            operation_TextInput("outName","Output name")]
     ),
 
     "Convert Color" : operation("Convert color",OperationType.COLORS,
-        number_inputs=[
-            operation_NumberInput("src","Source")],
+        text_inputs=[
+            operation_TextInput("src","Source")],
         radio_inputs=[
             operation_RadioInput("type","Type",
             options=[
@@ -33,35 +34,36 @@ sky_operations = {
                 "HSV2RGB",
                 "HSV2BGR",
                 "GRAY2RGB",
-            ])
-        ]
+            ])],
+        variable_outputs=[operation_TextInput("outName","Output name")]
     ),
 
     "Bitwise And" : operation("Bitwise AND",OperationType.ARITHMETIC,
-        number_inputs=[
-            operation_NumberInput("src1","Source One"),
-            operation_NumberInput("src1","Source Two"),
-            operation_NumberInput("mask","Mask"),
-            ],
-        
+        text_inputs=[
+            operation_TextInput("src1","Source 1"),
+            operation_TextInput("src2","Source 2"),
+            operation_TextInput("mask","Mask"),
+            ]
+        ,variable_outputs=[operation_TextInput("outName","Output name")]
     ),
 
     "Find Contours" : operation("Find Contours",OperationType.COLORS,
-        number_inputs=[
-            operation_NumberInput("src","Source"),
-            ],
-        
+        text_inputs=[
+            operation_TextInput("src","Source"),
+            ]
+        ,variable_outputs=[operation_TextInput("outName","Output name")]
     ),
 
     "Draw Contours" : operation("Draw Contours",OperationType.DRAW,
-        number_inputs=[
-            operation_NumberInput("src","Source"),
-            operation_NumberInput("cnt","Contours"),
-            operation_NumberInput("thick","Thickness"),
+        text_inputs=[
+            operation_TextInput("src","Source"),
+            operation_TextInput("cnt","Contours"),
             ],
+        number_inputs=[
+            operation_NumberInput("thick","Thickness"),
+        ],
         color_inputs=[
-            operation_ColorInput("clr","Color"),
-            ]
+            operation_ColorInput("clr","Color"),]
         
     )
 
@@ -70,24 +72,29 @@ sky_operations = {
 class sky_operator:
     def __init__(self):
         self.operations = []
-        self.frames = []
-        self.contours = []
         self.sources = []
+        self.inCounter = 0
+        self.values = {}
 
     def process(self):
-        self.frames.clear()
-        self.contours.clear()
+        self.values.clear()
 
         source_counter = 0
 
         for op in self.operations: # INPUT OPERATIONS
             if op.type == OperationType.INPUT:
                 if op.name == "Image input":
-                    self.frames.append(cv2.imread(op.textInputs[0].value))
+                    self.values[op.variableOutputs[0].value] = cv2.imread(op.textInputs[0].value)
+
                 
                 if op.name == "IP input":
                     ret, frame = self.sources[source_counter].read()
-                    self.frames.append(frame)
+                    self.values[op.variableOutputs[0].value] = frame
+                    source_counter+=1
+
+                if op.name == "Webcam input":
+                    ret, frame = self.sources[source_counter].read()
+                    self.values[op.variableOutputs[0].value] = frame
                     source_counter+=1
 
 
@@ -98,57 +105,57 @@ class sky_operator:
 
             if op.type == OperationType.ARITHMETIC: # ARITHMETIC OPERATIONS
                 if op.name == "Bitwise AND":
-                    src1 = int(op.numberInputs[0].value)
-                    src1 = self.frames[src1]
+                    src1 = op.textInputs[0].value
+                    src1 = self.values[src1]
 
-                    src2 = int(op.numberInputs[1].value)
-                    src2 = self.frames[src2]
+                    src2 = op.textInputs[1].value
+                    src2 = self.values[src2]
 
-                    maskval = int(op.numberInputs[2].value)
-                    mask = self.frames[maskval]
+                    maskval = op.textInputs[2].value
+                    mask = self.values[maskval]
 
                     if maskval != -1:
                         final = cv2.bitwise_and(src1,src2,mask=mask)
-                        self.frames.append(final)
+                        self.values[op.variableOutputs[0].value] = final
                     else:
                         final = cv2.bitwise_and(src1,src2)
-                        self.frames.append(final)
+                        self.values[op.variableOutputs[0].value] = final
 
 
 
             if op.type == OperationType.COLORS: # COLOR OPERATIONS
                 if op.name == "Convert color":
-                    src = int(op.numberInputs[0].value)
+                    src = op.textInputs[0].value
                     convert_type = op.radioInputs[0].value
 
                     if convert_type == "BGR2HSV":
-                        frame_source = self.frames[src]
+                        frame_source = self.values[src]
                         frame_converted = cv2.cvtColor(frame_source,cv2.COLOR_BGR2HSV)
-                        self.frames.append(frame_converted)
+                        self.values[op.variableOutputs[0].value] = frame_converted
                     if convert_type == "BGR2RGB":
-                        frame_source = self.frames[src]
+                        frame_source = self.values[src]
                         frame_converted = cv2.cvtColor(frame_source,cv2.COLOR_BGR2RGB)
-                        self.frames.append(frame_converted)
+                        self.values[op.variableOutputs[0].value] = frame_converted
                     if convert_type == "BGR2GRAY":
-                        frame_source = self.frames[src]
+                        frame_source = self.values[src]
                         frame_converted = cv2.cvtColor(frame_source,cv2.COLOR_BGR2GRAY)
-                        self.frames.append(frame_converted)
+                        self.values[op.variableOutputs[0].value] = frame_converted
                     if convert_type == "HSV2RGB":
-                        frame_source = self.frames[src]
+                        frame_source = self.values[src]
                         frame_converted = cv2.cvtColor(frame_source,cv2.COLOR_HSV2RGB)
-                        self.frames.append(frame_converted)
+                        self.values[op.variableOutputs[0].value] = frame_converted
                     if convert_type == "HSV2RGB":
-                        frame_source = self.frames[src]
+                        frame_source = self.values[src]
                         frame_converted = cv2.cvtColor(frame_source,cv2.COLOR_HSV2BGR)
-                        self.frames.append(frame_converted)
+                        self.values[op.variableOutputs[0].value] = frame_converted
                     if convert_type == "GRAY2RGB":
-                        frame_source = self.frames[src]
+                        frame_source = self.values[src]
                         frame_converted = cv2.cvtColor(frame_source,cv2.COLOR_GRAY2RGB)
-                        self.frames.append(frame_converted)
+                        self.values[op.variableOutputs[0].value] = frame_converted
 
                 if op.name == "Color Mask":
-                    src = int(op.numberInputs[0].value)
-                    src = self.frames[src]
+                    src = op.textInputs[0].value
+                    src = self.values[src]
 
                     lower = hex_to_hsv(op.colorInputs[0].value)
                     lower = np.array([lower[0],lower[1]*255,lower[2]*255])
@@ -157,26 +164,26 @@ class sky_operator:
                     higher = np.array([higher[0],higher[1]*255,higher[2]*255])
 
                     mask = cv2.inRange(src, lower, higher)
-                    self.frames.append(mask)
+                    self.values[op.variableOutputs[0].value] = mask
 
                 if op.name == "Find Contours":
-                    src = int(op.numberInputs[0].value)
-                    src = self.frames[src]
+                    src = op.textInputs[0].value
+                    src = self.values[src]
 
                     cntrs, _ = cv2.findContours(src,cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-                    self.contours.append(cntrs)
+                    self.values[op.variableOutputs[0].value] = cntrs
 
 
             if op.type == OperationType.DRAW: # DRAW OPERATIONS
                 if op.name == "Draw Contours":
-                    src = int(op.numberInputs[0].value)
-                    src = self.frames[src]
+                    src = op.textInputs[0].value
+                    src = self.values[src]
 
-                    cnt = int(op.numberInputs[1].value)
-                    cnt = self.contours[cnt]
+                    cnt = op.textInputs[1].value
+                    cnt = self.values[cnt]
 
-                    thickness = int(op.numberInputs[2].value)
-                    color = hex_to_rgb(request.form[op.colorInputs[0].inName])
+                    thickness = int(op.numberInputs[0].value)
+                    color = hex_to_rgb(op.colorInputs[0].value)
 
                     cv2.drawContours(src,cnt,-1,color,thickness=thickness)
                     
@@ -186,6 +193,7 @@ class sky_operator:
                 pass
 
     def update(self):
+        self.inCounter = len(self.values.values())
         for src in self.sources:
             src.release()
         self.sources.clear()
@@ -193,18 +201,31 @@ class sky_operator:
         for op in self.operations:
             for t_in in op.textInputs:
                 t_in.value = request.form[t_in.inName]
+                self.inCounter+=1
             for n_in in op.numberInputs:
                 n_in.value = request.form[n_in.inName]
+                self.inCounter+=1
             for r_in in op.radioInputs:
                 r_in.value = request.form[r_in.inName]
+                self.inCounter+=1
             for c_in in op.checkboxInputs:
                 c_in.value = request.form.getlist(c_in.inName)
+                self.inCounter+=1
             for clr_in in op.colorInputs:
                 clr_in.value = request.form[clr_in.inName]
+                self.inCounter+=1
+            for var_out in op.variableOutputs:
+                var_out.value = request.form[var_out.inName]
+                self.inCounter+=1
 
             if op.type == OperationType.INPUT: # INPUT OPERATIONS
                 if op.name == "IP input":
-                    camera = cv2.VideoCapture(request.form[op.textInputs[0].inName])
+                    camera = cv2.VideoCapture(op.textInputs[0].value)
+                    self.sources.append(camera)
+
+                if op.name == "Webcam input":
+                    camera = cv2.VideoCapture(op.numberInputs[0].value)
+                    print("Camera -",op.numberInputs[0].value)
                     self.sources.append(camera)
 
 
