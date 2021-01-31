@@ -129,8 +129,7 @@ class sky_operator:
                 if op.type == OperationType.INPUT: #if the type is from type "input" (cyan)
                     if op.name == "Image input": #op.name is the value in the dict
                         self.values[op.variableOutputs[0].value] = cv2.imread(op.textInputs[0].value) 
-
-                    
+                   
                     if op.name == "IP input":
                         ret, frame = self.sources[source_counter].read()
                         self.values[op.variableOutputs[0].value] = frame
@@ -327,9 +326,11 @@ class sky_operator:
                         self.sources.append(camera)
 
                     if op.name == "Webcam input":
-                        camera = cv2.VideoCapture(op.numberInputs[0].value)
-                        print("Camera -",op.numberInputs[0].value)
-                        self.sources.append(camera)
+                        try:
+                            id = int(op.numberInputs[0].value)
+                            camera = cv2.VideoCapture(id)
+                            self.sources.append(camera)
+                        except Exception as e: print(e)
 
 
 
