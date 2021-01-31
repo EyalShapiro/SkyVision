@@ -4,19 +4,19 @@
     {
       "check_in": [], 
       "color_in": [], 
-      "name": "Webcam input", 
-      "number_in": [
+      "name": "IP input", 
+      "number_in": [], 
+      "radio_in": [], 
+      "text_in": [
         {
           "brake": true, 
           "name": "webcamID1", 
           "style": "", 
           "text": "Webcam ID", 
           "textStyle": "font-size:28px;margin-right:10px;", 
-          "value": "0"
+          "value": "http://192.168.1.4:4747/mjpegfeed"
         }
       ], 
-      "radio_in": [], 
-      "text_in": [], 
       "type": 1, 
       "var_out": [
         {
@@ -25,69 +25,54 @@
           "style": "", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;", 
-          "value": "Vid"
+          "value": "vid"
         }
       ]
     }, 
     {
       "check_in": [], 
       "color_in": [], 
-      "name": "MorphEx", 
-      "number_in": [
-        {
-          "brake": true, 
-          "name": "kernel5", 
-          "style": "", 
-          "text": "Kernel", 
-          "textStyle": "font-size:28px;margin-right:10px;", 
-          "value": "25"
-        }, 
-        {
-          "brake": true, 
-          "name": "itr6", 
-          "style": "", 
-          "text": "Iterations", 
-          "textStyle": "font-size:28px;margin-right:10px;", 
-          "value": "5"
-        }
-      ], 
+      "name": "Convert color", 
+      "number_in": [], 
       "radio_in": [
         {
           "brake": true, 
           "direction": false, 
-          "name": "type7", 
+          "name": "type4", 
           "optionTextStyle": "font-size:18px;", 
           "options": [
-            "Erosion", 
-            "Dilation", 
-            "Opening", 
-            "Closing"
+            "BGR2HSV", 
+            "BGR2RGB", 
+            "BGR2GRAY", 
+            "HSV2RGB", 
+            "HSV2BGR", 
+            "GRAY2RGB"
           ], 
           "style": "margin-left:12px;", 
           "text": "Type", 
           "textStyle": "font-size:28px;", 
-          "value": "Closing"
+          "value": "BGR2HSV"
         }
       ], 
       "text_in": [
         {
           "brake": true, 
-          "name": "src4", 
+          "name": "src3", 
           "style": "", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;", 
-          "value": "Vid"
+          "value": "vid"
         }
       ], 
-      "type": 2, 
+      "type": 4, 
       "var_out": [
         {
           "brake": true, 
-          "name": "outName8", 
+          "name": "outName5", 
           "style": "", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;", 
-          "value": "Vid"
+          "value": "hsv"
         }
       ]
     }

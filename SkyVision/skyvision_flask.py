@@ -18,7 +18,7 @@ required_out = "None" # Current frame that will be drawn on screen
 error_pic = cv2.imread("ERR.jpg") # The frame that will be used for drawing when there is an error
 
 def generate(): # generates the output frame
-    time.sleep(3) # 3 second delay to allow for camera reconnection
+    time.sleep(3) # delay to allow for camera reconnection
     while(True):
         operator.process() # activate all operations
         outputs = operator.values # get all values from the operator
@@ -27,13 +27,16 @@ def generate(): # generates the output frame
             selected_out = outputs[required_out] # set the output to the required frame
         except: # if setting output frame fales, set it to the error pic
             selected_out = error_pic # set the output frame to the error pic
+        
+        if selected_out is None:
+            selected_out = error_pic
 
         ret, encodedImage = cv2.imencode(".jpg", selected_out) # turn the output pic to a jpg
         if not ret: # if encoding to jpg fails, skip this frame
             continue # skip the frame
 
         yield(b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + bytearray(encodedImage) + b'\r\n') # output the frame in a format that the browser can read
-
+        
 @app.route("/video_feed") # the route for only the video feed
 def video_feed():
     return Response(generate(),mimetype = "multipart/x-mixed-replace; boundary=frame") # return the output from the generate() function
@@ -87,7 +90,6 @@ def home(): # home page
         try:
             if request.form["action"] == "Save": # If the saved button is pressed
                 required_out = request.form["outID"] # set required frame
-                save_session() # save the session
                 operator.update() # activate all operations and update values
                 save_session() # save again ( with set values )
 

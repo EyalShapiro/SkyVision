@@ -108,7 +108,6 @@ sky_operations = {
         ]
     )
 
-
 }
 
 class sky_operator:
@@ -118,7 +117,6 @@ class sky_operator:
         self.inCounter = 0 #differ between inputs
         self.values = {} #dictionary of all values
 
-    
     def process(self):
         self.values.clear()
 
@@ -131,14 +129,18 @@ class sky_operator:
                         self.values[op.variableOutputs[0].value] = cv2.imread(op.textInputs[0].value) 
                    
                     if op.name == "IP input":
-                        ret, frame = self.sources[source_counter].read()
-                        self.values[op.variableOutputs[0].value] = frame
-                        source_counter+=1
+                        cap = self.sources[source_counter]
+                        if cap is not None:
+                            ret, frame = cap.read()
+                            self.values[op.variableOutputs[0].value] = frame
+                            source_counter+=1
 
                     if op.name == "Webcam input":
-                        ret, frame = self.sources[source_counter].read()
-                        self.values[op.variableOutputs[0].value] = frame
-                        source_counter+=1
+                        cap = self.sources[source_counter]
+                        if cap is not None:
+                            ret, frame = cap.read()
+                            self.values[op.variableOutputs[0].value] = frame
+                            source_counter+=1
 
 
                 if op.type == OperationType.MORPH: # MORPH OPERATIONS
@@ -151,9 +153,7 @@ class sky_operator:
                         Kernel = (KernelValue,KernelValue)
                         
                         iterations = int(op.numberInputs[1].value)
-                        print("A")
                         frame_blurred = cv2.GaussianBlur(src, Kernel,iterations) #last param would be the times it blurs
-                        print("B")
                         self.values[op.variableOutputs[0].value] = frame_blurred
 
                     if op.name == "MorphEx":
@@ -264,7 +264,6 @@ class sky_operator:
 
                         thickness = int(op.numberInputs[0].value)
                         color = hex_to_rgb(op.colorInputs[0].value)
-
                         cv2.drawContours(src,cnt,-1,color,thickness=thickness)
 
                     if op.name == "Draw Circle":
@@ -296,8 +295,9 @@ class sky_operator:
 
     def update(self):
         self.inCounter = len(self.values.values())
-        for src in self.sources:
-            src.release()
+
+        print("UPDATING")
+
         self.sources.clear()
 
         for op in self.operations:
@@ -319,18 +319,22 @@ class sky_operator:
             for var_out in op.variableOutputs:
                 var_out.value = request.form[var_out.inName]
                 self.inCounter+=1
+            
             try:
                 if op.type == OperationType.INPUT: # INPUT OPERATIONS
                     if op.name == "IP input":
                         camera = cv2.VideoCapture(op.textInputs[0].value)
-                        self.sources.append(camera)
+                        if camera is not None:
+                            self.sources.append(camera)
+                            print("READ IP")
+                        else:
+                            print("READ ERR")
 
                     if op.name == "Webcam input":
-                        try:
-                            id = int(op.numberInputs[0].value)
-                            camera = cv2.VideoCapture(id)
-                            self.sources.append(camera)
-                        except Exception as e: print(e)
+                        id = int(op.numberInputs[0].value)
+                        camera = cv2.VideoCapture(id)
+                        self.sources.append(camera)
+                        
 
 
 
