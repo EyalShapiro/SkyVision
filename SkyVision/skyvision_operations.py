@@ -38,6 +38,58 @@ sky_operations = {
         variable_outputs=[operation_TextInput("outName","Output name")]
     ),
 
+    "Blur" : operation("Blur", OperationType.MORPH,
+    text_inputs=[
+        operation_TextInput("src", "Source")],
+    number_inputs=[
+        operation_NumberInput("kernel", "KernelValue")
+    ],
+    radio_inputs=[
+        operation_RadioInput("type","blur_type",
+            options=[
+                "Gaussian"
+            ]
+        )
+    ],
+    variable_outputs=[operation_TextInput("outName","Output name")]
+    ),
+
+    "Erosion" : operation("Erosion", OperationType.MORPH,
+    text_inputs=[
+        operation_TextInput("src", "Source")],
+    number_inputs=[
+        operation_NumberInput("kernel","Kernel")
+    ],
+    variable_outputs=[operation_TextInput("outName","Output name")]
+    ),
+
+    "Dilation" : operation("Dilation",OperationType.MORPH,
+    text_inputs=[
+        operation_TextInput("src", "Source")],
+    number_inputs=[
+        operation_NumberInput("kernel","Kernel")
+    ],
+    variable_outputs=[operation_TextInput("outName","Output name")]
+    ),
+
+"Opening" : operation("Opening",OperationType.MORPH,
+    text_inputs=[
+        operation_TextInput("src", "Source")],
+    number_inputs=[
+        operation_NumberInput("kernel","Kernel")
+    ],
+    variable_outputs=[operation_TextInput("outName","Output name")]
+    ),
+
+    "Closing" : operation("Closing",OperationType.MORPH,
+    text_inputs=[
+        operation_TextInput("src", "Source")],
+    number_inputs=[
+        operation_NumberInput("kernel","Kernel")
+    ],
+    variable_outputs=[operation_TextInput("outName","Output name")]
+    ),
+
     "Bitwise And" : operation("Bitwise AND",OperationType.ARITHMETIC,
         text_inputs=[
             operation_TextInput("src1","Source 1"),
@@ -85,15 +137,15 @@ sky_operations = {
 
 class sky_operator:
     def __init__(self):
-        self.operations = [] #array of blocks
-        self.sources = [] #array of cameras
+        self.operations = [] #array of blocks (operations)
+        self.sources = [] #array of cameras 
         self.inCounter = 0 #differ between inputs
         self.values = {} #dictionary of all values
 
     def process(self):
         self.values.clear()
 
-        source_counter = 0 #from which camera you get info
+        source_counter = 0 #which camera you get info from
 
         for op in self.operations: # INPUT OPERATIONS
             if op.type == OperationType.INPUT: #if the type is from type "input" (cyan)
@@ -112,10 +164,70 @@ class sky_operator:
                     source_counter+=1
 
 
-
             if op.type == OperationType.MORPH: # MORPH OPERATIONS
-                pass
+                
+                if op.name == "Blur":
+                    src = op.textInputs[0].value
+                    src = self.values[src]
 
+                    KernelValue = int(op.numberInputs[0].value)
+                    Kernel = (KernelValue,KernelValue)
+                    
+                    blur_type = op.radioInputs[0].value
+                    if blur_type == "Gaussian":
+                        frame_source = src
+                        frame_blurred = cv2.GaussianBlur(frame_source, Kernel, 1) #last param would be the times it blurs
+                        self.values[op.variableOutputs[0].value] = frame_blurred
+                
+                if op.name == "Erosion":
+                    src = op.textInputs[0].value
+                    src = self.values[src]
+
+                    KernelValue = int(op.numberInputs[0].value)
+                    Kernel = np.ones((KernelValue,KernelValue), np.uint8)
+
+                    eroded_frame = cv2.erode(src, Kernel, iterations=1)
+
+                    self.values[op.variableOutputs[0].value] = eroded_frame
+
+                if op.name == "Dilation":
+                    src = op.textInputs[0].value
+                    src = self.values[src]
+
+                    KernelValue = int(op.numberInputs[0].value)
+                    Kernel = np.ones((KernelValue,KernelValue), np.uint8)
+
+                    dilated_frame = cv2.dilate(src, Kernel, iterations=1)
+
+                    self.values[op.variableOutputs[0].value] = dilated_frame
+
+
+                if op.name == "Opening": #erosion then dilation (removes noise)
+                    src = op.textInputs[0].value
+                    src = self.values[src]
+
+                    KernelValue = int(op.numberInputs[0].value)
+                    Kernel = np.ones((KernelValue,KernelValue), np.uint8)
+
+                    opened_frame = cv2.morphologyEx(src, cv2.MORPH_OPEN,Kernel)
+
+                    self.values[op.variableOutputs[0].value] = opened_frame
+
+                
+                if op.name == "Closing": #dilation then erosion (removes "holes" in pic)
+                    src = op.textInputs[0].value
+                    src = self.values[src]
+
+                    KernelValue = int(op.numberInputs[0].value)
+                    Kernel = np.ones((KernelValue,KernelValue), np.uint8)
+
+                    closed_frame = cv2.morphologyEx(src,cv2.MORPH_CLOSE ,Kernel)
+
+                    self.values[op.variableOutputs[0].value] = closed_frame
+
+                
+
+                
 
             if op.type == OperationType.ARITHMETIC: # ARITHMETIC OPERATIONS
                 if op.name == "Bitwise AND":
@@ -216,6 +328,11 @@ class sky_operator:
                     color = hex_to_hsv(op.colorInputs[0].value)
 
                     cv2.circle(src,(x,y), radius, color, thickness)
+
+                if op.name == "Text":
+                    src = op.textInputs[0].value
+                    src = self.values[src]
+                
 
 
             if op.type == OperationType.MISC: # MISC OPERATIONS
