@@ -10,13 +10,12 @@ from skyvision_operations import *
 import copy
 
 app = Flask(__name__) # app
-app.secret_key = "#4416"
+app.secret_key = "#4416" # secret key used for session saving
 
-operator = sky_operator()
-outputs = []
-required_out = "None"
+operator = sky_operator() # main class responsible for organizing and activating operations
+required_out = "None" # Current frame that will be drawn on screen
 
-error_pic = cv2.imread("ERR.jpg")
+error_pic = cv2.imread("ERR.jpg") # The frame that will be used for drawing when there is an error
 
 def generate():
     time.sleep(3)
