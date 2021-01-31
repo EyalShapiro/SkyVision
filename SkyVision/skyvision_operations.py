@@ -3,11 +3,11 @@ from SkyVision_Tools import *
 from flask import *
 import cv2
 
-    # camera = cv2.VideoCapture('http://192.168.1.4:4747/mjpegfeed')
-
 sky_operations = {
-    "Image Input" : operation("Image input",OperationType.INPUT,text_inputs=[operation_TextInput("imgPath","Image Path")],variable_outputs=[operation_TextInput("outName","Output name")]),
     #{key: Image input ; value: object(operation)}
+    
+    "Image Input" : operation("Image input",OperationType.INPUT,text_inputs=[operation_TextInput("imgPath","Image Path")],variable_outputs=[operation_TextInput("outName","Output name")]),
+    
     "Webcam Input" : operation("Webcam input",OperationType.INPUT,number_inputs=[operation_NumberInput("webcamID","Webcam ID")],variable_outputs=[operation_TextInput("outName","Output name")]),
 
     "IP Input" : operation("IP input",OperationType.INPUT,text_inputs=[operation_TextInput("webcamID","Webcam ID")],variable_outputs=[operation_TextInput("outName","Output name")]),
@@ -38,37 +38,31 @@ sky_operations = {
         variable_outputs=[operation_TextInput("outName","Output name")]
     ),
 
-    "Blur" : operation("Blur", OperationType.MORPH,
-    text_inputs=[
-        operation_TextInput("src", "Source")],
-    number_inputs=[
-        operation_NumberInput("kernel", "KernelValue")
-    ],
-    radio_inputs=[
-        operation_RadioInput("type","blur_type",
-            options=[
-                "Gaussian"
-            ]
-        )
-    ],
-    variable_outputs=[operation_TextInput("outName","Output name")]
+    "Gaussian Blur" : operation("Gaussian Blur", OperationType.MORPH,
+        text_inputs=[
+            operation_TextInput("src", "Source")],
+        number_inputs=[
+            operation_NumberInput("kernel", "Kernel Value"),
+            operation_NumberInput("iter", "Iterations")
+        ],
+        variable_outputs=[operation_TextInput("outName","Output name")]
     ),
 
     "MorphEx" : operation("MorphEx", OperationType.MORPH,
-    text_inputs=[
-        operation_TextInput("src", "Source")],
-    number_inputs=[
-        operation_NumberInput("kernel","Kernel"),
-        operation_NumberInput("itr", "Iterations")],
-    radio_inputs=[
-            operation_RadioInput("type","Type",
-            options=[
-                "Erosion",
-                "Dilation",
-                "Opening",
-                "Closing",
-            ])],
-    variable_outputs=[operation_TextInput("outName","Output name")]
+        text_inputs=[
+            operation_TextInput("src", "Source")],
+        number_inputs=[
+            operation_NumberInput("kernel","Kernel"),
+            operation_NumberInput("itr", "Iterations")],
+        radio_inputs=[
+                operation_RadioInput("type","Type",
+                options=[
+                    "Erosion",
+                    "Dilation",
+                    "Opening",
+                    "Closing",
+                ])],
+        variable_outputs=[operation_TextInput("outName","Output name")]
     ),
  
     "Bitwise And" : operation("Bitwise AND",OperationType.ARITHMETIC,
@@ -98,19 +92,20 @@ sky_operations = {
         color_inputs=[
             operation_ColorInput("clr","Color"),]
     ),
+
     "Draw Circle" : operation("Draw Circle", OperationType.DRAW,
-    text_inputs=[
-        operation_TextInput("src", "Source"),
-    ],
-    number_inputs=[
-        operation_NumberInput("radius","Radius"),
-        operation_NumberInput("xValue","X","padding-right:5px",brake=False),
-        operation_NumberInput("yValue","Y"),
-        operation_NumberInput("thickness", "Thickness")
-    ],
-    color_inputs=[
-        operation_ColorInput("Color","Color")
-    ]
+        text_inputs=[
+            operation_TextInput("src", "Source"),
+        ],
+        number_inputs=[
+            operation_NumberInput("radius","Radius"),
+            operation_NumberInput("xValue","X","padding-right:5px",brake=False),
+            operation_NumberInput("yValue","Y"),
+            operation_NumberInput("thickness", "Thickness")
+        ],
+        color_inputs=[
+            operation_ColorInput("Color","Color")
+        ]
     )
 
 
@@ -149,18 +144,18 @@ class sky_operator:
 
                 if op.type == OperationType.MORPH: # MORPH OPERATIONS
                     
-                    if op.name == "Blur":
+                    if op.name == "Gaussian Blur":
                         src = op.textInputs[0].value
                         src = self.values[src]
 
                         KernelValue = int(op.numberInputs[0].value)
                         Kernel = (KernelValue,KernelValue)
                         
-                        blur_type = op.radioInputs[0].value
-                        if blur_type == "Gaussian":
-                            frame_source = src
-                            frame_blurred = cv2.GaussianBlur(frame_source, Kernel, 1) #last param would be the times it blurs
-                            self.values[op.variableOutputs[0].value] = frame_blurred
+                        iterations = int(op.numberInputs[1].value)
+                        print("A")
+                        frame_blurred = cv2.GaussianBlur(src, Kernel,iterations) #last param would be the times it blurs
+                        print("B")
+                        self.values[op.variableOutputs[0].value] = frame_blurred
 
                     if op.name == "MorphEx":
                         src = op.textInputs[0].value
@@ -299,6 +294,7 @@ class sky_operator:
                     pass
             except:
                 pass
+
     def update(self):
         self.inCounter = len(self.values.values())
         for src in self.sources:
