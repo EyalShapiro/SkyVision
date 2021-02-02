@@ -10,7 +10,7 @@ sky_operations = {
     
     "Webcam Input" : operation("Webcam input",OperationType.INPUT,number_inputs=[operation_NumberInput("webcamID","Webcam ID")],variable_outputs=[operation_TextInput("outName","Output name")]),
 
-    "IP Input" : operation("IP input",OperationType.INPUT,text_inputs=[operation_TextInput("webcamID","Webcam ID")],variable_outputs=[operation_TextInput("outName","Output name")]),
+    "IP Input" : operation("IP input [DEPRECATED]",OperationType.INPUT,text_inputs=[operation_TextInput("webcamID","Webcam ID")],variable_outputs=[operation_TextInput("outName","Output name")]),
 
     "Color Mask" : operation("Color Mask",OperationType.COLORS,
         text_inputs=[
@@ -294,6 +294,7 @@ class sky_operator:
                 pass
 
     def MoveUP(self,num):
+        self.update()
         counter = 0
         curr_operation = 0
 
@@ -310,6 +311,7 @@ class sky_operator:
             pass
 
     def MoveDOWN(self,num):
+        self.update()
         counter = 0
         curr_operation = 0
 
@@ -326,6 +328,7 @@ class sky_operator:
             pass
 
     def Delete(self,num):
+        self.update()
         for op in self.operations:
             if int(op.op_move_counter) == int(num):
                 self.operations.remove(op)

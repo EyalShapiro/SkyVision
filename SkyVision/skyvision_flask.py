@@ -101,7 +101,7 @@ def home(): # home page
     elif request.method == "POST": # if got to the website from a press of button
         # try:
         submit = request.form["action"][:6]
-        print("FOUND - " + submit)
+        print("FOUND - " + request.form["action"])
         if request.form["action"] == "Save": # If the saved button is pressed
             required_out = request.form["outID"] # set required frame
             operator.update() # activate all operations and update values

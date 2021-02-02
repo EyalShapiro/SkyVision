@@ -293,10 +293,10 @@ class operation: # main class for operation
 
         # div contents here ->
         retdiv += html_header(self.name,brake=False) # div Title
-
-        retdiv += "<input type=\"submit\" name=\"action\" value=\"Delete" + str(self.op_move_counter) + "\" style=\"font-size: 25px;margin-right: 15px;margin-left: 65px;\" />"
-        retdiv += "<input type=\"submit\" name=\"action\" value=\"MoveUP" + str(self.op_move_counter) + "\" style=\"font-size: 25px;margin-right: 15px;\" />"
-        retdiv += "<input type=\"submit\" name=\"action\" value=\"MovDON" + str(self.op_move_counter) + "\" style=\"font-size: 25px;margin-right: 15px;\" /><br/>"
+        # margin-right: 15px;margin-left: 65px;\"
+        retdiv += "<button type=\"submit\" formmethod=\"post\" name=\"action\" value=\"Delete" + str(self.op_move_counter) + "\" style=\"margin-left:65px;\">Delete</button>"
+        retdiv += "<button type=\"submit\" formmethod=\"post\" name=\"action\" value=\"MoveUP" + str(self.op_move_counter) + "\" style=\"margin-left:15px;\">Move UP</button>"
+        retdiv += "<button type=\"submit\" formmethod=\"post\" name=\"action\" value=\"MovDON" + str(self.op_move_counter) + "\" style=\"margin-left:15px;\">Move DOWN</button><br/>"
 
         for text_input in self.textInputs:
             retdiv += str(text_input)
