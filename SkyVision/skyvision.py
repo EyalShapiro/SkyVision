@@ -182,6 +182,8 @@ class operation: # main class for operation
         self.colorInputs = color_inputs
         self.variableOutputs = variable_outputs
 
+        self.op_move_counter = 0
+
         #op_input.name = "name=\"" + op_input.inName + str(value) + "\""
     def add_num(self,num):
         counter = 0
@@ -227,6 +229,7 @@ class operation: # main class for operation
             op_input.name = "name=\"" + op_input.inName + str(value) + "\""
             op_input.inName = op_input.inName + str(value)
         
+        self.op_move_counter = str(num)
 
     def conv_dict(self):
 
@@ -289,7 +292,11 @@ class operation: # main class for operation
         retdiv += "<div style=\"padding-left:25px;padding-right:25px;padding-up:25px;padding-down:25px;display:inline-block;\">" # add inner div
 
         # div contents here ->
-        retdiv += html_header(self.name) # div Title
+        retdiv += html_header(self.name,brake=False) # div Title
+
+        retdiv += "<input type=\"submit\" name=\"action\" value=\"Delete" + str(self.op_move_counter) + "\" style=\"font-size: 25px;margin-right: 15px;margin-left: 65px;\" />"
+        retdiv += "<input type=\"submit\" name=\"action\" value=\"MoveUP" + str(self.op_move_counter) + "\" style=\"font-size: 25px;margin-right: 15px;\" />"
+        retdiv += "<input type=\"submit\" name=\"action\" value=\"MovDON" + str(self.op_move_counter) + "\" style=\"font-size: 25px;margin-right: 15px;\" /><br/>"
 
         for text_input in self.textInputs:
             retdiv += str(text_input)

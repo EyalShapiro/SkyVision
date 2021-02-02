@@ -52,33 +52,45 @@ def home(): # home page
                 data = json.load(json_file) # get the json data
                 temp_operations = data["operations"] # load operations from the json file
 
+                counter = 0
+                cc = 0
                 for op in temp_operations: # for operation in loaded operations
+                    
                     textinputs = [] # all text inputs in the loaded operation
                     for temp_input in op["text_in"]:
                         textinputs.append(operation_TextInput(temp_input["name"],temp_input["text"],temp_input["style"],temp_input["textStyle"],temp_input["value"],temp_input["brake"])) # create a operation_TextInput from loaded data
+                        counter+=1
 
                     numinputs = [] # all number inputs in the loaded operation
                     for temp_input in op["number_in"]:
                         numinputs.append(operation_NumberInput(temp_input["name"],temp_input["text"],temp_input["style"],temp_input["textStyle"],temp_input["value"],temp_input["brake"])) # create a operation_NumberInput from loaded data
+                        counter+=1
                     
                     radinputs = [] # all radio inputs in the loaded operation
                     for temp_input in op["radio_in"]:
                         radinputs.append(operation_RadioInput(temp_input["name"],temp_input["text"],temp_input["options"],temp_input["style"],temp_input["textStyle"],temp_input["optionTextStyle"],temp_input["value"],temp_input["direction"],temp_input["brake"])) # create a operation_RadioInput from loaded data
+                        counter+=1
 
                     checkinputs = [] # all checkbox inputs in the loaded operation
                     for temp_input in op["check_in"]:
                         checkinputs.append(operation_CheckboxInput(temp_input["name"],temp_input["text"],temp_input["options"],temp_input["style"],temp_input["textStyle"],temp_input["optionTextStyle"],temp_input["value"],temp_input["direction"],temp_input["brake"])) # create a operation_CheckboxInput from loaded data
+                        counter+=1
 
                     colorinputs = [] # all color inputs in the loaded operation
                     for temp_input in op["color_in"]:
                         colorinputs.append(operation_ColorInput(temp_input["name"],temp_input["text"],temp_input["style"],temp_input["textStyle"],temp_input["value"],temp_input["brake"])) # create a operation_ColorInput from loaded data
+                        counter+=1
 
                     varOutputs = [] # all variable Outputs in the loaded operation
                     for temp_output in op["var_out"]:
                         varOutputs.append(operation_TextInput(temp_output["name"],temp_output["text"],temp_output["style"],temp_output["textStyle"],temp_output["value"],temp_output["brake"])) # create a operation_TextInput from loaded data
+                        counter+=1
 
-
-                    operator.operations.append(operation(op["name"],op["type"],text_inputs=textinputs,number_inputs=numinputs,radio_inputs=radinputs,checkbox_inputs=checkinputs,color_inputs=colorinputs,variable_outputs=varOutputs)) # create an operation from all created inputs
+                    op = operation(op["name"],op["type"],text_inputs=textinputs,number_inputs=numinputs,radio_inputs=radinputs,checkbox_inputs=checkinputs,color_inputs=colorinputs,variable_outputs=varOutputs)
+                    op.add_num(cc)
+                    cc += 1
+                    operator.inCounter += 1
+                    operator.operations.append(op) # create an operation from all created inputs
             pass
         except:
             print("Unable to located \"Session.json\"") # print error if failed to open session.json
@@ -87,23 +99,38 @@ def home(): # home page
         return render_template("mainhtml.html",ops = operator.operations,curr_out = required_out) # returns the main html with the array of operations
 
     elif request.method == "POST": # if got to the website from a press of button
-        try:
-            if request.form["action"] == "Save": # If the saved button is pressed
-                required_out = request.form["outID"] # set required frame
-                operator.update() # activate all operations and update values
-                save_session() # save again ( with set values )
+        # try:
+        submit = request.form["action"][:6]
+        print("FOUND - " + submit)
+        if request.form["action"] == "Save": # If the saved button is pressed
+            required_out = request.form["outID"] # set required frame
+            operator.update() # activate all operations and update values
+            save_session() # save again ( with set values )
 
-            elif request.form["action"] == "Update": # if update is pressed
-                required_out = request.form["outID"] # set required frame
-                print("Req Out is",required_out) 
-                operator.update() # activate all operations and set values
+        elif request.form["action"] == "Update": # if update is pressed
+            required_out = request.form["outID"] # set required frame
+            print("Req Out is",required_out) 
+            operator.update() # activate all operations and set values
 
-            else: # if not update nor save was pressed, add an operation
-                value = request.form["action"] # get the pressed button's name
-                add_operation(value) # add operation with the name of the button
+        elif submit == "Delete":
+            value = int((request.form["action"])[6:])
+            operator.Delete(value)
+
+        elif submit == "MoveUP":
+            value = int((request.form["action"])[6:])
+            operator.MoveUP(value)
+
+        elif submit == "MovDON":
+            value = int((request.form["action"])[6:])
+            operator.MoveDOWN(value)
+
+        else: # if not update nor save was pressed, add an operation
+            value = request.form["action"] # get the pressed button's name
+            add_operation(value) # add operation with the name of the button
                 
-        except:
-            pass
+                
+        # except:
+            # pass
 
         return render_template("mainhtml.html",ops = operator.operations,curr_out = required_out) # return the html page with all the operations
 

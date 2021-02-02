@@ -293,6 +293,49 @@ class sky_operator:
             except:
                 pass
 
+    def MoveUP(self,num):
+        counter = 0
+        curr_operation = 0
+
+        try:
+            for op in self.operations:
+                if int(op.op_move_counter) == int(num):
+                    curr_operation = op
+                    self.operations.remove(op)
+                    self.operations.insert(counter-1,curr_operation)
+                    break
+
+                counter += 1
+        except:
+            pass
+
+    def MoveDOWN(self,num):
+        counter = 0
+        curr_operation = 0
+
+        try:
+            for op in self.operations:
+                if int(op.op_move_counter) == int(num):
+                    curr_operation = op
+                    self.operations.remove(op)
+                    self.operations.insert(counter+1,curr_operation)
+                    break
+
+                counter += 1
+        except:
+            pass
+
+    def Delete(self,num):
+        for op in self.operations:
+            if int(op.op_move_counter) == int(num):
+                self.operations.remove(op)
+                print("Removed")
+                self.inCounter -= 1
+                break
+
+        
+        self.update()
+
     def update(self):
         self.inCounter = len(self.values.values())
 
