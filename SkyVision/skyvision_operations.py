@@ -3,9 +3,12 @@ from SkyVision_Tools import *
 from flask import *
 import cv2
 
-sky_operations = {
-    #{key: Image input ; value: object(operation)}
-    
+sky_operations = { # sky operation is a dictionary that defines the inputs each operation has
+
+    #EXAMPLE ->
+    #Key : operation("operation name",OperationType,
+    #   text_inputs=[operation_TextInput("html Name", " html Text")],
+    #   number_inputs=[operation_NumberInput("html Name", "html Text")])
     "Image Input" : operation("Image input",OperationType.INPUT,text_inputs=[operation_TextInput("imgPath","Image Path")],variable_outputs=[operation_TextInput("outName","Output name")]),
     
     "Webcam Input" : operation("Webcam input",OperationType.INPUT,number_inputs=[operation_NumberInput("webcamID","Webcam ID")],variable_outputs=[operation_TextInput("outName","Output name")]),
@@ -110,14 +113,14 @@ sky_operations = {
 
 }
 
-class sky_operator:
+class sky_operator: # main class responsible for running operations
     def __init__(self):
         self.operations = [] #array of blocks (operations)
         self.sources = [] #array of cameras 
         self.inCounter = 0 #differ between inputs
         self.values = {} #dictionary of all values
 
-    def process(self):
+    def process(self): # process operations each frame
         self.values.clear()
 
         source_counter = 0 #which camera you get info from
@@ -293,7 +296,7 @@ class sky_operator:
             except:
                 pass
 
-    def MoveUP(self,num):
+    def MoveUP(self,num): # move operation up
         self.update()
         counter = 0
         curr_operation = 0
@@ -310,7 +313,7 @@ class sky_operator:
         except:
             pass
 
-    def MoveDOWN(self,num):
+    def MoveDOWN(self,num): # move operation down
         self.update()
         counter = 0
         curr_operation = 0
@@ -327,7 +330,7 @@ class sky_operator:
         except:
             pass
 
-    def Delete(self,num):
+    def Delete(self,num): # delete operation
         self.update()
         for op in self.operations:
             if int(op.op_move_counter) == int(num):
@@ -339,14 +342,14 @@ class sky_operator:
         
         self.update()
 
-    def update(self):
+    def update(self): # process operations when update is pressed
         self.inCounter = len(self.values.values())
 
         print("UPDATING")
 
         self.sources.clear()
 
-        for op in self.operations:
+        for op in self.operations: # update the counter used for addnum
             for t_in in op.textInputs:
                 t_in.value = request.form[t_in.inName]
                 self.inCounter+=1

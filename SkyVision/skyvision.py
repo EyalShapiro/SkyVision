@@ -1,7 +1,7 @@
 from htmlcontrol import *
 from flask import *
 
-class OperationType():
+class OperationType(): # operation type . mostly for the operation's color
     NONE = 0
     INPUT = 1
     MORPH = 2
@@ -34,9 +34,9 @@ class operation_TextInput: # text input for operation
         return ret_dict
 
     def __str__(self):
-        return html_input(self.text,"text",self.name,self.style,self.txtStyle,value=self.value,brake=self.br)
+        return html_input(self.text,"text",self.name,self.style,self.txtStyle,value=self.value,brake=self.br) # return the html version of the input
 
-class operation_NumberInput: # text input for operation
+class operation_NumberInput: # number input for operation ( like text but can only get numbers )
     def __init__(self, name, text = "",style = "",text_style = "font-size:28px;margin-right:10px;",value="",brake=True):
         self.name = "name=\"" + name + "\""
         self.inName = name
@@ -60,9 +60,9 @@ class operation_NumberInput: # text input for operation
         return ret_dict
 
     def __str__(self):
-        return html_input(self.text,"number",self.name,self.style,self.txtStyle,self.value,brake=self.br)
+        return html_input(self.text,"number",self.name,self.style,self.txtStyle,self.value,brake=self.br) # return the html version of the input
 
-class operation_RadioInput: # text input for operation
+class operation_RadioInput: # radio input for operation ( select one of options )
     def __init__(self, name,text = "", options = [],radio_style = "margin-left:12px;",header_style = "font-size:28px;",option_text_style="font-size:18px;",value="",vertical=False,brake=True):
         self.name = "name=\"" + name + "\""
         self.inName = name
@@ -92,7 +92,7 @@ class operation_RadioInput: # text input for operation
         return ret_dict
 
     def __str__(self):
-        retstr = html_header(self.text+": ",size=3,brake=self.direction,style=self.txtStyle)
+        retstr = html_header(self.text+": ",size=3,brake=self.direction,style=self.txtStyle) # return the html version of the input
         for option in self.options:
             if option != self.value:
                 retstr = retstr + html_radio(self.name,option,style=self.style,text_style=self.txtStyle,option_style=self.optnTxtStyle,brake=self.direction)
@@ -101,7 +101,7 @@ class operation_RadioInput: # text input for operation
         retstr = retstr + ("<br/>" if self.brake else "")
         return retstr
 
-class operation_CheckboxInput: # text input for operation
+class operation_CheckboxInput: # checkbox input for operation ( select multiple from options )
     def __init__(self, name,text = "", options = [],radio_style = "margin-left:12px;",header_style = "font-size:28px;",option_text_style="font-size:18px;",value = "",vertical=False,brake=True):
         self.name = "name=\"" + name + "\""
         self.inName = name
@@ -130,7 +130,7 @@ class operation_CheckboxInput: # text input for operation
         }
         return ret_dict
 
-    def __str__(self):
+    def __str__(self): # return the html version of the input
         retstr = html_header(self.text+": ",size=3,brake=self.direction,style=self.txtStyle)
         for option in self.options:
             selected = False
@@ -144,7 +144,7 @@ class operation_CheckboxInput: # text input for operation
         retstr = retstr + ("<br/>" if self.brake else "")
         return retstr
 
-class operation_ColorInput: # text input for operation
+class operation_ColorInput: # color input for operation
     def __init__(self, name, text = "",style = "",text_style = "font-size:28px;margin-right:10px;",value="#00FF00",brake=True):
         self.name = "name=\"" + name + "\""
         self.inName = name
@@ -167,7 +167,7 @@ class operation_ColorInput: # text input for operation
         }
         return ret_dict
 
-    def __str__(self):
+    def __str__(self): # return the html version of the input
         return html_color(self.name,self.value,self.text,self.style,self.txtStyle,brake=self.br,)
 
 class operation: # main class for operation
@@ -184,8 +184,7 @@ class operation: # main class for operation
 
         self.op_move_counter = 0
 
-        #op_input.name = "name=\"" + op_input.inName + str(value) + "\""
-    def add_num(self,num):
+    def add_num(self,num): # add num adds a unique number to each input
         counter = 0
         for op_input in self.textInputs:
             counter += 1
@@ -231,7 +230,7 @@ class operation: # main class for operation
         
         self.op_move_counter = str(num)
 
-    def conv_dict(self):
+    def conv_dict(self): # turns the operation and it's inputs to a dictionary, required for json files
 
         text_in_dict = []
         for op_input in self.textInputs:
@@ -273,7 +272,7 @@ class operation: # main class for operation
 
         return ret_dict
 
-    def __str__(self):
+    def __str__(self): # return the html version of the operation
 
         retdiv = "<div style=\"margin-top:7px;margin-bottom:7px;background-color:" # init div
 
@@ -298,6 +297,8 @@ class operation: # main class for operation
         retdiv += "<button type=\"submit\" formmethod=\"post\" name=\"action\" value=\"MoveUP" + str(self.op_move_counter) + "\" style=\"margin-left:15px;\">Move UP</button>"
         retdiv += "<button type=\"submit\" formmethod=\"post\" name=\"action\" value=\"MovDON" + str(self.op_move_counter) + "\" style=\"margin-left:15px;\">Move DOWN</button><br/>"
 
+
+        # add the html versions of all the inputs of the operation
         for text_input in self.textInputs:
             retdiv += str(text_input)
 

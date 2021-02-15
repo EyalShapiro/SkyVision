@@ -87,7 +87,7 @@ def home(): # home page
                         counter+=1
 
                     op = operation(op["name"],op["type"],text_inputs=textinputs,number_inputs=numinputs,radio_inputs=radinputs,checkbox_inputs=checkinputs,color_inputs=colorinputs,variable_outputs=varOutputs)
-                    op.add_num(cc)
+                    op.add_num(cc) # add num is used to differentiate each input from another
                     cc += 1
                     operator.inCounter += 1
                     operator.operations.append(op) # create an operation from all created inputs
