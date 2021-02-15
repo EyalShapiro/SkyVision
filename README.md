@@ -1,5 +1,5 @@
 # SkyVision
-skyvision is a web api used for creating computer vision applications using nodes ( called operations )
+skyvision is a web interface used for creating computer vision applications using nodes ( called operations )
 
 **usage**  
 1.run skyvision_flask.py - this is the main file, and it's responsible for running flask.  
