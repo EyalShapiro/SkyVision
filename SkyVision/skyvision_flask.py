@@ -17,7 +17,10 @@ required_out = "None" # Current frame that will be drawn on screen
 
 error_pic = cv2.imread("ERR.jpg") # The frame that will be used for drawing when there is an error
 
+windowMode = False
+
 def generate(): # generates the output frame
+    cv2.destroyAllWindows()
     time.sleep(3) # delay to allow for camera reconnection
     while(True):
         operator.process() # activate all operations
@@ -32,18 +35,46 @@ def generate(): # generates the output frame
             selected_out = error_pic
 
         ret, encodedImage = cv2.imencode(".jpg", selected_out) # turn the output pic to a jpg
-        if not ret: # if encoding to jpg fails, skip this frame
-            continue # skip the frame
 
-        yield(b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + bytearray(encodedImage) + b'\r\n') # output the frame in a format that the browser can read
+        if ret: # if encoding to jpg fails, skip this frame
+            yield(b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + bytearray(encodedImage) + b'\r\n') # output the frame in a format that the browser can read
+
+def generateWindow(): # generates the output frame
+    global windowMode
+    cv2.destroyAllWindows()
+    time.sleep(5) # delay to allow for camera reconnection
+    while(windowMode):
+        operator.process() # activate all operations
+        outputs = operator.values # get all values from the operator
+        
+        try: # try to set the output frame to the required frame
+            selected_out = outputs[required_out] # set the output to the required frame
+        except: # if setting output frame fales, set it to the error pic
+            selected_out = error_pic # set the output frame to the error pic
+        
+        if selected_out is None:
+            selected_out = error_pic
+
+        
+        cv2.imshow('SkyVision',selected_out)
+        cv2.waitKey(1)
+
+
+
         
 @app.route("/video_feed") # the route for only the video feed
 def video_feed():
-    return Response(generate(),mimetype = "multipart/x-mixed-replace; boundary=frame") # return the output from the generate() function
+    global windowMode
+    if windowMode:
+        return generateWindow()
+    else:
+        return Response(generate(),mimetype = "multipart/x-mixed-replace; boundary=frame") # return the output from the generate() function
+    
 
 @app.route("/",methods=['GET', 'POST']) # route for main page, allows for GET and POST requests
 def home(): # home page
     global required_out
+    cv2.destroyAllWindows()
     if request.method == "GET": # if entered page regularly
         try:
             required_out = "None" # set the required output frame to "None"
@@ -123,6 +154,11 @@ def home(): # home page
         elif submit == "MovDON":
             value = int((request.form["action"])[6:])
             operator.MoveDOWN(value)
+
+        elif request.form["action"] == "WindowMode": # If the saved button is pressed
+            cv2.destroyAllWindows()
+            global windowMode
+            windowMode = not windowMode
 
         else: # if not update nor save was pressed, add an operation
             value = request.form["action"] # get the pressed button's name

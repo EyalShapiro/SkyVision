@@ -109,8 +109,9 @@ sky_operations = { # sky operation is a dictionary that defines the inputs each 
         color_inputs=[
             operation_ColorInput("Color","Color")
         ]
-    )
+    ),
 
+    "Flip" : operation("Flip",OperationType.MISC,text_inputs=[operation_TextInput("imgPath","Source")],radio_inputs=[operation_RadioInput("flipMode","Mode",["Horizontal","Vertical","Horizontal and Vertical"])],variable_outputs=[operation_TextInput("outName","Output name")]),
 }
 
 class sky_operator: # main class responsible for running operations
@@ -290,9 +291,22 @@ class sky_operator: # main class responsible for running operations
                         src = self.values[src]
                     
 
-
                 if op.type == OperationType.MISC: # MISC OPERATIONS
-                    pass
+                    if op.name == "Flip":
+                        src = op.textInputs[0].value
+                        src = self.values[src]
+                        flip_type = op.radioInputs[0].value #the conversion that was chosen  
+
+                        if flip_type == "Horizontal":
+                            frame_flipped = cv2.flip(src,1)
+                            self.values[op.variableOutputs[0].value] = frame_flipped
+                        if flip_type == "Vertical":
+                            frame_flipped = cv2.flip(src,0)
+                            self.values[op.variableOutputs[0].value] = frame_flipped
+                        if flip_type == "Horizontal and Vertical":
+                            frame_flipped = cv2.flip(src,-1)
+                            self.values[op.variableOutputs[0].value] = frame_flipped
+                        
             except:
                 pass
 
@@ -343,6 +357,7 @@ class sky_operator: # main class responsible for running operations
         self.update()
 
     def update(self): # process operations when update is pressed
+
         self.inCounter = len(self.values.values())
 
         print("UPDATING")
@@ -408,3 +423,4 @@ class sky_operator: # main class responsible for running operations
                 pass
             
         self.process()
+#End
