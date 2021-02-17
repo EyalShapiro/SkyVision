@@ -1,4 +1,77 @@
 {
   "_permanent": true, 
-  "operations": []
+  "operations": [
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Webcam input", 
+      "number_in": [
+        {
+          "brake": true, 
+          "name": "webcamID11", 
+          "style": "", 
+          "text": "Webcam ID", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "0"
+        }
+      ], 
+      "radio_in": [], 
+      "text_in": [], 
+      "type": 1, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "outName22", 
+          "style": "", 
+          "text": "Output name", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "cam"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Flip", 
+      "number_in": [], 
+      "radio_in": [
+        {
+          "brake": true, 
+          "direction": false, 
+          "name": "flipMode4", 
+          "optionTextStyle": "font-size:18px;", 
+          "options": [
+            "Horizontal", 
+            "Vertical", 
+            "Horizontal and Vertical"
+          ], 
+          "style": "margin-left:12px;", 
+          "text": "Mode", 
+          "textStyle": "font-size:28px;", 
+          "value": "Vertical"
+        }
+      ], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "imgPath3", 
+          "style": "", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "cam"
+        }
+      ], 
+      "type": 6, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "outName5", 
+          "style": "", 
+          "text": "Output name", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "cam"
+        }
+      ]
+    }
+  ]
 }

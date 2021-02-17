@@ -55,7 +55,6 @@ def generateWindow(): # generates the output frame
         if selected_out is None:
             selected_out = error_pic
 
-        
         cv2.imshow('SkyVision',selected_out)
         if cv2.waitKey(1) == ord('q'):
             windowMode = False
