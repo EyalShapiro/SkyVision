@@ -57,7 +57,8 @@ def generateWindow(): # generates the output frame
 
         
         cv2.imshow('SkyVision',selected_out)
-        cv2.waitKey(1)
+        if cv2.waitKey(1) == ord('q'):
+            windowMode = False
 
 
 
@@ -66,7 +67,8 @@ def generateWindow(): # generates the output frame
 def video_feed():
     global windowMode
     if windowMode:
-        return generateWindow()
+        generateWindow()
+        return Response(generate(),mimetype = "multipart/x-mixed-replace; boundary=frame") # return the output from the generate() function
     else:
         return Response(generate(),mimetype = "multipart/x-mixed-replace; boundary=frame") # return the output from the generate() function
     
