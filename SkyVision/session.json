@@ -8,7 +8,7 @@
       "number_in": [
         {
           "brake": true, 
-          "name": "webcamID238933848285977576901434311990", 
+          "name": "webcamID23893384828597757690143431199036863947086666", 
           "style": "", 
           "text": "Webcam ID", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -21,7 +21,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "outName248933849285977676901444311991", 
+          "name": "outName24893384928597767690144431199136863957086667", 
           "style": "", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -38,7 +38,7 @@
         {
           "brake": true, 
           "direction": false, 
-          "name": "type53323508357611345968596871499", 
+          "name": "type5332350835761134596859687149968891722610947", 
           "optionTextStyle": "font-size:18px;", 
           "options": [
             "BGR2HSV", 
@@ -57,7 +57,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src42213508356611335968595871498", 
+          "name": "src4221350835661133596859587149868891712610946", 
           "style": "", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -68,7 +68,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "outName64433508358611355968597871500", 
+          "name": "outName6443350835861135596859787150068891732610948", 
           "style": "", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -81,7 +81,7 @@
       "color_in": [
         {
           "brake": true, 
-          "name": "lower94431258900520681380824116045615", 
+          "name": "lower9443125890052068138082411604561541023755144248", 
           "style": "", 
           "text": "Lower", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -89,7 +89,7 @@
         }, 
         {
           "brake": true, 
-          "name": "higher105541258901520681480824126045616", 
+          "name": "higher10554125890152068148082412604561641023765144249", 
           "style": "", 
           "text": "Higher", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -102,7 +102,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src83321258899520681280824106045614", 
+          "name": "src8332125889952068128082410604561441023745144247", 
           "style": "", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -113,7 +113,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "outName116651258902520681580824136045617", 
+          "name": "outName11665125890252068158082413604561741023775144250", 
           "style": "", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -128,7 +128,7 @@
       "number_in": [
         {
           "brake": true, 
-          "name": "kernel406775840052145641473633570", 
+          "name": "kernel40677584005214564147363357076911255963070", 
           "style": "", 
           "text": "Kernel", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -136,7 +136,7 @@
         }, 
         {
           "brake": true, 
-          "name": "itr406775940052155641483633571", 
+          "name": "itr40677594005215564148363357176911265963071", 
           "style": "", 
           "text": "Iterations", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -147,7 +147,7 @@
         {
           "brake": true, 
           "direction": false, 
-          "name": "type406776040052165641493633572", 
+          "name": "type40677604005216564149363357276911275963072", 
           "optionTextStyle": "font-size:18px;", 
           "options": [
             "Erosion", 
@@ -164,7 +164,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src406775740052135641463633569", 
+          "name": "src40677574005213564146363356976911245963069", 
           "style": "", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -175,7 +175,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "outName406776140052175641503633573", 
+          "name": "outName40677614005217564150363357376911285963073", 
           "style": "", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -192,7 +192,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src15552367662658664422960957322600", 
+          "name": "src155523676626586644229609573226002776876521593", 
           "style": "", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -203,7 +203,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "outName16662367663658664522960967322601", 
+          "name": "outName166623676636586645229609673226012776886521594", 
           "style": "", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -216,7 +216,7 @@
       "color_in": [
         {
           "brake": true, 
-          "name": "clr2392553668788010731051795228937", 
+          "name": "clr23925536687880107310517952289379786219608185", 
           "style": "", 
           "text": "Color", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -227,7 +227,7 @@
       "number_in": [
         {
           "brake": true, 
-          "name": "thick2282553667788010631051785228936", 
+          "name": "thick22825536677880106310517852289369786218608184", 
           "style": "", 
           "text": "Thickness", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -238,7 +238,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src2062553665788010431051765228934", 
+          "name": "src20625536657880104310517652289349786216608182", 
           "style": "", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -246,7 +246,7 @@
         }, 
         {
           "brake": true, 
-          "name": "cnt2172553666788010531051775228935", 
+          "name": "cnt21725536667880105310517752289359786217608183", 
           "style": "", 
           "text": "Contours", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -265,7 +265,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "cntrs97429776940092828246", 
+          "name": "cntrs9742977694009282824662365155945874", 
           "style": "", 
           "text": "Contours", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -276,7 +276,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "cntOut97429786940102828247", 
+          "name": "cntOut9742978694010282824762365165945875", 
           "style": "", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -289,7 +289,7 @@
       "color_in": [
         {
           "brake": true, 
-          "name": "clr82614020794597621876", 
+          "name": "clr8261402079459762187637363594993838", 
           "style": "", 
           "text": "Color", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -300,7 +300,7 @@
       "number_in": [
         {
           "brake": true, 
-          "name": "thick82613920794587621875", 
+          "name": "thick8261392079458762187537363584993837", 
           "style": "", 
           "text": "Thickness", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -311,7 +311,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src82613720794567621873", 
+          "name": "src8261372079456762187337363564993835", 
           "style": "", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -319,7 +319,7 @@
         }, 
         {
           "brake": true, 
-          "name": "cnt82613820794577621874", 
+          "name": "cnt8261382079457762187437363574993836", 
           "style": "", 
           "text": "Contours", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -338,7 +338,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src24073709066676", 
+          "name": "src24073709066676129793060550", 
           "style": "", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -349,7 +349,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "out24073719066677", 
+          "name": "out24073719066677129803060551", 
           "style": "", 
           "text": "Output", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -362,7 +362,7 @@
       "color_in": [
         {
           "brake": true, 
-          "name": "clr7893532", 
+          "name": "clr789353214048511238187", 
           "style": "", 
           "text": "Color", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -373,7 +373,7 @@
       "number_in": [
         {
           "brake": true, 
-          "name": "num7893531", 
+          "name": "num789353114048501238186", 
           "style": "", 
           "text": "Thickness", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -384,7 +384,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src7893529", 
+          "name": "src789352914048481238184", 
           "style": "", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -392,11 +392,84 @@
         }, 
         {
           "brake": true, 
-          "name": "ellipse7893530", 
+          "name": "ellipse789353014048491238185", 
           "style": "", 
           "text": "Ellipse", 
           "textStyle": "font-size:28px;margin-right:10px;", 
           "value": "ellpse"
+        }
+      ], 
+      "type": 5, 
+      "var_out": []
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Minimum Enclosing Circle", 
+      "number_in": [], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src63234589196095", 
+          "style": "", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "singlecnt"
+        }
+      ], 
+      "type": 6, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "out63234599196096", 
+          "style": "", 
+          "text": "Output", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "fndcircle"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [
+        {
+          "brake": true, 
+          "name": "clr6697305", 
+          "style": "", 
+          "text": "Color", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "#ff00f7"
+        }
+      ], 
+      "name": "Draw Found Circle", 
+      "number_in": [
+        {
+          "brake": true, 
+          "name": "num6697304", 
+          "style": "", 
+          "text": "Thickness", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "30"
+        }
+      ], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src6697302", 
+          "style": "", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "cam"
+        }, 
+        {
+          "brake": true, 
+          "name": "circle6697303", 
+          "style": "", 
+          "text": "Circle", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "fndcircle"
         }
       ], 
       "type": 5, 

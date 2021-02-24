@@ -129,7 +129,11 @@ sky_operations = { # sky operation is a dictionary that defines the inputs each 
 
     "Fit ellipse": operation("Fit Ellipse",OperationType.MISC,text_inputs=[operation_TextInput("src","Source")],variable_outputs=[operation_TextInput("out","Output")]),
 
-    "Draw ellipse": operation("Draw Ellipse",OperationType.DRAW,text_inputs=[operation_TextInput("src","Source"),operation_TextInput("ellipse","Ellipse")],color_inputs=[operation_ColorInput("clr","Color")],number_inputs=[operation_NumberInput("num","Thickness")])
+    "Draw ellipse": operation("Draw Ellipse",OperationType.DRAW,text_inputs=[operation_TextInput("src","Source"),operation_TextInput("ellipse","Ellipse")],color_inputs=[operation_ColorInput("clr","Color")],number_inputs=[operation_NumberInput("num","Thickness")]),
+
+    "Draw Found Circle": operation("Draw Found Circle",OperationType.DRAW,text_inputs=[operation_TextInput("src","Source"),operation_TextInput("circle","Circle")],color_inputs=[operation_ColorInput("clr","Color")],number_inputs=[operation_NumberInput("num","Thickness")]),
+
+    "Minimum Enclosing Circle": operation("Minimum Enclosing Circle",OperationType.MISC,text_inputs=[operation_TextInput("src","Source")],variable_outputs=[operation_TextInput("out","Output")]),
 }
 
 class sky_operator: # main class responsible for running operations
@@ -314,6 +318,22 @@ class sky_operator: # main class responsible for running operations
                         color = hex_to_bgr(op.colorInputs[0].value)
 
                         cv2.circle(src,(x,y), radius, color, thickness)
+
+                    if op.name == "Draw Found Circle":
+                        src = op.textInputs[0].value
+                        src = self.values[src]
+                        
+                        circle = op.textInputs[1].value
+                        circle = self.values[circle]
+                        
+                        thickness = int(op.numberInputs[0].value)
+                        
+                        color = hex_to_bgr(op.colorInputs[0].value)
+                        
+                        print(circle[1])
+                        cv2.circle(src,circle[0], circle[1], color, thickness)
+                        
+
                     if op.name =="Draw Ellipse":
                         frame = op.textInputs[0].value
                         frame = self.values[frame]
@@ -362,12 +382,22 @@ class sky_operator: # main class responsible for running operations
 
                         
                         self.values[op.variableOutputs[0].value] = cnt
+                    
                     if op.name == "Fit Ellipse":
                         src= op.textInputs[0].value
                         contour = self.values[src]
                         ellipse = cv2.fitEllipse(contour)
                         
                         self.values[op.variableOutputs[0].value] = ellipse                    
+
+                    if op.name == "Minimum Enclosing Circle":
+                        src= op.textInputs[0].value
+                        cnt = self.values[src]
+
+                        (x,y),radius = cv2.minEnclosingCircle(cnt)
+
+                        self.values[op.variableOutputs[0].value] = ((int(x),int(y)),int(radius))                    
+
                         
             except:
                 pass
