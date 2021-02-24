@@ -134,6 +134,8 @@ sky_operations = { # sky operation is a dictionary that defines the inputs each 
     "Draw Found Circle": operation("Draw Found Circle",OperationType.DRAW,text_inputs=[operation_TextInput("src","Source"),operation_TextInput("circle","Circle")],color_inputs=[operation_ColorInput("clr","Color")],number_inputs=[operation_NumberInput("num","Thickness")]),
 
     "Minimum Enclosing Circle": operation("Minimum Enclosing Circle",OperationType.MISC,text_inputs=[operation_TextInput("src","Source")],variable_outputs=[operation_TextInput("out","Output")]),
+
+    "Minimum Contour Area": operation("Minimum Contour Area",OperationType.MISC,text_inputs=[operation_TextInput("src","Source")],number_inputs=[operation_NumberInput("area","Area")],variable_outputs=[operation_TextInput("out","Output")]),
 }
 
 class sky_operator: # main class responsible for running operations
@@ -330,7 +332,6 @@ class sky_operator: # main class responsible for running operations
                         
                         color = hex_to_bgr(op.colorInputs[0].value)
                         
-                        print(circle[1])
                         cv2.circle(src,circle[0], circle[1], color, thickness)
                         
 
@@ -397,6 +398,24 @@ class sky_operator: # main class responsible for running operations
                         (x,y),radius = cv2.minEnclosingCircle(cnt)
 
                         self.values[op.variableOutputs[0].value] = ((int(x),int(y)),int(radius))                    
+
+                    if op.name == "Minimum Contour Area":
+                        print("I")
+                        src= op.textInputs[0].value
+                        contours = self.values[src]
+
+                        area = int(op.numberInputs[0].value)
+
+                        outcnts = []
+                        print("A")
+                        for cnt in contours:
+                            currarea = cv2.contourArea(cnt)
+                            if(currarea > area):
+                                outcnts.append(cnt)
+
+                        self.values[op.variableOutputs[0].value] = outcnts
+
+                        print(len(outcnts))
 
                         
             except:

@@ -8,7 +8,7 @@
       "number_in": [
         {
           "brake": true, 
-          "name": "webcamID23893384828597757690143431199036863947086666", 
+          "name": "webcamID238933848285977576901434311990368639470866662636174304764", 
           "style": "", 
           "text": "Webcam ID", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -21,7 +21,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "outName24893384928597767690144431199136863957086667", 
+          "name": "outName248933849285977676901444311991368639570866672636184304765", 
           "style": "", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -38,7 +38,7 @@
         {
           "brake": true, 
           "direction": false, 
-          "name": "type5332350835761134596859687149968891722610947", 
+          "name": "type533235083576113459685968714996889172261094755148627338721", 
           "optionTextStyle": "font-size:18px;", 
           "options": [
             "BGR2HSV", 
@@ -57,7 +57,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src4221350835661133596859587149868891712610946", 
+          "name": "src422135083566113359685958714986889171261094655148617338720", 
           "style": "", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -68,7 +68,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "outName6443350835861135596859787150068891732610948", 
+          "name": "outName644335083586113559685978715006889173261094855148637338722", 
           "style": "", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -81,7 +81,7 @@
       "color_in": [
         {
           "brake": true, 
-          "name": "lower9443125890052068138082411604561541023755144248", 
+          "name": "lower944312589005206813808241160456154102375514424845644447916412", 
           "style": "", 
           "text": "Lower", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -89,7 +89,7 @@
         }, 
         {
           "brake": true, 
-          "name": "higher10554125890152068148082412604561641023765144249", 
+          "name": "higher1055412589015206814808241260456164102376514424945644457916413", 
           "style": "", 
           "text": "Higher", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -102,7 +102,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src8332125889952068128082410604561441023745144247", 
+          "name": "src833212588995206812808241060456144102374514424745644437916411", 
           "style": "", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -113,7 +113,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "outName11665125890252068158082413604561741023775144250", 
+          "name": "outName1166512589025206815808241360456174102377514425045644467916414", 
           "style": "", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -128,7 +128,7 @@
       "number_in": [
         {
           "brake": true, 
-          "name": "kernel40677584005214564147363357076911255963070", 
+          "name": "kernel4067758400521456414736335707691125596307073715686437759", 
           "style": "", 
           "text": "Kernel", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -136,7 +136,7 @@
         }, 
         {
           "brake": true, 
-          "name": "itr40677594005215564148363357176911265963071", 
+          "name": "itr4067759400521556414836335717691126596307173715696437760", 
           "style": "", 
           "text": "Iterations", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -147,7 +147,7 @@
         {
           "brake": true, 
           "direction": false, 
-          "name": "type40677604005216564149363357276911275963072", 
+          "name": "type4067760400521656414936335727691127596307273715706437761", 
           "optionTextStyle": "font-size:18px;", 
           "options": [
             "Erosion", 
@@ -164,7 +164,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src40677574005213564146363356976911245963069", 
+          "name": "src4067757400521356414636335697691124596306973715676437758", 
           "style": "", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -175,7 +175,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "outName40677614005217564150363357376911285963073", 
+          "name": "outName4067761400521756415036335737691128596307373715716437762", 
           "style": "", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -192,7 +192,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src155523676626586644229609573226002776876521593", 
+          "name": "src15552367662658664422960957322600277687652159386095929281364", 
           "style": "", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -203,7 +203,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "outName166623676636586645229609673226012776886521594", 
+          "name": "outName16662367663658664522960967322601277688652159486095939281365", 
           "style": "", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -213,10 +213,47 @@
     }, 
     {
       "check_in": [], 
+      "color_in": [], 
+      "name": "Minimum Contour Area", 
+      "number_in": [
+        {
+          "brake": true, 
+          "name": "area11276846830951", 
+          "style": "", 
+          "text": "Area", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "2000"
+        }
+      ], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src11276836830950", 
+          "style": "", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "ballcnt"
+        }
+      ], 
+      "type": 6, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "out11276856830952", 
+          "style": "", 
+          "text": "Output", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "newballcnt"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
       "color_in": [
         {
           "brake": true, 
-          "name": "clr23925536687880107310517952289379786219608185", 
+          "name": "clr2392553668788010731051795228937978621960818513920267447488", 
           "style": "", 
           "text": "Color", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -227,7 +264,7 @@
       "number_in": [
         {
           "brake": true, 
-          "name": "thick22825536677880106310517852289369786218608184", 
+          "name": "thick2282553667788010631051785228936978621860818413920257447487", 
           "style": "", 
           "text": "Thickness", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -238,7 +275,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src20625536657880104310517652289349786216608182", 
+          "name": "src2062553665788010431051765228934978621660818213920237447485", 
           "style": "", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -246,11 +283,11 @@
         }, 
         {
           "brake": true, 
-          "name": "cnt21725536667880105310517752289359786217608183", 
+          "name": "cnt2172553666788010531051775228935978621760818313920247447486", 
           "style": "", 
           "text": "Contours", 
           "textStyle": "font-size:28px;margin-right:10px;", 
-          "value": "ballcnt"
+          "value": "newballcnt"
         }
       ], 
       "type": 5, 
@@ -265,18 +302,18 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "cntrs9742977694009282824662365155945874", 
+          "name": "cntrs974297769400928282466236515594587449915138350270", 
           "style": "", 
           "text": "Contours", 
           "textStyle": "font-size:28px;margin-right:10px;", 
-          "value": "ballcnt"
+          "value": "newballcnt"
         }
       ], 
       "type": 6, 
       "var_out": [
         {
           "brake": true, 
-          "name": "cntOut9742978694010282824762365165945875", 
+          "name": "cntOut974297869401028282476236516594587549915148350271", 
           "style": "", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -289,7 +326,7 @@
       "color_in": [
         {
           "brake": true, 
-          "name": "clr8261402079459762187637363594993838", 
+          "name": "clr826140207945976218763736359499383813660598638948", 
           "style": "", 
           "text": "Color", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -300,7 +337,7 @@
       "number_in": [
         {
           "brake": true, 
-          "name": "thick8261392079458762187537363584993837", 
+          "name": "thick826139207945876218753736358499383713660588638947", 
           "style": "", 
           "text": "Thickness", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -311,7 +348,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src8261372079456762187337363564993835", 
+          "name": "src826137207945676218733736356499383513660568638945", 
           "style": "", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -319,7 +356,7 @@
         }, 
         {
           "brake": true, 
-          "name": "cnt8261382079457762187437363574993836", 
+          "name": "cnt826138207945776218743736357499383613660578638946", 
           "style": "", 
           "text": "Contours", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -338,7 +375,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src24073709066676129793060550", 
+          "name": "src2407370906667612979306055027518271075028", 
           "style": "", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -349,7 +386,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "out24073719066677129803060551", 
+          "name": "out2407371906667712980306055127518281075029", 
           "style": "", 
           "text": "Output", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -362,7 +399,7 @@
       "color_in": [
         {
           "brake": true, 
-          "name": "clr789353214048511238187", 
+          "name": "clr7893532140485112381879373598775406", 
           "style": "", 
           "text": "Color", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -373,7 +410,7 @@
       "number_in": [
         {
           "brake": true, 
-          "name": "num789353114048501238186", 
+          "name": "num7893531140485012381869373597775405", 
           "style": "", 
           "text": "Thickness", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -384,7 +421,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src789352914048481238184", 
+          "name": "src7893529140484812381849373595775403", 
           "style": "", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -392,7 +429,7 @@
         }, 
         {
           "brake": true, 
-          "name": "ellipse789353014048491238185", 
+          "name": "ellipse7893530140484912381859373596775404", 
           "style": "", 
           "text": "Ellipse", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -411,7 +448,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src63234589196095", 
+          "name": "src632345891960956124287860796", 
           "style": "", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -422,7 +459,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "out63234599196096", 
+          "name": "out632345991960966124297860797", 
           "style": "", 
           "text": "Output", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -435,7 +472,7 @@
       "color_in": [
         {
           "brake": true, 
-          "name": "clr6697305", 
+          "name": "clr669730554110695870287", 
           "style": "", 
           "text": "Color", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -446,7 +483,7 @@
       "number_in": [
         {
           "brake": true, 
-          "name": "num6697304", 
+          "name": "num669730454110685870286", 
           "style": "", 
           "text": "Thickness", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -457,7 +494,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src6697302", 
+          "name": "src669730254110665870284", 
           "style": "", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -465,7 +502,7 @@
         }, 
         {
           "brake": true, 
-          "name": "circle6697303", 
+          "name": "circle669730354110675870285", 
           "style": "", 
           "text": "Circle", 
           "textStyle": "font-size:28px;margin-right:10px;", 
