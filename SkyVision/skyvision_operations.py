@@ -400,14 +400,12 @@ class sky_operator: # main class responsible for running operations
                         self.values[op.variableOutputs[0].value] = ((int(x),int(y)),int(radius))                    
 
                     if op.name == "Minimum Contour Area":
-                        print("I")
                         src= op.textInputs[0].value
                         contours = self.values[src]
 
                         area = int(op.numberInputs[0].value)
 
                         outcnts = []
-                        print("A")
                         for cnt in contours:
                             currarea = cv2.contourArea(cnt)
                             if(currarea > area):
@@ -415,7 +413,6 @@ class sky_operator: # main class responsible for running operations
 
                         self.values[op.variableOutputs[0].value] = outcnts
 
-                        print(len(outcnts))
 
                         
             except:
