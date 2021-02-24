@@ -96,6 +96,18 @@ sky_operations = { # sky operation is a dictionary that defines the inputs each 
             operation_ColorInput("clr","Color"),]
     ),
 
+    "Draw Contour" : operation("Draw Contour",OperationType.DRAW,
+        text_inputs=[
+            operation_TextInput("src","Source"),
+            operation_TextInput("cnt","Contours"),
+            ],
+        number_inputs=[
+            operation_NumberInput("thick","Thickness"),
+        ],
+        color_inputs=[
+            operation_ColorInput("clr","Color"),]
+    ),
+
     "Draw Circle" : operation("Draw Circle", OperationType.DRAW,
         text_inputs=[
             operation_TextInput("src", "Source"),
@@ -112,6 +124,10 @@ sky_operations = { # sky operation is a dictionary that defines the inputs each 
     ),
 
     "Flip" : operation("Flip",OperationType.MISC,text_inputs=[operation_TextInput("imgPath","Source")],radio_inputs=[operation_RadioInput("flipMode","Mode",["Horizontal","Vertical","Horizontal and Vertical"])],variable_outputs=[operation_TextInput("outName","Output name")]),
+
+    "LargestContour" : operation("Largest Contour",OperationType.MISC,text_inputs=[operation_TextInput("cntrs","Contours")],variable_outputs=[operation_TextInput("cntOut","Output name")]),
+
+    "Fit ellipse": operation("Fit Ellipse",OperationType.MISC,text_inputs=[operation_TextInput("src","Source")],variable_outputs=[operation_TextInput("out","Output")])
 }
 
 class sky_operator: # main class responsible for running operations
@@ -270,6 +286,17 @@ class sky_operator: # main class responsible for running operations
                         color = hex_to_rgb(op.colorInputs[0].value)
                         cv2.drawContours(src,cnt,-1,color,thickness=thickness)
 
+                    if op.name == "Draw Contour":
+                        src = op.textInputs[0].value
+                        src = self.values[src]
+
+                        cnt = op.textInputs[1].value
+                        cnt = self.values[cnt]
+
+                        thickness = int(op.numberInputs[0].value)
+                        color = hex_to_rgb(op.colorInputs[0].value)
+                        cv2.drawContours(src,[cnt],-1,color,thickness=thickness)
+
                     if op.name == "Draw Circle":
                         src = op.textInputs[0].value
                         src = self.values[src]
@@ -293,6 +320,7 @@ class sky_operator: # main class responsible for running operations
 
                 if op.type == OperationType.MISC: # MISC OPERATIONS
                     if op.name == "Flip":
+                        
                         src = op.textInputs[0].value
                         src = self.values[src]
                         flip_type = op.radioInputs[0].value #the conversion that was chosen  
@@ -306,6 +334,28 @@ class sky_operator: # main class responsible for running operations
                         if flip_type == "Horizontal and Vertical":
                             frame_flipped = cv2.flip(src,-1)
                             self.values[op.variableOutputs[0].value] = frame_flipped
+
+                    if op.name == "Largest Contour":
+                        src = op.textInputs[0].value
+                        contours = self.values[src]
+                        
+                        largestCnt = 0
+                        largestValue = -1
+
+
+                        for cnt in contours:
+                            currArea = cv2.contourArea(cnt)
+                            if currArea > largestValue:
+                                largestValue = currArea
+                                largestCnt = cnt
+
+                        
+                        self.values[op.variableOutputs[0].value] = cnt
+                    if op.name == "Fit Ellipse":
+                        src= op.textInputs[0].value
+                        contour = self.values[src]
+                        ellipse = cv2.fitEllipse(contour)
+                        self.values[op.variableOutputs[0].value] = ellipse                    
                         
             except:
                 pass
