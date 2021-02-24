@@ -8,7 +8,7 @@
       "number_in": [
         {
           "brake": true, 
-          "name": "webcamID11", 
+          "name": "webcamID238933848", 
           "style": "", 
           "text": "Webcam ID", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -21,7 +21,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "outName22", 
+          "name": "outName248933849", 
           "style": "", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -32,44 +32,271 @@
     {
       "check_in": [], 
       "color_in": [], 
-      "name": "Flip", 
+      "name": "Convert color", 
       "number_in": [], 
       "radio_in": [
         {
           "brake": true, 
           "direction": false, 
-          "name": "flipMode4", 
+          "name": "type53323508357", 
           "optionTextStyle": "font-size:18px;", 
           "options": [
-            "Horizontal", 
-            "Vertical", 
-            "Horizontal and Vertical"
+            "BGR2HSV", 
+            "BGR2RGB", 
+            "BGR2GRAY", 
+            "HSV2RGB", 
+            "HSV2BGR", 
+            "GRAY2RGB"
           ], 
           "style": "margin-left:12px;", 
-          "text": "Mode", 
+          "text": "Type", 
           "textStyle": "font-size:28px;", 
-          "value": "Vertical"
+          "value": "BGR2HSV"
         }
       ], 
       "text_in": [
         {
           "brake": true, 
-          "name": "imgPath3", 
+          "name": "src42213508356", 
           "style": "", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;", 
           "value": "cam"
         }
       ], 
-      "type": 6, 
+      "type": 4, 
       "var_out": [
         {
           "brake": true, 
-          "name": "outName5", 
+          "name": "outName64433508358", 
           "style": "", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "hsv"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [
+        {
+          "brake": true, 
+          "name": "lower94431258900", 
+          "style": "", 
+          "text": "Lower", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "#471a1a"
+        }, 
+        {
+          "brake": true, 
+          "name": "higher105541258901", 
+          "style": "", 
+          "text": "Higher", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "#ff9900"
+        }
+      ], 
+      "name": "Color Mask", 
+      "number_in": [], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src83321258899", 
+          "style": "", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "hsv"
+        }
+      ], 
+      "type": 4, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "outName116651258902", 
+          "style": "", 
+          "text": "Output name", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "mask"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "MorphEx", 
+      "number_in": [
+        {
+          "brake": true, 
+          "name": "kernel4067758", 
+          "style": "", 
+          "text": "Kernel", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "15"
+        }, 
+        {
+          "brake": true, 
+          "name": "itr4067759", 
+          "style": "", 
+          "text": "Iterations", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "5"
+        }
+      ], 
+      "radio_in": [
+        {
+          "brake": true, 
+          "direction": false, 
+          "name": "type4067760", 
+          "optionTextStyle": "font-size:18px;", 
+          "options": [
+            "Erosion", 
+            "Dilation", 
+            "Opening", 
+            "Closing"
+          ], 
+          "style": "margin-left:12px;", 
+          "text": "Type", 
+          "textStyle": "font-size:28px;", 
+          "value": "Closing"
+        }
+      ], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src4067757", 
+          "style": "", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "mask"
+        }
+      ], 
+      "type": 2, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "outName4067761", 
+          "style": "", 
+          "text": "Output name", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "mask"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Find Contours", 
+      "number_in": [], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src15552367662", 
+          "style": "", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "mask"
+        }
+      ], 
+      "type": 4, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "outName16662367663", 
+          "style": "", 
+          "text": "Output name", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "ballcnt"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [
+        {
+          "brake": true, 
+          "name": "clr2392553668", 
+          "style": "", 
+          "text": "Color", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "#00ff00"
+        }
+      ], 
+      "name": "Draw Contours", 
+      "number_in": [
+        {
+          "brake": true, 
+          "name": "thick2282553667", 
+          "style": "", 
+          "text": "Thickness", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "15"
+        }
+      ], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src2062553665", 
+          "style": "", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
           "value": "cam"
+        }, 
+        {
+          "brake": true, 
+          "name": "cnt2172553666", 
+          "style": "", 
+          "text": "Contours", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "ballcnt"
+        }
+      ], 
+      "type": 5, 
+      "var_out": []
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Bitwise AND", 
+      "number_in": [], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src18189310", 
+          "style": "", 
+          "text": "Source 1", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "cam"
+        }, 
+        {
+          "brake": true, 
+          "name": "src28189311", 
+          "style": "", 
+          "text": "Source 2", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "cam"
+        }, 
+        {
+          "brake": true, 
+          "name": "mask8189312", 
+          "style": "", 
+          "text": "Mask", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "mask"
+        }
+      ], 
+      "type": 3, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "outName8189313", 
+          "style": "", 
+          "text": "Output name", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "out"
         }
       ]
     }

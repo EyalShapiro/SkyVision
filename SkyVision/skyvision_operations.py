@@ -399,6 +399,7 @@ class sky_operator: # main class responsible for running operations
                         camera = cv2.VideoCapture(id)
                         self.sources.append(camera)
                         
+                        
 
 
 

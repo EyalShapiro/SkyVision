@@ -131,43 +131,43 @@ def home(): # home page
         return render_template("mainhtml.html",ops = operator.operations,curr_out = required_out) # returns the main html with the array of operations
 
     elif request.method == "POST": # if got to the website from a press of button
-        # try:
-        submit = request.form["action"][:6]
-        print("FOUND - " + request.form["action"])
-        if request.form["action"] == "Save": # If the saved button is pressed
-            required_out = request.form["outID"] # set required frame
-            operator.update() # activate all operations and update values
-            save_session() # save again ( with set values )
+        try:
+            submit = request.form["action"][:6]
+            print("FOUND - " + request.form["action"])
+            if request.form["action"] == "Save": # If the saved button is pressed
+                required_out = request.form["outID"] # set required frame
+                operator.update() # activate all operations and update values
+                save_session() # save again ( with set values )
 
-        elif request.form["action"] == "Update": # if update is pressed
-            required_out = request.form["outID"] # set required frame
-            print("Req Out is",required_out) 
-            operator.update() # activate all operations and set values
+            elif request.form["action"] == "Update": # if update is pressed
+                required_out = request.form["outID"] # set required frame
+                print("Req Out is",required_out) 
+                operator.update() # activate all operations and set values
 
-        elif submit == "Delete":
-            value = int((request.form["action"])[6:])
-            operator.Delete(value)
+            elif submit == "Delete":
+                value = int((request.form["action"])[6:])
+                operator.Delete(value)
 
-        elif submit == "MoveUP":
-            value = int((request.form["action"])[6:])
-            operator.MoveUP(value)
+            elif submit == "MoveUP":
+                value = int((request.form["action"])[6:])
+                operator.MoveUP(value)
 
-        elif submit == "MovDON":
-            value = int((request.form["action"])[6:])
-            operator.MoveDOWN(value)
+            elif submit == "MovDON":
+                value = int((request.form["action"])[6:])
+                operator.MoveDOWN(value)
 
-        elif request.form["action"] == "WindowMode": # If the saved button is pressed
-            cv2.destroyAllWindows()
-            global windowMode
-            windowMode = not windowMode
+            elif request.form["action"] == "WindowMode": # If the saved button is pressed
+                cv2.destroyAllWindows()
+                global windowMode
+                windowMode = not windowMode
 
-        else: # if not update nor save was pressed, add an operation
-            value = request.form["action"] # get the pressed button's name
-            add_operation(value) # add operation with the name of the button
-                
-                
-        # except:
-            # pass
+            else: # if not update nor save was pressed, add an operation
+                value = request.form["action"] # get the pressed button's name
+                add_operation(value) # add operation with the name of the button
+                    
+                    
+        except:
+            pass
 
         return render_template("mainhtml.html",ops = operator.operations,curr_out = required_out) # return the html page with all the operations
 

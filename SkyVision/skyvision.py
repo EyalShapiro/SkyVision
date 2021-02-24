@@ -1,5 +1,6 @@
 from htmlcontrol import *
 from flask import *
+from random import randint
 
 class OperationType(): # operation type . mostly for the operation's color
     NONE = 0
@@ -185,7 +186,7 @@ class operation: # main class for operation
         self.op_move_counter = 0
 
     def add_num(self,num): # add num adds a unique number to each input
-        counter = 0
+        counter = randint(num,9999999)
         for op_input in self.textInputs:
             counter += 1
 
@@ -293,9 +294,11 @@ class operation: # main class for operation
         # div contents here ->
         retdiv += html_header(self.name,brake=False) # div Title
         # margin-right: 15px;margin-left: 65px;\"
-        retdiv += "<button type=\"submit\" formmethod=\"post\" name=\"action\" value=\"Delete" + str(self.op_move_counter) + "\" style=\"margin-left:65px;\">Delete</button>"
+        retdiv += "<div style=\"text-align: right;display: inline-block;\">"
+        retdiv += "<button type=\"submit\" formmethod=\"post\" name=\"action\" value=\"Delete" + str(self.op_move_counter) + "\" style=\"margin-left:15px;\">Delete</button>"
         retdiv += "<button type=\"submit\" formmethod=\"post\" name=\"action\" value=\"MoveUP" + str(self.op_move_counter) + "\" style=\"margin-left:15px;\">Move UP</button>"
         retdiv += "<button type=\"submit\" formmethod=\"post\" name=\"action\" value=\"MovDON" + str(self.op_move_counter) + "\" style=\"margin-left:15px;\">Move DOWN</button><br/>"
+        retdiv += "</div><br>"
 
 
         # add the html versions of all the inputs of the operation
