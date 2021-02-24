@@ -127,7 +127,9 @@ sky_operations = { # sky operation is a dictionary that defines the inputs each 
 
     "LargestContour" : operation("Largest Contour",OperationType.MISC,text_inputs=[operation_TextInput("cntrs","Contours")],variable_outputs=[operation_TextInput("cntOut","Output name")]),
 
-    "Fit ellipse": operation("Fit Ellipse",OperationType.MISC,text_inputs=[operation_TextInput("src","Source")],variable_outputs=[operation_TextInput("out","Output")])
+    "Fit ellipse": operation("Fit Ellipse",OperationType.MISC,text_inputs=[operation_TextInput("src","Source")],variable_outputs=[operation_TextInput("out","Output")]),
+
+    "Draw ellipse": operation("Draw Ellipse",OperationType.DRAW,text_inputs=[operation_TextInput("src","Source"),operation_TextInput("ellipse","Ellipse")],color_inputs=[operation_ColorInput("clr","Color")],number_inputs=[operation_NumberInput("num","Thickness")])
 }
 
 class sky_operator: # main class responsible for running operations
@@ -283,7 +285,7 @@ class sky_operator: # main class responsible for running operations
                         cnt = self.values[cnt]
 
                         thickness = int(op.numberInputs[0].value)
-                        color = hex_to_rgb(op.colorInputs[0].value)
+                        color = hex_to_bgr(op.colorInputs[0].value)
                         cv2.drawContours(src,cnt,-1,color,thickness=thickness)
 
                     if op.name == "Draw Contour":
@@ -294,7 +296,7 @@ class sky_operator: # main class responsible for running operations
                         cnt = self.values[cnt]
 
                         thickness = int(op.numberInputs[0].value)
-                        color = hex_to_rgb(op.colorInputs[0].value)
+                        color = hex_to_bgr(op.colorInputs[0].value)
                         cv2.drawContours(src,[cnt],-1,color,thickness=thickness)
 
                     if op.name == "Draw Circle":
@@ -309,9 +311,18 @@ class sky_operator: # main class responsible for running operations
                         thickness = int(op.numberInputs[3].value)
 
 
-                        color = hex_to_hsv(op.colorInputs[0].value)
+                        color = hex_to_bgr(op.colorInputs[0].value)
 
                         cv2.circle(src,(x,y), radius, color, thickness)
+                    if op.name =="Draw Ellipse":
+                        frame = op.textInputs[0].value
+                        frame = self.values[frame]
+                        ellipse = op.textInputs[1].value
+                        ellipse = self.values[ellipse]
+                        color = hex_to_bgr(op.colorInputs[0].value)
+                        thickness = int(op.numberInputs[0].value)
+
+                        cv2.ellipse(frame,ellipse,color,thickness)
 
                     if op.name == "Text":
                         src = op.textInputs[0].value
@@ -355,6 +366,7 @@ class sky_operator: # main class responsible for running operations
                         src= op.textInputs[0].value
                         contour = self.values[src]
                         ellipse = cv2.fitEllipse(contour)
+                        
                         self.values[op.variableOutputs[0].value] = ellipse                    
                         
             except:

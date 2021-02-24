@@ -8,7 +8,7 @@
       "number_in": [
         {
           "brake": true, 
-          "name": "webcamID2389338482859775", 
+          "name": "webcamID238933848285977576901434311990", 
           "style": "", 
           "text": "Webcam ID", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -21,7 +21,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "outName2489338492859776", 
+          "name": "outName248933849285977676901444311991", 
           "style": "", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -38,7 +38,7 @@
         {
           "brake": true, 
           "direction": false, 
-          "name": "type5332350835761134", 
+          "name": "type53323508357611345968596871499", 
           "optionTextStyle": "font-size:18px;", 
           "options": [
             "BGR2HSV", 
@@ -57,7 +57,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src4221350835661133", 
+          "name": "src42213508356611335968595871498", 
           "style": "", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -68,7 +68,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "outName6443350835861135", 
+          "name": "outName64433508358611355968597871500", 
           "style": "", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -81,7 +81,7 @@
       "color_in": [
         {
           "brake": true, 
-          "name": "lower944312589005206813", 
+          "name": "lower94431258900520681380824116045615", 
           "style": "", 
           "text": "Lower", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -89,7 +89,7 @@
         }, 
         {
           "brake": true, 
-          "name": "higher1055412589015206814", 
+          "name": "higher105541258901520681480824126045616", 
           "style": "", 
           "text": "Higher", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -102,7 +102,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src833212588995206812", 
+          "name": "src83321258899520681280824106045614", 
           "style": "", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -113,7 +113,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "outName1166512589025206815", 
+          "name": "outName116651258902520681580824136045617", 
           "style": "", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -128,7 +128,7 @@
       "number_in": [
         {
           "brake": true, 
-          "name": "kernel40677584005214", 
+          "name": "kernel406775840052145641473633570", 
           "style": "", 
           "text": "Kernel", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -136,7 +136,7 @@
         }, 
         {
           "brake": true, 
-          "name": "itr40677594005215", 
+          "name": "itr406775940052155641483633571", 
           "style": "", 
           "text": "Iterations", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -147,7 +147,7 @@
         {
           "brake": true, 
           "direction": false, 
-          "name": "type40677604005216", 
+          "name": "type406776040052165641493633572", 
           "optionTextStyle": "font-size:18px;", 
           "options": [
             "Erosion", 
@@ -164,7 +164,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src40677574005213", 
+          "name": "src406775740052135641463633569", 
           "style": "", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -175,7 +175,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "outName40677614005217", 
+          "name": "outName406776140052175641503633573", 
           "style": "", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -192,7 +192,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src155523676626586644", 
+          "name": "src15552367662658664422960957322600", 
           "style": "", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -203,7 +203,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "outName166623676636586645", 
+          "name": "outName16662367663658664522960967322601", 
           "style": "", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -216,7 +216,7 @@
       "color_in": [
         {
           "brake": true, 
-          "name": "clr23925536687880107", 
+          "name": "clr2392553668788010731051795228937", 
           "style": "", 
           "text": "Color", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -227,7 +227,7 @@
       "number_in": [
         {
           "brake": true, 
-          "name": "thick22825536677880106", 
+          "name": "thick2282553667788010631051785228936", 
           "style": "", 
           "text": "Thickness", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -238,7 +238,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src20625536657880104", 
+          "name": "src2062553665788010431051765228934", 
           "style": "", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -246,7 +246,7 @@
         }, 
         {
           "brake": true, 
-          "name": "cnt21725536667880105", 
+          "name": "cnt2172553666788010531051775228935", 
           "style": "", 
           "text": "Contours", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -265,7 +265,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "cntrs9742977", 
+          "name": "cntrs97429776940092828246", 
           "style": "", 
           "text": "Contours", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -276,7 +276,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "cntOut9742978", 
+          "name": "cntOut97429786940102828247", 
           "style": "", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -289,7 +289,7 @@
       "color_in": [
         {
           "brake": true, 
-          "name": "clr826140", 
+          "name": "clr82614020794597621876", 
           "style": "", 
           "text": "Color", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -300,7 +300,7 @@
       "number_in": [
         {
           "brake": true, 
-          "name": "thick826139", 
+          "name": "thick82613920794587621875", 
           "style": "", 
           "text": "Thickness", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -311,7 +311,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src826137", 
+          "name": "src82613720794567621873", 
           "style": "", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;", 
@@ -319,11 +319,84 @@
         }, 
         {
           "brake": true, 
-          "name": "cnt826138", 
+          "name": "cnt82613820794577621874", 
           "style": "", 
           "text": "Contours", 
           "textStyle": "font-size:28px;margin-right:10px;", 
           "value": "singlecnt"
+        }
+      ], 
+      "type": 5, 
+      "var_out": []
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Fit Ellipse", 
+      "number_in": [], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src24073709066676", 
+          "style": "", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "singlecnt"
+        }
+      ], 
+      "type": 6, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "out24073719066677", 
+          "style": "", 
+          "text": "Output", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "ellpse"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [
+        {
+          "brake": true, 
+          "name": "clr7893532", 
+          "style": "", 
+          "text": "Color", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "#ff9500"
+        }
+      ], 
+      "name": "Draw Ellipse", 
+      "number_in": [
+        {
+          "brake": true, 
+          "name": "num7893531", 
+          "style": "", 
+          "text": "Thickness", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "30"
+        }
+      ], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src7893529", 
+          "style": "", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "cam"
+        }, 
+        {
+          "brake": true, 
+          "name": "ellipse7893530", 
+          "style": "", 
+          "text": "Ellipse", 
+          "textStyle": "font-size:28px;margin-right:10px;", 
+          "value": "ellpse"
         }
       ], 
       "type": 5, 

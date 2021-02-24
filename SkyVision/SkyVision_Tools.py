@@ -10,6 +10,12 @@ def hex_to_rgb(hex): # turn hex to hsv
     c = Color(hex=hex)
     return c.rgb
 
+def hex_to_bgr(hex): # turn hex to hsv
+    c = Color(hex=hex)
+    rgb = c.rgb
+    bgr = (rgb[2],rgb[1],rgb[0])
+    return bgr
+
 def vstack_images(image1,image2): # put image on top on another image
     return np.vstack((image1, image2))
 
