@@ -8,7 +8,7 @@
       "number_in": [
         {
           "brake": true, 
-          "name": "webcamID23893384828597757690143431199036863947086666263617430476450902812258833", 
+          "name": "webcamID23893384828597757690143431199036863947086666263617430476450902812258833222418150958664911811970315661384283510739420748102855", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Webcam ID", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -21,7 +21,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "outName24893384928597767690144431199136863957086667263618430476550902822258834", 
+          "name": "outName24893384928597767690144431199136863957086667263618430476550902822258834222418250958764911911970325661385283510839420758102856", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -38,7 +38,7 @@
         {
           "brake": true, 
           "direction": false, 
-          "name": "type53323508357611345968596871499688917226109475514862733872136485968613474", 
+          "name": "type5332350835761134596859687149968891722610947551486273387213648596861347483255983536003237061561630445702209892075382307969356405", 
           "optionTextStyle": "font-size:18px;color:#ebebeb;", 
           "options": [
             "BGR2HSV", 
@@ -57,7 +57,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src42213508356611335968595871498688917126109465514861733872036485958613473", 
+          "name": "src4221350835661133596859587149868891712610946551486173387203648595861347383255973536002237061461630435702208892075282307959356404", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -68,7 +68,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "outName64433508358611355968597871500688917326109485514863733872236485978613475", 
+          "name": "outName6443350835861135596859787150068891732610948551486373387223648597861347583255993536004237061661630455702210892075482307979356406", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -81,7 +81,7 @@
       "color_in": [
         {
           "brake": true, 
-          "name": "lower9443125890052068138082411604561541023755144248456444479164123284998305210", 
+          "name": "lower944312589005206813808241160456154102375514424845644447916412328499830521069340055280050733609833136329396189683549339973619315248", 
           "style": "", 
           "text": "Lower", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -89,7 +89,7 @@
         }, 
         {
           "brake": true, 
-          "name": "higher10554125890152068148082412604561641023765144249456444579164133285008305211", 
+          "name": "higher1055412589015206814808241260456164102376514424945644457916413328500830521169340065280051733609933136339396190683549439973629315249", 
           "style": "", 
           "text": "Higher", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -102,7 +102,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src8332125889952068128082410604561441023745144247456444379164113284988305209", 
+          "name": "src833212588995206812808241060456144102374514424745644437916411328498830520969340045280049733609733136319396188683549239973609315247", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -113,7 +113,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "outName11665125890252068158082413604561741023775144250456444679164143285018305212", 
+          "name": "outName1166512589025206815808241360456174102377514425045644467916414328501830521269340075280052733610033136349396191683549539973639315250", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -128,7 +128,7 @@
       "number_in": [
         {
           "brake": true, 
-          "name": "kernel406775840052145641473633570769112559630707371568643775935286384573975", 
+          "name": "kernel4067758400521456414736335707691125596307073715686437759352863845739758319069655853570836876985724181827213794326323377296012", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Kernel", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -136,7 +136,7 @@
         }, 
         {
           "brake": true, 
-          "name": "itr406775940052155641483633571769112659630717371569643776035286394573976", 
+          "name": "itr4067759400521556414836335717691126596307173715696437760352863945739768319070655854570836976985734181828213794426323387296013", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Iterations", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -147,7 +147,7 @@
         {
           "brake": true, 
           "direction": false, 
-          "name": "type406776040052165641493633572769112759630727371570643776135286404573977", 
+          "name": "type4067760400521656414936335727691127596307273715706437761352864045739778319071655855570837076985744181829213794526323397296014", 
           "optionTextStyle": "font-size:18px;", 
           "options": [
             "Erosion", 
@@ -164,7 +164,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src406775740052135641463633569769112459630697371567643775835286374573974", 
+          "name": "src4067757400521356414636335697691124596306973715676437758352863745739748319068655852570836776985714181826213794226323367296011", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -175,7 +175,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "outName406776140052175641503633573769112859630737371571643776235286414573978", 
+          "name": "outName4067761400521756415036335737691128596307373715716437762352864145739788319072655856570837176985754181830213794626323407296015", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -192,7 +192,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src1555236766265866442296095732260027768765215938609592928136497269081579379", 
+          "name": "src155523676626586644229609573226002776876521593860959292813649726908157937919752737580194401137458473527219419241104033071701240025", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -203,7 +203,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "outName1666236766365866452296096732260127768865215948609593928136597269091579380", 
+          "name": "outName166623676636586645229609673226012776886521594860959392813659726909157938019752747580195401137558473537219420241104133071711240026", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -218,7 +218,7 @@
       "number_in": [
         {
           "brake": true, 
-          "name": "area1127684683095194571512244498", 
+          "name": "area112768468309519457151224449842215578917084792034821809138301375455104032138491462556", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Area", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -229,7 +229,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src1127683683095094571502244497", 
+          "name": "src112768368309509457150224449742215568917083792034721809128301374455103932138481462555", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -240,7 +240,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "out1127685683095294571522244499", 
+          "name": "out112768568309529457152224449942215588917085792034921809148301376455104132138501462557", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Output", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -253,7 +253,7 @@
       "color_in": [
         {
           "brake": true, 
-          "name": "clr239255366878801073105179522893797862196081851392026744748884133324654976", 
+          "name": "clr2392553668788010731051795228937978621960818513920267447488841333246549761870984892307554840361654144451994754496035763149926895", 
           "style": "", 
           "text": "Color", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -264,7 +264,7 @@
       "number_in": [
         {
           "brake": true, 
-          "name": "thick228255366778801063105178522893697862186081841392025744748784133314654975", 
+          "name": "thick2282553667788010631051785228936978621860818413920257447487841333146549751870983892307454840261654134451993754495935763139926894", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Thickness", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -275,7 +275,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src206255366578801043105176522893497862166081821392023744748584133294654973", 
+          "name": "src2062553665788010431051765228934978621660818213920237447485841332946549731870981892307254840061654114451991754495735763119926892", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -283,7 +283,7 @@
         }, 
         {
           "brake": true, 
-          "name": "cnt217255366678801053105177522893597862176081831392024744748684133304654974", 
+          "name": "cnt2172553666788010531051775228935978621760818313920247447486841333046549741870982892307354840161654124451992754495835763129926893", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Contours", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -302,7 +302,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "cntrs97429776940092828246623651559458744991513835027080421802376841", 
+          "name": "cntrs3584662518207947571947944467975218910557913856847", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Contours", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -313,204 +313,13 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "cntOut97429786940102828247623651659458754991514835027180421812376842", 
+          "name": "cntOut3584663518208047571957944468975219010557923856848", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
           "value": "singlecnt"
         }
       ]
-    }, 
-    {
-      "check_in": [], 
-      "color_in": [
-        {
-          "brake": true, 
-          "name": "clr82614020794597621876373635949938381366059863894870613407275813", 
-          "style": "", 
-          "text": "Color", 
-          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
-          "value": "#00e1ff"
-        }
-      ], 
-      "name": "Draw Contour", 
-      "number_in": [
-        {
-          "brake": true, 
-          "name": "thick82613920794587621875373635849938371366058863894770613397275812", 
-          "style": "color: #ebebeb;background-color:#525252;", 
-          "text": "Thickness", 
-          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
-          "value": "20"
-        }
-      ], 
-      "radio_in": [], 
-      "text_in": [
-        {
-          "brake": true, 
-          "name": "src82613720794567621873373635649938351366056863894570613377275810", 
-          "style": "color: #ebebeb;background-color:#525252;", 
-          "text": "Source", 
-          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
-          "value": "cam"
-        }, 
-        {
-          "brake": true, 
-          "name": "cnt82613820794577621874373635749938361366057863894670613387275811", 
-          "style": "color: #ebebeb;background-color:#525252;", 
-          "text": "Contours", 
-          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
-          "value": "singlecnt"
-        }
-      ], 
-      "type": 5, 
-      "var_out": []
-    }, 
-    {
-      "check_in": [], 
-      "color_in": [], 
-      "name": "Fit Ellipse", 
-      "number_in": [], 
-      "radio_in": [], 
-      "text_in": [
-        {
-          "brake": true, 
-          "name": "src240737090666761297930605502751827107502876195512928129", 
-          "style": "color: #ebebeb;background-color:#525252;", 
-          "text": "Source", 
-          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
-          "value": "singlecnt"
-        }
-      ], 
-      "type": 6, 
-      "var_out": [
-        {
-          "brake": true, 
-          "name": "out240737190666771298030605512751828107502976195522928130", 
-          "style": "color: #ebebeb;background-color:#525252;", 
-          "text": "Output", 
-          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
-          "value": "ellpse"
-        }
-      ]
-    }, 
-    {
-      "check_in": [], 
-      "color_in": [
-        {
-          "brake": true, 
-          "name": "clr789353214048511238187937359877540683804686805063", 
-          "style": "", 
-          "text": "Color", 
-          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
-          "value": "#ff9500"
-        }
-      ], 
-      "name": "Draw Ellipse", 
-      "number_in": [
-        {
-          "brake": true, 
-          "name": "num789353114048501238186937359777540583804676805062", 
-          "style": "color: #ebebeb;background-color:#525252;", 
-          "text": "Thickness", 
-          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
-          "value": "30"
-        }
-      ], 
-      "radio_in": [], 
-      "text_in": [
-        {
-          "brake": true, 
-          "name": "src789352914048481238184937359577540383804656805060", 
-          "style": "color: #ebebeb;background-color:#525252;", 
-          "text": "Source", 
-          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
-          "value": "cam"
-        }, 
-        {
-          "brake": true, 
-          "name": "ellipse789353014048491238185937359677540483804666805061", 
-          "style": "color: #ebebeb;background-color:#525252;", 
-          "text": "Ellipse", 
-          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
-          "value": "ellpse"
-        }
-      ], 
-      "type": 5, 
-      "var_out": []
-    }, 
-    {
-      "check_in": [], 
-      "color_in": [], 
-      "name": "Minimum Enclosing Circle", 
-      "number_in": [], 
-      "radio_in": [], 
-      "text_in": [
-        {
-          "brake": true, 
-          "name": "src63234589196095612428786079698067984257053", 
-          "style": "color: #ebebeb;background-color:#525252;", 
-          "text": "Source", 
-          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
-          "value": "singlecnt"
-        }
-      ], 
-      "type": 6, 
-      "var_out": [
-        {
-          "brake": true, 
-          "name": "out63234599196096612429786079798067994257054", 
-          "style": "color: #ebebeb;background-color:#525252;", 
-          "text": "Output", 
-          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
-          "value": "fndcircle"
-        }
-      ]
-    }, 
-    {
-      "check_in": [], 
-      "color_in": [
-        {
-          "brake": true, 
-          "name": "clr66973055411069587028731403387785445", 
-          "style": "", 
-          "text": "Color", 
-          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
-          "value": "#ff00f7"
-        }
-      ], 
-      "name": "Draw Found Circle", 
-      "number_in": [
-        {
-          "brake": true, 
-          "name": "num66973045411068587028631403377785444", 
-          "style": "color: #ebebeb;background-color:#525252;", 
-          "text": "Thickness", 
-          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
-          "value": "30"
-        }
-      ], 
-      "radio_in": [], 
-      "text_in": [
-        {
-          "brake": true, 
-          "name": "src66973025411066587028431403357785442", 
-          "style": "color: #ebebeb;background-color:#525252;", 
-          "text": "Source", 
-          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
-          "value": "cam"
-        }, 
-        {
-          "brake": true, 
-          "name": "circle66973035411067587028531403367785443", 
-          "style": "color: #ebebeb;background-color:#525252;", 
-          "text": "Circle", 
-          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
-          "value": "fndcircle"
-        }
-      ], 
-      "type": 5, 
-      "var_out": []
     }, 
     {
       "check_in": [], 
@@ -521,7 +330,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src6819795213090", 
+          "name": "src82126762933081766910327555571300056601868673536", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -532,35 +341,63 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "retX6819805213091", 
+          "name": "retX82126772933091766911327556571300156601878673537", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "X", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
-          "value": "rectX"
+          "value": "rx"
         }, 
         {
           "brake": true, 
-          "name": "retY6819815213092", 
+          "name": "retY82126782933101766912327557571300256601888673538", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Y", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
-          "value": "rectY"
+          "value": "ry"
         }, 
         {
           "brake": true, 
-          "name": "retW6819825213093", 
+          "name": "retW82126792933111766913327558571300356601898673539", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "W", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
-          "value": "rectW"
+          "value": "rw"
         }, 
         {
           "brake": true, 
-          "name": "retH6819835213094", 
+          "name": "retH82126802933121766914327559571300456601908673540", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "H", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
-          "value": "rectH"
+          "value": "rh"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Rotated Rectangle", 
+      "number_in": [], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "cntrs5819614329624945208554935845", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Contours", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "singlecnt"
+        }
+      ], 
+      "type": 6, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "cntOut5819615329625045208564935846", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Output name", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "box"
         }
       ]
     }, 
@@ -569,29 +406,29 @@
       "color_in": [
         {
           "brake": true, 
-          "name": "Color9307819", 
+          "name": "Color505998816330134592928832301733269649812436", 
           "style": "", 
           "text": "Color", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
-          "value": "#ff7b00"
+          "value": "#ff0000"
         }
       ], 
-      "name": "Draw Circle Params", 
+      "name": "Draw Rectangle Params", 
       "number_in": [
         {
           "brake": true, 
-          "name": "thickness9307818", 
+          "name": "thickness505998716330124592927832301633269639812435", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Thickness", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
-          "value": "5"
+          "value": "15"
         }
       ], 
       "radio_in": [], 
       "text_in": [
         {
           "brake": true, 
-          "name": "src9307814", 
+          "name": "src505998216330074592922832301133269589812430", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -599,31 +436,203 @@
         }, 
         {
           "brake": true, 
-          "name": "radius9307815", 
+          "name": "wth505998316330084592923832301233269599812431", 
           "style": "color: #ebebeb;background-color:#525252;", 
-          "text": "Radius", 
+          "text": "Width", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
-          "value": "rectW"
-        }, 
-        {
-          "brake": false, 
-          "name": "xValue9307816", 
-          "style": "padding-right:5px;color: #ebebeb;background-color:#525252;", 
-          "text": "X", 
-          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
-          "value": "rectX"
+          "value": "rw"
         }, 
         {
           "brake": true, 
-          "name": "yValue9307817", 
+          "name": "hght505998416330094592924832301333269609812432", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Height", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "rh"
+        }, 
+        {
+          "brake": false, 
+          "name": "xValue505998516330104592925832301433269619812433", 
+          "style": "padding-right:5px", 
+          "text": "X", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "rx"
+        }, 
+        {
+          "brake": true, 
+          "name": "yValue505998616330114592926832301533269629812434", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Y", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
-          "value": "rectY"
+          "value": "ry"
         }
       ], 
       "type": 5, 
       "var_out": []
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Blank Image", 
+      "number_in": [], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src10128245413884", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "cam"
+        }
+      ], 
+      "type": 6, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "cntOut10128255413885", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Output name", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "blank"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [
+        {
+          "brake": true, 
+          "name": "clr6642655713707112724523674229", 
+          "style": "", 
+          "text": "Color", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "#ffffff"
+        }
+      ], 
+      "name": "Draw Contours", 
+      "number_in": [
+        {
+          "brake": true, 
+          "name": "thick6642654713707012724513674228", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Thickness", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "-1"
+        }
+      ], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src6642652713706812724493674226", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "blank"
+        }, 
+        {
+          "brake": true, 
+          "name": "cnt6642653713706912724503674227", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Contours", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "box"
+        }
+      ], 
+      "type": 5, 
+      "var_out": []
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Convert color", 
+      "number_in": [], 
+      "radio_in": [
+        {
+          "brake": true, 
+          "direction": false, 
+          "name": "type90436836187868", 
+          "optionTextStyle": "font-size:18px;color:#ebebeb;", 
+          "options": [
+            "BGR2HSV", 
+            "BGR2RGB", 
+            "BGR2GRAY", 
+            "HSV2RGB", 
+            "HSV2BGR", 
+            "GRAY2RGB"
+          ], 
+          "style": "margin-left:12px;", 
+          "text": "Type", 
+          "textStyle": "font-size:28px;color:#ebebeb;", 
+          "value": "BGR2GRAY"
+        }
+      ], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src90436826187867", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "blank"
+        }
+      ], 
+      "type": 4, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "outName90436846187869", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Output name", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "blankgray"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Bitwise AND", 
+      "number_in": [], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src130391929595359", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Source 1", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "cam"
+        }, 
+        {
+          "brake": true, 
+          "name": "src230391939595360", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Source 2", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "cam"
+        }, 
+        {
+          "brake": true, 
+          "name": "mask30391949595361", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Mask", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "blankgray"
+        }
+      ], 
+      "type": 3, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "outName30391959595362", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Output name", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "cam"
+        }
+      ]
     }
   ]
 }

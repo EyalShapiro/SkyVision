@@ -194,5 +194,4 @@ def save_session(): # save the operations
         print("Saved Session")
 
 
-if __name__ == "__main__":
-    app.run(debug = True,host='0.0.0.0') # run the app on main
+app.run(debug = True,host='0.0.0.0') # run the app on main
