@@ -123,6 +123,21 @@ sky_operations = { # sky operation is a dictionary that defines the inputs each 
         ]
     ),
 
+    "Draw Circle Params" : operation("Draw Circle Params", OperationType.DRAW,
+        text_inputs=[
+            operation_TextInput("src", "Source"),
+            operation_TextInput("radius","Radius"),
+            operation_TextInput("xValue","X","padding-right:5px",brake=False),
+            operation_TextInput("yValue","Y"),
+        ],
+        number_inputs=[
+            operation_TextInput("thickness", "Thickness")
+        ],
+        color_inputs=[
+            operation_ColorInput("Color","Color")
+        ]
+    ),
+
     "Flip" : operation("Flip",OperationType.MISC,text_inputs=[operation_TextInput("imgPath","Source")],radio_inputs=[operation_RadioInput("flipMode","Mode",["Horizontal","Vertical","Horizontal and Vertical"])],variable_outputs=[operation_TextInput("outName","Output name")]),
 
     "LargestContour" : operation("Largest Contour",OperationType.MISC,text_inputs=[operation_TextInput("cntrs","Contours")],variable_outputs=[operation_TextInput("cntOut","Output name")]),
@@ -136,6 +151,8 @@ sky_operations = { # sky operation is a dictionary that defines the inputs each 
     "Minimum Enclosing Circle": operation("Minimum Enclosing Circle",OperationType.MISC,text_inputs=[operation_TextInput("src","Source")],variable_outputs=[operation_TextInput("out","Output")]),
 
     "Minimum Contour Area": operation("Minimum Contour Area",OperationType.MISC,text_inputs=[operation_TextInput("src","Source")],number_inputs=[operation_NumberInput("area","Area")],variable_outputs=[operation_TextInput("out","Output")]),
+
+    "Bounding Rectangle": operation("Bounding Rectangle",OperationType.MISC,text_inputs=[operation_TextInput("src","Source")],variable_outputs=[operation_TextInput("retX","X"),operation_TextInput("retY","Y"),operation_TextInput("retW","W"),operation_TextInput("retH","H")]),
 }
 
 class sky_operator: # main class responsible for running operations
@@ -169,7 +186,6 @@ class sky_operator: # main class responsible for running operations
                             ret, frame = cap.read()
                             self.values[op.variableOutputs[0].value] = frame
                             source_counter+=1
-
 
                 if op.type == OperationType.MORPH: # MORPH OPERATIONS
                     
@@ -229,8 +245,6 @@ class sky_operator: # main class responsible for running operations
                             final = cv2.bitwise_and(src1,src2)
                             self.values[op.variableOutputs[0].value] = final
 
-
-
                 if op.type == OperationType.COLORS: # COLOR OPERATIONS
                     if op.name == "Convert color":
                         src = op.textInputs[0].value
@@ -281,7 +295,6 @@ class sky_operator: # main class responsible for running operations
                         cntrs, _ = cv2.findContours(src,cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
                         self.values[op.variableOutputs[0].value] = cntrs
 
-
                 if op.type == OperationType.DRAW: # DRAW OPERATIONS
                     if op.name == "Draw Contours":
                         src = op.textInputs[0].value
@@ -321,6 +334,23 @@ class sky_operator: # main class responsible for running operations
 
                         cv2.circle(src,(x,y), radius, color, thickness)
 
+                    if op.name == "Draw Circle Params":
+                        
+
+                        src = op.textInputs[0].value
+                        src = self.values[src]
+
+                        radius = int(self.values[op.textInputs[1].value])
+
+                        x = int(self.values[op.textInputs[2].value])
+                        y = int(self.values[op.textInputs[3].value])
+                        print("A")
+                        thickness = int(op.numberInputs[0].value)
+
+                        color = hex_to_bgr(op.colorInputs[0].value)
+
+                        cv2.circle(src,(x,y), radius, color, thickness)
+
                     if op.name == "Draw Found Circle":
                         src = op.textInputs[0].value
                         src = self.values[src]
@@ -349,7 +379,6 @@ class sky_operator: # main class responsible for running operations
                         src = op.textInputs[0].value
                         src = self.values[src]
                     
-
                 if op.type == OperationType.MISC: # MISC OPERATIONS
                     if op.name == "Flip":
                         
@@ -413,7 +442,15 @@ class sky_operator: # main class responsible for running operations
 
                         self.values[op.variableOutputs[0].value] = outcnts
 
+                    if op.name == "Bounding Rectangle":
+                        src = op.textInputs[0].value
+                        src = self.values[src]
 
+                        x,y,w,h = cv.boundingRect(cnt)
+                        self.values[op.variableOutputs[0].value] = x
+                        self.values[op.variableOutputs[1].value] = y
+                        self.values[op.variableOutputs[2].value] = w
+                        self.values[op.variableOutputs[3].value] = h
                         
             except:
                 pass
