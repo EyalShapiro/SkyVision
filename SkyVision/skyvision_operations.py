@@ -143,7 +143,7 @@ sky_operations = { # sky operation is a dictionary that defines the inputs each 
             operation_TextInput("src", "Source"),
             operation_TextInput("wth","Width"),
             operation_TextInput("hght","Height"),
-            operation_TextInput("xValue","X","padding-right:5px",brake=False),
+            operation_TextInput("xValue","X","padding-right:5px;color: #ebebeb;background-color:#525252;",brake=False),
             operation_TextInput("yValue","Y"),
         ],
         number_inputs=[
@@ -173,6 +173,8 @@ sky_operations = { # sky operation is a dictionary that defines the inputs each 
     "Minimum Contour Area": operation("Minimum Contour Area",OperationType.MISC,text_inputs=[operation_TextInput("src","Source")],number_inputs=[operation_NumberInput("area","Area")],variable_outputs=[operation_TextInput("out","Output")]),
 
     "Bounding Rectangle": operation("Bounding Rectangle",OperationType.MISC,text_inputs=[operation_TextInput("src","Source")],variable_outputs=[operation_TextInput("retX","X"),operation_TextInput("retY","Y"),operation_TextInput("retW","W"),operation_TextInput("retH","H")]),
+
+    "Hough Circles": operation("Hough Circles",OperationType.MISC,text_inputs=[operation_TextInput("src","Source")],number_inputs=[operation_NumberInput("dp","dp"),operation_NumberInput("md","minDist"),operation_NumberInput("ht","Higher Threshold"),operation_NumberInput("at","Accumulator Threshold"),operation_NumberInput("minr","Minimum Radius"),operation_NumberInput("maxr","Maximum Radius")],variable_outputs=[operation_TextInput("out","Output")]),
 }
 
 class sky_operator: # main class responsible for running operations
@@ -508,6 +510,29 @@ class sky_operator: # main class responsible for running operations
                         blank_image = np.zeros((height,width,channels), np.uint8)
 
                         self.values[op.variableOutputs[0].value] = blank_image
+
+                    if op.name == "Hough Circles":
+                        try:
+                            src = op.textInputs[0].value
+                            src = self.values[src]
+
+                            height, width = src.shape
+                            blank_image = np.zeros((height,width,1), np.uint8)
+
+                            circles = cv2.HoughCircles(src,cv2.HOUGH_GRADIENT,int(op.numberInputs[0].value),int(op.numberInputs[1].value),
+                                param1=int(op.numberInputs[2].value),param2=int(op.numberInputs[3].value),minRadius=int(op.numberInputs[4].value),maxRadius=int(op.numberInputs[5].value))
+                            circles = np.uint16(np.around(circles))
+                            
+                            for i in circles[0,:]:
+                                # draw the outer circle
+                                cv2.circle(blank_image,(i[0],i[1]),i[2],(255,255,255),-1)
+                            self.values[op.variableOutputs[0].value] = blank_image
+                        except:
+                            src = op.textInputs[0].value
+                            src = self.values[src]
+                            height, width = src.shape
+                            blank_image = np.zeros((height,width,1), np.uint8)
+                            self.values[op.variableOutputs[0].value] = blank_image
                         
             except:
                 pass

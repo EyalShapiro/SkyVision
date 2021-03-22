@@ -8,7 +8,7 @@
       "number_in": [
         {
           "brake": true, 
-          "name": "webcamID23893384828597757690143431199036863947086666263617430476450902812258833222418150958664911811970315661384283510739420748102855", 
+          "name": "webcamID238933848285977576901434311990368639470866662636174304764509028122588332224181509586649118119703156613842835107394207481028558832946574564132201", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Webcam ID", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -21,7 +21,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "outName24893384928597767690144431199136863957086667263618430476550902822258834222418250958764911911970325661385283510839420758102856", 
+          "name": "outName248933849285977676901444311991368639570866672636184304765509028222588342224182509587649119119703256613852835108394207581028568832947574565132202", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -38,7 +38,7 @@
         {
           "brake": true, 
           "direction": false, 
-          "name": "type5332350835761134596859687149968891722610947551486273387213648596861347483255983536003237061561630445702209892075382307969356405", 
+          "name": "type5332350835761134596859687149968891722610947551486273387213648596861347483255983536003237061561630445702209892075382307969356405920341942802277359953", 
           "optionTextStyle": "font-size:18px;color:#ebebeb;", 
           "options": [
             "BGR2HSV", 
@@ -57,7 +57,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src4221350835661133596859587149868891712610946551486173387203648595861347383255973536002237061461630435702208892075282307959356404", 
+          "name": "src4221350835661133596859587149868891712610946551486173387203648595861347383255973536002237061461630435702208892075282307959356404920341842802267359952", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -68,7 +68,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "outName6443350835861135596859787150068891732610948551486373387223648597861347583255993536004237061661630455702210892075482307979356406", 
+          "name": "outName6443350835861135596859787150068891732610948551486373387223648597861347583255993536004237061661630455702210892075482307979356406920342042802287359954", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -81,15 +81,15 @@
       "color_in": [
         {
           "brake": true, 
-          "name": "lower944312589005206813808241160456154102375514424845644447916412328499830521069340055280050733609833136329396189683549339973619315248", 
+          "name": "lower944312589005206813808241160456154102375514424845644447916412328499830521069340055280050733609833136329396189683549339973619315248929160138638889286517", 
           "style": "", 
           "text": "Lower", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
-          "value": "#953737"
+          "value": "#4a1c1c"
         }, 
         {
           "brake": true, 
-          "name": "higher1055412589015206814808241260456164102376514424945644457916413328500830521169340065280051733609933136339396190683549439973629315249", 
+          "name": "higher1055412589015206814808241260456164102376514424945644457916413328500830521169340065280051733609933136339396190683549439973629315249929160238638899286518", 
           "style": "", 
           "text": "Higher", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -102,7 +102,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src833212588995206812808241060456144102374514424745644437916411328498830520969340045280049733609733136319396188683549239973609315247", 
+          "name": "src833212588995206812808241060456144102374514424745644437916411328498830520969340045280049733609733136319396188683549239973609315247929160038638879286516", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -113,7 +113,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "outName1166512589025206815808241360456174102377514425045644467916414328501830521269340075280052733610033136349396191683549539973639315250", 
+          "name": "outName1166512589025206815808241360456174102377514425045644467916414328501830521269340075280052733610033136349396191683549539973639315250929160338638909286519", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -128,7 +128,7 @@
       "number_in": [
         {
           "brake": true, 
-          "name": "kernel4067758400521456414736335707691125596307073715686437759352863845739758319069655853570836876985724181827213794326323377296012", 
+          "name": "kernel4067758400521456414736335707691125596307073715686437759352863845739758319069655853570836876985724181827213794326323377296012381290751544421222507", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Kernel", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -136,7 +136,7 @@
         }, 
         {
           "brake": true, 
-          "name": "itr4067759400521556414836335717691126596307173715696437760352863945739768319070655854570836976985734181828213794426323387296013", 
+          "name": "itr4067759400521556414836335717691126596307173715696437760352863945739768319070655854570836976985734181828213794426323387296013381290851544431222508", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Iterations", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -147,7 +147,7 @@
         {
           "brake": true, 
           "direction": false, 
-          "name": "type4067760400521656414936335727691127596307273715706437761352864045739778319071655855570837076985744181829213794526323397296014", 
+          "name": "type4067760400521656414936335727691127596307273715706437761352864045739778319071655855570837076985744181829213794526323397296014381290951544441222509", 
           "optionTextStyle": "font-size:18px;", 
           "options": [
             "Erosion", 
@@ -164,7 +164,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src4067757400521356414636335697691124596306973715676437758352863745739748319068655852570836776985714181826213794226323367296011", 
+          "name": "src4067757400521356414636335697691124596306973715676437758352863745739748319068655852570836776985714181826213794226323367296011381290651544411222506", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -175,7 +175,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "outName4067761400521756415036335737691128596307373715716437762352864145739788319072655856570837176985754181830213794626323407296015", 
+          "name": "outName4067761400521756415036335737691128596307373715716437762352864145739788319072655856570837176985754181830213794626323407296015381291051544451222510", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -192,7 +192,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src155523676626586644229609573226002776876521593860959292813649726908157937919752737580194401137458473527219419241104033071701240025", 
+          "name": "src15552367662658664422960957322600277687652159386095929281364972690815793791975273758019440113745847352721941924110403307170124002556641934527063525002", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -203,7 +203,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "outName166623676636586645229609673226012776886521594860959392813659726909157938019752747580195401137558473537219420241104133071711240026", 
+          "name": "outName16662367663658664522960967322601277688652159486095939281365972690915793801975274758019540113755847353721942024110413307171124002656641944527064525003", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -218,7 +218,7 @@
       "number_in": [
         {
           "brake": true, 
-          "name": "area112768468309519457151224449842215578917084792034821809138301375455104032138491462556", 
+          "name": "area11276846830951945715122444984221557891708479203482180913830137545510403213849146255653443342145779826428", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Area", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -229,7 +229,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src112768368309509457150224449742215568917083792034721809128301374455103932138481462555", 
+          "name": "src11276836830950945715022444974221556891708379203472180912830137445510393213848146255553443242145769826427", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -240,7 +240,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "out112768568309529457152224449942215588917085792034921809148301376455104132138501462557", 
+          "name": "out11276856830952945715222444994221558891708579203492180914830137645510413213850146255753443442145789826429", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Output", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -253,7 +253,7 @@
       "color_in": [
         {
           "brake": true, 
-          "name": "clr2392553668788010731051795228937978621960818513920267447488841333246549761870984892307554840361654144451994754496035763149926895", 
+          "name": "clr2392553668788010731051795228937978621960818513920267447488841333246549761870984892307554840361654144451994754496035763149926895331010159240206928532", 
           "style": "", 
           "text": "Color", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -264,7 +264,7 @@
       "number_in": [
         {
           "brake": true, 
-          "name": "thick2282553667788010631051785228936978621860818413920257447487841333146549751870983892307454840261654134451993754495935763139926894", 
+          "name": "thick2282553667788010631051785228936978621860818413920257447487841333146549751870983892307454840261654134451993754495935763139926894331010059240196928531", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Thickness", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -275,7 +275,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src2062553665788010431051765228934978621660818213920237447485841332946549731870981892307254840061654114451991754495735763119926892", 
+          "name": "src2062553665788010431051765228934978621660818213920237447485841332946549731870981892307254840061654114451991754495735763119926892331009859240176928529", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -283,7 +283,7 @@
         }, 
         {
           "brake": true, 
-          "name": "cnt2172553666788010531051775228935978621760818313920247447486841333046549741870982892307354840161654124451992754495835763129926893", 
+          "name": "cnt2172553666788010531051775228935978621760818313920247447486841333046549741870982892307354840161654124451992754495835763129926893331009959240186928530", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Contours", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -302,7 +302,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "cntrs3584662518207947571947944467975218910557913856847", 
+          "name": "cntrs3584662518207947571947944467975218910557913856847475180662785994146001", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Contours", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -313,7 +313,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "cntOut3584663518208047571957944468975219010557923856848", 
+          "name": "cntOut3584663518208047571957944468975219010557923856848475180762786004146002", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -330,7 +330,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src82126762933081766910327555571300056601868673536", 
+          "name": "src82126762933081766910327555571300056601868673536754986991642186530750", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -341,7 +341,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "retX82126772933091766911327556571300156601878673537", 
+          "name": "retX82126772933091766911327556571300156601878673537754987091642196530751", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "X", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -349,7 +349,7 @@
         }, 
         {
           "brake": true, 
-          "name": "retY82126782933101766912327557571300256601888673538", 
+          "name": "retY82126782933101766912327557571300256601888673538754987191642206530752", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Y", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -357,7 +357,7 @@
         }, 
         {
           "brake": true, 
-          "name": "retW82126792933111766913327558571300356601898673539", 
+          "name": "retW82126792933111766913327558571300356601898673539754987291642216530753", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "W", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -365,7 +365,7 @@
         }, 
         {
           "brake": true, 
-          "name": "retH82126802933121766914327559571300456601908673540", 
+          "name": "retH82126802933121766914327559571300456601908673540754987391642226530754", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "H", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -382,7 +382,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "cntrs5819614329624945208554935845", 
+          "name": "cntrs5819614329624945208554935845512010125349265726299", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Contours", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -393,7 +393,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "cntOut5819615329625045208564935846", 
+          "name": "cntOut5819615329625045208564935846512010225349275726300", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -406,7 +406,7 @@
       "color_in": [
         {
           "brake": true, 
-          "name": "Color505998816330134592928832301733269649812436", 
+          "name": "Color50599881633013459292883230173326964981243615397417757748138744", 
           "style": "", 
           "text": "Color", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -417,7 +417,7 @@
       "number_in": [
         {
           "brake": true, 
-          "name": "thickness505998716330124592927832301633269639812435", 
+          "name": "thickness50599871633012459292783230163326963981243515397317757738138743", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Thickness", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -428,7 +428,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src505998216330074592922832301133269589812430", 
+          "name": "src50599821633007459292283230113326958981243015396817757688138738", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -436,7 +436,7 @@
         }, 
         {
           "brake": true, 
-          "name": "wth505998316330084592923832301233269599812431", 
+          "name": "wth50599831633008459292383230123326959981243115396917757698138739", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Width", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -444,7 +444,7 @@
         }, 
         {
           "brake": true, 
-          "name": "hght505998416330094592924832301333269609812432", 
+          "name": "hght50599841633009459292483230133326960981243215397017757708138740", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Height", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -452,15 +452,15 @@
         }, 
         {
           "brake": false, 
-          "name": "xValue505998516330104592925832301433269619812433", 
-          "style": "padding-right:5px", 
+          "name": "xValue50599851633010459292583230143326961981243315397117757718138741", 
+          "style": "padding-right:5px;color: #ebebeb;background-color:#525252;", 
           "text": "X", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
           "value": "rx"
         }, 
         {
           "brake": true, 
-          "name": "yValue505998616330114592926832301533269629812434", 
+          "name": "yValue50599861633011459292683230153326962981243415397217757728138742", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Y", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -479,7 +479,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src10128245413884", 
+          "name": "src10128245413884638543439704784919164", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -490,7 +490,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "cntOut10128255413885", 
+          "name": "cntOut10128255413885638543539704794919165", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -503,7 +503,7 @@
       "color_in": [
         {
           "brake": true, 
-          "name": "clr6642655713707112724523674229", 
+          "name": "clr6642655713707112724523674229372011932619415023535", 
           "style": "", 
           "text": "Color", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -514,7 +514,7 @@
       "number_in": [
         {
           "brake": true, 
-          "name": "thick6642654713707012724513674228", 
+          "name": "thick6642654713707012724513674228372011832619405023534", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Thickness", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -525,7 +525,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src6642652713706812724493674226", 
+          "name": "src6642652713706812724493674226372011632619385023532", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -533,7 +533,7 @@
         }, 
         {
           "brake": true, 
-          "name": "cnt6642653713706912724503674227", 
+          "name": "cnt6642653713706912724503674227372011732619395023533", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Contours", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -552,7 +552,7 @@
         {
           "brake": true, 
           "direction": false, 
-          "name": "type90436836187868", 
+          "name": "type90436836187868598336765326709998175", 
           "optionTextStyle": "font-size:18px;color:#ebebeb;", 
           "options": [
             "BGR2HSV", 
@@ -571,7 +571,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src90436826187867", 
+          "name": "src90436826187867598336665326699998174", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Source", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -582,7 +582,7 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "outName90436846187869", 
+          "name": "outName90436846187869598336865326719998176", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -599,7 +599,7 @@
       "text_in": [
         {
           "brake": true, 
-          "name": "src130391929595359", 
+          "name": "src130391929595359298264587381903757457", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Source 1", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -607,7 +607,7 @@
         }, 
         {
           "brake": true, 
-          "name": "src230391939595360", 
+          "name": "src230391939595360298264687381913757458", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Source 2", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -615,7 +615,7 @@
         }, 
         {
           "brake": true, 
-          "name": "mask30391949595361", 
+          "name": "mask30391949595361298264787381923757459", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Mask", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
@@ -626,11 +626,135 @@
       "var_out": [
         {
           "brake": true, 
-          "name": "outName30391959595362", 
+          "name": "outName30391959595362298264887381933757460", 
           "style": "color: #ebebeb;background-color:#525252;", 
           "text": "Output name", 
           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
           "value": "cam"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Convert color", 
+      "number_in": [], 
+      "radio_in": [
+        {
+          "brake": true, 
+          "direction": false, 
+          "name": "type1004652", 
+          "optionTextStyle": "font-size:18px;color:#ebebeb;", 
+          "options": [
+            "BGR2HSV", 
+            "BGR2RGB", 
+            "BGR2GRAY", 
+            "HSV2RGB", 
+            "HSV2BGR", 
+            "GRAY2RGB"
+          ], 
+          "style": "margin-left:12px;", 
+          "text": "Type", 
+          "textStyle": "font-size:28px;color:#ebebeb;", 
+          "value": "BGR2GRAY"
+        }
+      ], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src1004651", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "cam"
+        }
+      ], 
+      "type": 4, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "outName1004653", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Output name", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "cam"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Hough Circles", 
+      "number_in": [
+        {
+          "brake": true, 
+          "name": "dp74043762578712", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "dp", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "1"
+        }, 
+        {
+          "brake": true, 
+          "name": "md74043772578713", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "minDist", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "20"
+        }, 
+        {
+          "brake": true, 
+          "name": "ht74043782578714", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Higher Threshold", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "50"
+        }, 
+        {
+          "brake": true, 
+          "name": "at74043792578715", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Accumulator Threshold", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "30"
+        }, 
+        {
+          "brake": true, 
+          "name": "minr74043802578716", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Minimum Radius", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "0"
+        }, 
+        {
+          "brake": true, 
+          "name": "maxr74043812578717", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Maximum Radius", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "0"
+        }
+      ], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src74043752578711", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "cam"
+        }
+      ], 
+      "type": 6, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "out74043822578718", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Output", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "circles"
         }
       ]
     }
