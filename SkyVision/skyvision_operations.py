@@ -168,6 +168,8 @@ sky_operations = { # sky operation is a dictionary that defines the inputs each 
 
     "Draw Found Circle": operation("Draw Found Circle",OperationType.DRAW,text_inputs=[operation_TextInput("src","Source"),operation_TextInput("circle","Circle")],color_inputs=[operation_ColorInput("clr","Color")],number_inputs=[operation_NumberInput("num","Thickness")]),
 
+    "Draw Found Circles": operation("Draw Found Circles",OperationType.DRAW,text_inputs=[operation_TextInput("src","Source"),operation_TextInput("circle","Circles")],color_inputs=[operation_ColorInput("clr","Color")],number_inputs=[operation_NumberInput("num","Thickness")]),
+
     "Minimum Enclosing Circle": operation("Minimum Enclosing Circle",OperationType.MISC,text_inputs=[operation_TextInput("src","Source")],variable_outputs=[operation_TextInput("out","Output")]),
 
     "Minimum Contour Area": operation("Minimum Contour Area",OperationType.MISC,text_inputs=[operation_TextInput("src","Source")],number_inputs=[operation_NumberInput("area","Area")],variable_outputs=[operation_TextInput("out","Output")]),
@@ -175,6 +177,20 @@ sky_operations = { # sky operation is a dictionary that defines the inputs each 
     "Bounding Rectangle": operation("Bounding Rectangle",OperationType.MISC,text_inputs=[operation_TextInput("src","Source")],variable_outputs=[operation_TextInput("retX","X"),operation_TextInput("retY","Y"),operation_TextInput("retW","W"),operation_TextInput("retH","H")]),
 
     "Hough Circles": operation("Hough Circles",OperationType.MISC,text_inputs=[operation_TextInput("src","Source")],number_inputs=[operation_NumberInput("dp","dp"),operation_NumberInput("md","minDist"),operation_NumberInput("ht","Higher Threshold"),operation_NumberInput("at","Accumulator Threshold"),operation_NumberInput("minr","Minimum Radius"),operation_NumberInput("maxr","Maximum Radius")],variable_outputs=[operation_TextInput("out","Output")]),
+
+    "Math Add" : operation("Math Add",OperationType.ARITHMETIC,text_inputs=[operation_TextInput("val","Value")],number_inputs=[operation_NumberInput("add","Value to add")]),
+
+    "Canny" : operation("Canny",OperationType.COLORS,text_inputs=[operation_TextInput("src","Source")],number_inputs=[operation_NumberInput("thres1","Threshold 1"),operation_NumberInput("thres2","Threshold 2")],variable_outputs=[operation_TextInput("out","Output")]),
+
+    "ApproxPolyDP" : operation("ApproxPolyDP",OperationType.MISC,text_inputs=[operation_TextInput("cnt","Contours")],number_inputs=[operation_NumberInput("min","Minimum Sides")],variable_outputs=[operation_TextInput("out","Output")]),
+
+    "Convex Hull" : operation("Convex Hull",OperationType.MISC, text_inputs=[operation_TextInput("cnt","Contours"),],variable_outputs=[operation_TextInput("out","Output")],),
+
+    "Square Contours" : operation("Square Contours",OperationType.MISC, text_inputs=[operation_TextInput("cnt","Contours"),],number_inputs=[operation_NumberInput("thres","Threshold")],variable_outputs=[operation_TextInput("out","Output")],),
+
+    "Average Circle Radius": operation("Average Circle Radius",OperationType.MISC,text_inputs=[operation_TextInput("src","Source")],variable_outputs=[operation_TextInput("out","Output")]),
+
+    "Circle Coords": operation("Circle Coords",OperationType.MISC,text_inputs=[operation_TextInput("src","circles")],number_inputs=[operation_TextInput("onemeter","Size at 1 meter")]),
 }
 
 class sky_operator: # main class responsible for running operations
@@ -267,6 +283,13 @@ class sky_operator: # main class responsible for running operations
                             final = cv2.bitwise_and(src1,src2)
                             self.values[op.variableOutputs[0].value] = final
 
+                    if op.name == "Math Add":
+                        val = op.textInputs[0].value
+                        value = int(self.values[val])
+                        add = int(op.numberInputs[0].value)
+                        res = (value + add)
+                        self.values[val] = res
+
                 if op.type == OperationType.COLORS: # COLOR OPERATIONS
                     if op.name == "Convert color":
                         src = op.textInputs[0].value
@@ -317,14 +340,21 @@ class sky_operator: # main class responsible for running operations
                         cntrs, _ = cv2.findContours(src,cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
                         self.values[op.variableOutputs[0].value] = cntrs
 
+                        if(op.variableOutputs[0].value == "cannycnts"):
+                            print("FOUND",len(cntrs))
+
+                    if op.name == "Canny":
+                        src = op.textInputs[0].value
+                        src = self.values[src]
+                        canny = cv2.Canny(src,int(op.numberInputs[0].value),int(op.numberInputs[1].value))
+                        self.values[op.variableOutputs[0].value] = canny
+
                 if op.type == OperationType.DRAW: # DRAW OPERATIONS
                     if op.name == "Draw Contours":
                         src = op.textInputs[0].value
                         src = self.values[src]
-
                         cnt = op.textInputs[1].value
                         cnt = self.values[cnt]
-
                         thickness = int(op.numberInputs[0].value)
                         color = hex_to_bgr(op.colorInputs[0].value)
                         cv2.drawContours(src,cnt,-1,color,thickness=thickness)
@@ -372,22 +402,17 @@ class sky_operator: # main class responsible for running operations
                         cv2.circle(src,(x,y), radius, color, thickness)
 
                     if op.name == "Draw Rectangle Params":
-                        
 
                         src = op.textInputs[0].value
                         src = self.values[src]
-                        
-                        width = int(self.values[op.textInputs[1].value])
-                        height = int(self.values[op.textInputs[2].value])
-                        
-                        x = int(self.values[op.textInputs[3].value])
-                        y = int(self.values[op.textInputs[4].value])
-                        
+                        width = self.values[op.textInputs[1].value]
+                        height = self.values[op.textInputs[2].value]
+                        x = self.values[op.textInputs[3].value]
+                        y = self.values[op.textInputs[4].value]
                         thickness = int(op.numberInputs[0].value)
-
                         color = hex_to_bgr(op.colorInputs[0].value)
-
-                        cv2.rectangle(src,(x,y), (x+w,y+h), color, thickness)
+                        cv2.rectangle(src,(x,y), (x+width,y+height), color, thickness)
+                        print("rect-",x,y,width,height)
 
                     if op.name == "Draw Found Circle":
                         src = op.textInputs[0].value
@@ -402,6 +427,18 @@ class sky_operator: # main class responsible for running operations
                         
                         cv2.circle(src,circle[0], circle[1], color, thickness)
                         
+                    if op.name == "Draw Found Circles":
+                        src = op.textInputs[0].value
+                        src = self.values[src]
+                        circles = op.textInputs[1].value
+                        circles = self.values[circles]
+                        thickness = int(op.numberInputs[0].value)
+                        
+                        color = hex_to_bgr(op.colorInputs[0].value)
+                        for i in range(len(circles[0,:])):
+                                # draw the outer circle
+                                currCirc = circles[0,:][i]
+                                cv2.circle(src,(currCirc[0],currCirc[1]),currCirc[2],color,thickness)
 
                     if op.name =="Draw Ellipse":
                         frame = op.textInputs[0].value
@@ -491,6 +528,8 @@ class sky_operator: # main class responsible for running operations
                         self.values[op.variableOutputs[2].value] = w
                         self.values[op.variableOutputs[3].value] = h
 
+                        print("BOUND")
+
                     if op.name == "Rotated Rectangle":
                         cnt = op.textInputs[0].value
                         cnt = self.values[cnt]
@@ -512,27 +551,80 @@ class sky_operator: # main class responsible for running operations
                         self.values[op.variableOutputs[0].value] = blank_image
 
                     if op.name == "Hough Circles":
-                        try:
-                            src = op.textInputs[0].value
-                            src = self.values[src]
+                        src = op.textInputs[0].value
+                        src = self.values[src]
+                        circles = cv2.HoughCircles(src,cv2.HOUGH_GRADIENT,int(op.numberInputs[0].value),int(op.numberInputs[1].value),
+                            param1=int(op.numberInputs[2].value),param2=int(op.numberInputs[3].value),minRadius=int(op.numberInputs[4].value),maxRadius=int(op.numberInputs[5].value))
+                        circles = np.uint16(np.around(circles))
+                        self.values[op.variableOutputs[0].value] = circles
 
-                            height, width = src.shape
-                            blank_image = np.zeros((height,width,1), np.uint8)
+                    if op.name == "ApproxPolyDP":
+                        cnt = op.textInputs[0].value
+                        contours = self.values[cnt]
 
-                            circles = cv2.HoughCircles(src,cv2.HOUGH_GRADIENT,int(op.numberInputs[0].value),int(op.numberInputs[1].value),
-                                param1=int(op.numberInputs[2].value),param2=int(op.numberInputs[3].value),minRadius=int(op.numberInputs[4].value),maxRadius=int(op.numberInputs[5].value))
-                            circles = np.uint16(np.around(circles))
+                        sides = int(op.numberInputs[0].value)
+
+                        contour_list = []
+                        for contour in contours:
+                            approx = cv2.approxPolyDP(contour,0.01*cv2.arcLength(contour,True),True)
+                            if ((len(approx) >= sides)):
+                                contour_list.append(contour)
+
+                        self.values[op.variableOutputs[0].value] = contour_list
+
+                    if op.name == "Convex Hull":
+                        cnt = op.textInputs[0].value
+                        contours = self.values[cnt]
+
+                        hull_list = []
+                        for i in range(len(contours)):
+                            hull = cv2.convexHull(contours[i])
+                            hull_list.append(hull)
+
+                        self.values[op.variableOutputs[0].value] = hull_list
+            
+                    if op.name == "Square Contours":
+                        cnt = op.textInputs[0].value
+                        contours = self.values[cnt]
+                        thres = float(op.numberInputs[0].value)
+                        cnt_list = []
+                        for i in range(len(contours)):
+                            _,_,w,h = cv2.boundingRect(contours[i])
+
+                            if(w >= h * thres and w <= h * ((1 - thres) + 1)):
+                                cnt_list.append(contours[i])
+                        self.values[op.variableOutputs[0].value] = cnt_list
+
+                    if op.name == "Average Circle Radius":
+                        circs = op.textInputs[0].value
+                        circles = self.values[circs]
+                        
+                        circle_list = []
+
+                        ccounter = 0
+                        csum = 0
+
+                        for circle in circles:
+                            ccounter+=1
+                            csum += circle[2]
+
+                        avg = csum / ccounter
+
+                        for circle in circles:
+                            if(circle[2] >= avg):
+                                circle_list.append(circle)
+                        self.values[op.variableOutputs[0].value] = circle_list
+            
+                    if op.name == "Circle Coords":
+                        circs = op.textInputs[0].value
+                        circles = self.values[circs]
+                        onemeter = float(op.numberInputs[0].value)
+                        for circ in circles[0]:
+                            distance = onemeter / circ[2]
                             
-                            for i in circles[0,:]:
-                                # draw the outer circle
-                                cv2.circle(blank_image,(i[0],i[1]),i[2],(255,255,255),-1)
-                            self.values[op.variableOutputs[0].value] = blank_image
-                        except:
-                            src = op.textInputs[0].value
-                            src = self.values[src]
-                            height, width = src.shape
-                            blank_image = np.zeros((height,width,1), np.uint8)
-                            self.values[op.variableOutputs[0].value] = blank_image
+                            print("Dist - " + str(distance) + "[",onemeter,circ[2],"]")
+
+                        print("C")
                         
             except:
                 pass

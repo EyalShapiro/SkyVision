@@ -1,0 +1,537 @@
+// {
+//   "_permanent": true, 
+//   "operations": [
+//     {
+//       "check_in": [], 
+//       "color_in": [], 
+//       "name": "Webcam input", 
+//       "number_in": [
+//         {
+//           "brake": true, 
+//           "name": "webcamID2389338482859775769014343119903686394708666626361743047645090281225883322241815095866491181197031566138428351073942074810285588329465745641322018351842946437297784862787368395722440703377322875693919525563986451523743567656051", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "Webcam ID", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "0"
+//         }
+//       ], 
+//       "radio_in": [], 
+//       "text_in": [], 
+//       "type": 1, 
+//       "var_out": [
+//         {
+//           "brake": true, 
+//           "name": "outName2489338492859776769014443119913686395708666726361843047655090282225883422241825095876491191197032566138528351083942075810285688329475745651322028351843946438297784962787468395732440704377322975693929525564986451623743577656052", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "Output name", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "cam"
+//         }
+//       ]
+//     }, 
+//     {
+//       "check_in": [], 
+//       "color_in": [], 
+//       "name": "Convert color", 
+//       "number_in": [], 
+//       "radio_in": [
+//         {
+//           "brake": true, 
+//           "direction": false, 
+//           "name": "type5332350835761134596859687149968891722610947551486273387213648596861347483255983536003237061561630445702209892075382307969356405920341942802277359953912319394488662129802803711753511664900523198342581129471119684349102893725883714768", 
+//           "optionTextStyle": "font-size:18px;color:#ebebeb;", 
+//           "options": [
+//             "BGR2HSV", 
+//             "BGR2RGB", 
+//             "BGR2GRAY", 
+//             "HSV2RGB", 
+//             "HSV2BGR", 
+//             "GRAY2RGB"
+//           ], 
+//           "style": "margin-left:12px;", 
+//           "text": "Type", 
+//           "textStyle": "font-size:28px;color:#ebebeb;", 
+//           "value": "BGR2HSV"
+//         }
+//       ], 
+//       "text_in": [
+//         {
+//           "brake": true, 
+//           "name": "src4221350835661133596859587149868891712610946551486173387203648595861347383255973536002237061461630435702208892075282307959356404920341842802267359952912319294488652129801803711653511654900522198342481129461119683349102793725873714767", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "Source", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "cam"
+//         }
+//       ], 
+//       "type": 4, 
+//       "var_out": [
+//         {
+//           "brake": true, 
+//           "name": "outName6443350835861135596859787150068891732610948551486373387223648597861347583255993536004237061661630455702210892075482307979356406920342042802287359954912319494488672129803803711853511674900524198342681129481119685349102993725893714769", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "Output name", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "hsv"
+//         }
+//       ]
+//     }, 
+//     {
+//       "check_in": [], 
+//       "color_in": [
+//         {
+//           "brake": true, 
+//           "name": "lower944312589005206813808241160456154102375514424845644447916412328499830521069340055280050733609833136329396189683549339973619315248929160138638889286517323066139113889509715642804363203413708366478681636935123803053740328054278158381522", 
+//           "style": "", 
+//           "text": "Lower", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "#4a1c1c"
+//         }, 
+//         {
+//           "brake": true, 
+//           "name": "higher1055412589015206814808241260456164102376514424945644457916413328500830521169340065280051733609933136339396190683549439973629315249929160238638899286518323066239113899509716642804463203423708367478681736935133803054740328154278168381523", 
+//           "style": "", 
+//           "text": "Higher", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "#ff9900"
+//         }
+//       ], 
+//       "name": "Color Mask", 
+//       "number_in": [], 
+//       "radio_in": [], 
+//       "text_in": [
+//         {
+//           "brake": true, 
+//           "name": "src833212588995206812808241060456144102374514424745644437916411328498830520969340045280049733609733136319396188683549239973609315247929160038638879286516323066039113879509714642804263203403708365478681536935113803052740327954278148381521", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "Source", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "hsv"
+//         }
+//       ], 
+//       "type": 4, 
+//       "var_out": [
+//         {
+//           "brake": true, 
+//           "name": "outName1166512589025206815808241360456174102377514425045644467916414328501830521269340075280052733610033136349396191683549539973639315250929160338638909286519323066339113909509717642804563203433708368478681836935143803055740328254278178381524", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "Output name", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "mask"
+//         }
+//       ]
+//     }, 
+//     {
+//       "check_in": [], 
+//       "color_in": [], 
+//       "name": "MorphEx", 
+//       "number_in": [
+//         {
+//           "brake": true, 
+//           "name": "kernel406775840052145641473633570769112559630707371568643775935286384573975831906965585357083687698572418182721379432632337729601238129075154442122250775633659279274693964475119391436737743945673200634110522235122510398239025991310503", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "Kernel", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "15"
+//         }, 
+//         {
+//           "brake": true, 
+//           "name": "itr406775940052155641483633571769112659630717371569643776035286394573976831907065585457083697698573418182821379442632338729601338129085154443122250875633669279275693965475119491436747743946673200734110532235123510398339026001310504", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "Iterations", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "5"
+//         }
+//       ], 
+//       "radio_in": [
+//         {
+//           "brake": true, 
+//           "direction": false, 
+//           "name": "type406776040052165641493633572769112759630727371570643776135286404573977831907165585557083707698574418182921379452632339729601438129095154444122250975633679279276693966475119591436757743947673200834110542235124510398439026011310505", 
+//           "optionTextStyle": "font-size:18px;", 
+//           "options": [
+//             "Erosion", 
+//             "Dilation", 
+//             "Opening", 
+//             "Closing"
+//           ], 
+//           "style": "margin-left:12px;", 
+//           "text": "Type", 
+//           "textStyle": "font-size:28px;color:#ebebeb;", 
+//           "value": "Closing"
+//         }
+//       ], 
+//       "text_in": [
+//         {
+//           "brake": true, 
+//           "name": "src406775740052135641463633569769112459630697371567643775835286374573974831906865585257083677698571418182621379422632336729601138129065154441122250675633649279273693963475119291436727743944673200534110512235121510398139025981310502", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "Source", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "mask"
+//         }
+//       ], 
+//       "type": 2, 
+//       "var_out": [
+//         {
+//           "brake": true, 
+//           "name": "outName406776140052175641503633573769112859630737371571643776235286414573978831907265585657083717698575418183021379462632340729601538129105154445122251075633689279277693967475119691436767743948673200934110552235125510398539026021310506", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "Output name", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "mask"
+//         }
+//       ]
+//     }, 
+//     {
+//       "check_in": [], 
+//       "color_in": [], 
+//       "name": "Find Contours", 
+//       "number_in": [], 
+//       "radio_in": [], 
+//       "text_in": [
+//         {
+//           "brake": true, 
+//           "name": "src2931647963259764749321533177", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "Source", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "mask"
+//         }
+//       ], 
+//       "type": 4, 
+//       "var_out": [
+//         {
+//           "brake": true, 
+//           "name": "outName2931648963259864749331533178", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "Output name", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "maskcnts"
+//         }
+//       ]
+//     }, 
+//     {
+//       "check_in": [], 
+//       "color_in": [], 
+//       "name": "Bounding Rectangle", 
+//       "number_in": [], 
+//       "radio_in": [], 
+//       "text_in": [
+//         {
+//           "brake": true, 
+//           "name": "src4398505176969643349859451046", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "Source", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "maskcnts"
+//         }
+//       ], 
+//       "type": 6, 
+//       "var_out": [
+//         {
+//           "brake": true, 
+//           "name": "retX4398506176969743349869451047", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "X", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "rx"
+//         }, 
+//         {
+//           "brake": true, 
+//           "name": "retY4398507176969843349879451048", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "Y", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "ry"
+//         }, 
+//         {
+//           "brake": true, 
+//           "name": "retW4398508176969943349889451049", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "W", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "rw"
+//         }, 
+//         {
+//           "brake": true, 
+//           "name": "retH4398509176970043349899451050", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "H", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "rh"
+//         }
+//       ]
+//     }, 
+//     {
+//       "check_in": [], 
+//       "color_in": [], 
+//       "name": "Math Add", 
+//       "number_in": [
+//         {
+//           "brake": true, 
+//           "name": "add55128920751439210203034266", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "Value to add", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "-20"
+//         }
+//       ], 
+//       "radio_in": [], 
+//       "text_in": [
+//         {
+//           "brake": true, 
+//           "name": "val55128820751429210193034265", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "Value", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "rx"
+//         }
+//       ], 
+//       "type": 3, 
+//       "var_out": []
+//     }, 
+//     {
+//       "check_in": [], 
+//       "color_in": [], 
+//       "name": "Math Add", 
+//       "number_in": [
+//         {
+//           "brake": true, 
+//           "name": "add3168444428080193662655667377", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "Value to add", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "-20"
+//         }
+//       ], 
+//       "radio_in": [], 
+//       "text_in": [
+//         {
+//           "brake": true, 
+//           "name": "val3168443428080093662645667376", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "Value", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "ry"
+//         }
+//       ], 
+//       "type": 3, 
+//       "var_out": []
+//     }, 
+//     {
+//       "check_in": [], 
+//       "color_in": [], 
+//       "name": "Math Add", 
+//       "number_in": [
+//         {
+//           "brake": true, 
+//           "name": "add14407962001945595063", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "Value to add", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "20"
+//         }
+//       ], 
+//       "radio_in": [], 
+//       "text_in": [
+//         {
+//           "brake": true, 
+//           "name": "val14407862001935595062", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "Value", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "rw"
+//         }
+//       ], 
+//       "type": 3, 
+//       "var_out": []
+//     }, 
+//     {
+//       "check_in": [], 
+//       "color_in": [], 
+//       "name": "Math Add", 
+//       "number_in": [
+//         {
+//           "brake": true, 
+//           "name": "add76769859006359762722", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "Value to add", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "20"
+//         }
+//       ], 
+//       "radio_in": [], 
+//       "text_in": [
+//         {
+//           "brake": true, 
+//           "name": "val76769849006349762721", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "Value", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "rh"
+//         }
+//       ], 
+//       "type": 3, 
+//       "var_out": []
+//     }, 
+//     {
+//       "check_in": [], 
+//       "color_in": [], 
+//       "name": "Blank Image", 
+//       "number_in": [], 
+//       "radio_in": [], 
+//       "text_in": [
+//         {
+//           "brake": true, 
+//           "name": "src525591677428085938541", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "Source", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "cam"
+//         }
+//       ], 
+//       "type": 6, 
+//       "var_out": [
+//         {
+//           "brake": true, 
+//           "name": "cntOut525591777428095938542", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "Output name", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "blank"
+//         }
+//       ]
+//     }, 
+//     {
+//       "check_in": [], 
+//       "color_in": [
+//         {
+//           "brake": true, 
+//           "name": "Color956058434778285885748", 
+//           "style": "", 
+//           "text": "Color", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "#ffffff"
+//         }
+//       ], 
+//       "name": "Draw Rectangle Params", 
+//       "number_in": [
+//         {
+//           "brake": true, 
+//           "name": "thickness956058334778275885747", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "Thickness", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "-1"
+//         }
+//       ], 
+//       "radio_in": [], 
+//       "text_in": [
+//         {
+//           "brake": true, 
+//           "name": "src956057834778225885742", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "Source", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "blank"
+//         }, 
+//         {
+//           "brake": true, 
+//           "name": "wth956057934778235885743", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "Width", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "rw"
+//         }, 
+//         {
+//           "brake": true, 
+//           "name": "hght956058034778245885744", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "Height", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "rh"
+//         }, 
+//         {
+//           "brake": false, 
+//           "name": "xValue956058134778255885745", 
+//           "style": "padding-right:5px;color: #ebebeb;background-color:#525252;", 
+//           "text": "X", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "rx"
+//         }, 
+//         {
+//           "brake": true, 
+//           "name": "yValue956058234778265885746", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "Y", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "ry"
+//         }
+//       ], 
+//       "type": 5, 
+//       "var_out": []
+//     }, 
+//     {
+//       "check_in": [], 
+//       "color_in": [
+//         {
+//           "brake": true, 
+//           "name": "Color120131798677599559043", 
+//           "style": "", 
+//           "text": "Color", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "#ffffff"
+//         }
+//       ], 
+//       "name": "Draw Circle", 
+//       "number_in": [
+//         {
+//           "brake": true, 
+//           "name": "radius120131398677559559039", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "Radius", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "500"
+//         }, 
+//         {
+//           "brake": false, 
+//           "name": "xValue120131498677569559040", 
+//           "style": "padding-right:5px", 
+//           "text": "X", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "0"
+//         }, 
+//         {
+//           "brake": true, 
+//           "name": "yValue120131598677579559041", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "Y", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "0"
+//         }, 
+//         {
+//           "brake": true, 
+//           "name": "thickness120131698677589559042", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "Thickness", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "-1"
+//         }
+//       ], 
+//       "radio_in": [], 
+//       "text_in": [
+//         {
+//           "brake": true, 
+//           "name": "src120131298677549559038", 
+//           "style": "color: #ebebeb;background-color:#525252;", 
+//           "text": "Source", 
+//           "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+//           "value": "blank"
+//         }
+//       ], 
+//       "type": 5, 
+//       "var_out": []
+//     }
+//   ]
+// }
