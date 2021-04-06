@@ -75,7 +75,7 @@ def video_feed():
 @app.route("/",methods=['GET', 'POST']) # route for main page, allows for GET and POST requests
 def home(): # home page
     global required_out
-    cv2.destroyAllWindows()
+    #cv2.destroyAllWindows()
     if request.method == "GET": # if entered page regularly
         try:
             required_out = "None" # set the required output frame to "None"
