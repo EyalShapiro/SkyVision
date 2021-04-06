@@ -20,7 +20,7 @@ error_pic = cv2.imread("ERR.jpg") # The frame that will be used for drawing when
 windowMode = False
 
 def generate(): # generates the output frame
-    cv2.destroyAllWindows()
+    # cv2.destroyAllWindows()
     time.sleep(3) # delay to allow for camera reconnection
     while(True):
         operator.process() # activate all operations
@@ -157,7 +157,7 @@ def home(): # home page
                 operator.MoveDOWN(value)
 
             elif request.form["action"] == "WindowMode": # If the saved button is pressed
-                cv2.destroyAllWindows()
+                # cv2.destroyAllWindows()
                 global windowMode
                 windowMode = not windowMode
 

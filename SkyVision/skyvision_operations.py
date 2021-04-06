@@ -182,7 +182,7 @@ sky_operations = { # sky operation is a dictionary that defines the inputs each 
 
     "Canny" : operation("Canny",OperationType.COLORS,text_inputs=[operation_TextInput("src","Source")],number_inputs=[operation_NumberInput("thres1","Threshold 1"),operation_NumberInput("thres2","Threshold 2")],variable_outputs=[operation_TextInput("out","Output")]),
 
-    "ApproxPolyDP" : operation("ApproxPolyDP",OperationType.MISC,text_inputs=[operation_TextInput("cnt","Contours")],number_inputs=[operation_NumberInput("min","Minimum Sides")],variable_outputs=[operation_TextInput("out","Output")]),
+    "ApproxPolyDP" : operation("ApproxPolyDP",OperationType.MISC,text_inputs=[operation_TextInput("cnt","Contours")],number_inputs=[operation_NumberInput("min","Minimum Sides"),operation_NumberInput("max","Maximum Sides")],variable_outputs=[operation_TextInput("out","Output")]),
 
     "Convex Hull" : operation("Convex Hull",OperationType.MISC, text_inputs=[operation_TextInput("cnt","Contours"),],variable_outputs=[operation_TextInput("out","Output")],),
 
@@ -191,6 +191,10 @@ sky_operations = { # sky operation is a dictionary that defines the inputs each 
     "Average Circle Radius": operation("Average Circle Radius",OperationType.MISC,text_inputs=[operation_TextInput("src","Source")],variable_outputs=[operation_TextInput("out","Output")]),
 
     "Circle Coords": operation("Circle Coords",OperationType.MISC,text_inputs=[operation_TextInput("src","circles")],number_inputs=[operation_TextInput("onemeter","Size at 1 meter")]),
+
+    "Split Channel": operation("Split Channel",OperationType.ARITHMETIC,text_inputs=[operation_TextInput("src","Source")],number_inputs=[operation_NumberInput("channel","Select Channel"),],variable_outputs=[operation_TextInput("out","Output")]),
+
+    "Ratio": operation("Ratio",OperationType.ARITHMETIC,text_inputs=[operation_TextInput("cnts","Contours")],number_inputs=[operation_NumberInput("wth","Width"),operation_NumberInput("height","Height"),operation_NumberInput("thresh","Threshold"),],variable_outputs=[operation_TextInput("out","Output")]),
 }
 
 class sky_operator: # main class responsible for running operations
@@ -289,6 +293,30 @@ class sky_operator: # main class responsible for running operations
                         add = int(op.numberInputs[0].value)
                         res = (value + add)
                         self.values[val] = res
+
+                    if op.name == "Split Channel":
+                        src = op.textInputs[0].value
+                        src = self.values[src]
+                        sel = int(op.numberInputs[0].value)
+                        self.values[op.variableOutputs[0].value] = cv2.split(src)[sel]
+
+                    if op.name == "Ratio":
+                        cnt = op.textInputs[0].value
+                        contours = self.values[cnt]
+
+                        width = int(op.numberInputs[0].value)
+                        height = int(op.numberInputs[1].value)
+                        threshold = float(op.numberInputs[2].value) 
+                        validCnt=[]
+
+                        for cnt in contours:
+                            x,y,w,h = cv2.boundingRect(cnt)
+
+                            if abs(w/h - width/height) <= threshold:
+                                validCnt.append(cnt)
+                                print(abs(w/h - width/height))
+
+                        self.values[op.variableOutputs[0].value] = validCnt
 
                 if op.type == OperationType.COLORS: # COLOR OPERATIONS
                     if op.name == "Convert color":
@@ -562,12 +590,13 @@ class sky_operator: # main class responsible for running operations
                         cnt = op.textInputs[0].value
                         contours = self.values[cnt]
 
-                        sides = int(op.numberInputs[0].value)
+                        minsides = int(op.numberInputs[0].value)
+                        maxsides = int(op.numberInputs[1].value)
 
                         contour_list = []
                         for contour in contours:
                             approx = cv2.approxPolyDP(contour,0.01*cv2.arcLength(contour,True),True)
-                            if ((len(approx) >= sides)):
+                            if ((len(approx) >= minsides and len(approx) <= maxsides)):
                                 contour_list.append(contour)
 
                         self.values[op.variableOutputs[0].value] = contour_list
@@ -624,7 +653,7 @@ class sky_operator: # main class responsible for running operations
                             
                             print("Dist - " + str(distance) + "[",onemeter,circ[2],"]")
 
-                        print("C")
+                        
                         
             except:
                 pass

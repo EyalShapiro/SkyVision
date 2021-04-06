@@ -1,0 +1,251 @@
+{
+  "_permanent": true, 
+  "operations": [
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Image input", 
+      "number_in": [], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "imgPath3031560778476897820938868050843928233777551079052", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Image Path", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "PPMask.png"
+        }
+      ], 
+      "type": 1, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "outName3031561778476997820948868051843928333777561079053", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Output name", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "mask"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Convert color", 
+      "number_in": [], 
+      "radio_in": [
+        {
+          "brake": true, 
+          "direction": false, 
+          "name": "type5933334393851533604506900281897502460401", 
+          "optionTextStyle": "font-size:18px;color:#ebebeb;", 
+          "options": [
+            "BGR2HSV", 
+            "BGR2RGB", 
+            "BGR2GRAY", 
+            "HSV2RGB", 
+            "HSV2BGR", 
+            "GRAY2RGB"
+          ], 
+          "style": "margin-left:12px;", 
+          "text": "Type", 
+          "textStyle": "font-size:28px;color:#ebebeb;", 
+          "value": "BGR2GRAY"
+        }
+      ], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src5933333393851433604496900271897492460400", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "mask"
+        }
+      ], 
+      "type": 4, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "outName5933335393851633604516900291897512460402", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Output name", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "gmask"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Find Contours", 
+      "number_in": [], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src846768299218838479303971223771717088595360", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "gmask"
+        }
+      ], 
+      "type": 4, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "outName846768399218848479304971223871717098595361", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Output name", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "cnts"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "ApproxPolyDP", 
+      "number_in": [
+        {
+          "brake": true, 
+          "name": "min361669250921673162651339602", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Minimum Sides", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "8"
+        }, 
+        {
+          "brake": true, 
+          "name": "max361669350921683162661339603", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Maximum Sides", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "8"
+        }
+      ], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "cnt361669150921663162641339601", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Contours", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "cnts"
+        }
+      ], 
+      "type": 6, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "out361669450921693162671339604", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Output", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "ncnts"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Ratio", 
+      "number_in": [
+        {
+          "brake": true, 
+          "name": "wth6131609641083842137439603596", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Width", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "100"
+        }, 
+        {
+          "brake": true, 
+          "name": "height6131610641083942137449603597", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Height", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "40"
+        }, 
+        {
+          "brake": true, 
+          "name": "thresh6131611641084042137459603598", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Threshold", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "0.5"
+        }
+      ], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "cnts6131608641083742137429603595", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Contours", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "ncnts"
+        }
+      ], 
+      "type": 3, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "out6131612641084142137469603599", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Output", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "nncnts"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [
+        {
+          "brake": true, 
+          "name": "clr767722667175078345866246290567332758256239", 
+          "style": "", 
+          "text": "Color", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "#00ff00"
+        }
+      ], 
+      "name": "Draw Contours", 
+      "number_in": [
+        {
+          "brake": true, 
+          "name": "thick767722567175068345865246290467332748256238", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Thickness", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "2"
+        }
+      ], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src767722367175048345863246290267332728256236", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "mask"
+        }, 
+        {
+          "brake": true, 
+          "name": "cnt767722467175058345864246290367332738256237", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Contours", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "nncnts"
+        }
+      ], 
+      "type": 5, 
+      "var_out": []
+    }
+  ]
+}
