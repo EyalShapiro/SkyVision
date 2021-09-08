@@ -129,5 +129,12 @@
             </div>
         </div>
     </div>
+    <script>
+        document.onkeydown = function(evt) {
+            evt = evt || window.event;
+            let x = evt.keyCode === 13;
+            if (x) return false
+        };
+    </script>
 </form>
 {% endblock %}
