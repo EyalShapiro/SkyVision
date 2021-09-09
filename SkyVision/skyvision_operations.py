@@ -381,7 +381,6 @@ class sky_operator:  # main class responsible for running operations
 
                             if abs(w / h - width / height) <= threshold:
                                 validCnt.append(cnt)
-                                print(abs(w / h - width / height))
 
                         self.values[op.variableOutputs[0].value] = validCnt
 
@@ -434,9 +433,6 @@ class sky_operator:  # main class responsible for running operations
 
                         cntrs, _ = cv2.findContours(src, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
                         self.values[op.variableOutputs[0].value] = cntrs
-
-                        if (op.variableOutputs[0].value == "cannycnts"):
-                            print("FOUND", len(cntrs))
 
                     if op.name == "Canny":
                         src = op.textInputs[0].value
@@ -503,7 +499,6 @@ class sky_operator:  # main class responsible for running operations
                         thickness = int(op.numberInputs[0].value)
                         color = hex_to_bgr(op.colorInputs[0].value)
                         cv2.rectangle(src, (x, y), (x + width, y + height), color, thickness)
-                        print("rect-", x, y, width, height)
 
                     if op.name == "Draw Found Circle":
                         src = op.textInputs[0].value
@@ -546,6 +541,7 @@ class sky_operator:  # main class responsible for running operations
                         src = self.values[src]
 
                 if op.type == OperationType.MISC:  # MISC OPERATIONS
+
                     if op.name == "Flip":
 
                         src = op.textInputs[0].value
@@ -616,8 +612,6 @@ class sky_operator:  # main class responsible for running operations
                         self.values[op.variableOutputs[1].value] = y
                         self.values[op.variableOutputs[2].value] = w
                         self.values[op.variableOutputs[3].value] = h
-
-                        print("BOUND")
 
                     if op.name == "Rotated Rectangle":
                         cnt = op.textInputs[0].value
@@ -715,11 +709,7 @@ class sky_operator:  # main class responsible for running operations
                         onemeter = float(op.numberInputs[0].value)
                         for circ in circles[0]:
                             distance = onemeter / circ[2]
-
                             # print("Dist - " + str(distance) + "[", onemeter, circ[2], "]")
-
-
-
             except:
                 pass
 
@@ -762,7 +752,6 @@ class sky_operator:  # main class responsible for running operations
         for op in self.operations:
             if int(op.op_move_counter) == int(num):
                 self.operations.remove(op)
-                print("Removed")
                 self.inCounter -= 1
                 break
 
@@ -805,9 +794,6 @@ class sky_operator:  # main class responsible for running operations
                         camera = cv2.VideoCapture(op.textInputs[0].value)
                         if camera is not None:
                             self.sources.append(camera)
-                            print("READ IP")
-                        else:
-                            print("READ ERR")
 
                     if op.name == "Webcam input":
                         id = int(op.numberInputs[0].value)
@@ -848,7 +834,6 @@ class sky_operator:  # main class responsible for running operations
                 pass
 
         # return self.frameOptions
-        print("RETURNINGOPTOINS -",self.frameOptions)
         if self.frameOptions != "":
             return self.frameOptions
         return "<option value=None>No Available Options</option>"
