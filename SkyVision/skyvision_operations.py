@@ -2,6 +2,7 @@ from skyvision import *
 from SkyVision_Tools import *
 from flask import *
 import cv2
+import numpy as np
 
 sky_operations = {  # sky operation is a dictionary that defines the inputs each operation has
 
@@ -266,6 +267,8 @@ class sky_operator:  # main class responsible for running operations
     def __init__(self):
         self.operations = []  # array of blocks (operations)
         self.sources = []  # array of cameras
+        self.frames = []
+        self.frameOptions = "<option value=None>No Available Options</option>"
         self.inCounter = 0  # differ between inputs
         self.values = {}  # dictionary of all values
 
@@ -713,7 +716,7 @@ class sky_operator:  # main class responsible for running operations
                         for circ in circles[0]:
                             distance = onemeter / circ[2]
 
-                            print("Dist - " + str(distance) + "[", onemeter, circ[2], "]")
+                            # print("Dist - " + str(distance) + "[", onemeter, circ[2], "]")
 
 
 
@@ -768,30 +771,33 @@ class sky_operator:  # main class responsible for running operations
     def update(self):  # process operations when update is pressed
 
         self.inCounter = len(self.values.values())
-
         print("UPDATING")
 
         self.sources.clear()
+        self.frames.clear()
 
         for op in self.operations:  # update the counter used for addnum
-            for t_in in op.textInputs:
-                t_in.value = request.form[t_in.inName]
-                self.inCounter += 1
-            for n_in in op.numberInputs:
-                n_in.value = request.form[n_in.inName]
-                self.inCounter += 1
-            for r_in in op.radioInputs:
-                r_in.value = request.form[r_in.inName]
-                self.inCounter += 1
-            for c_in in op.checkboxInputs:
-                c_in.value = request.form.getlist(c_in.inName)
-                self.inCounter += 1
-            for clr_in in op.colorInputs:
-                clr_in.value = request.form[clr_in.inName]
-                self.inCounter += 1
-            for var_out in op.variableOutputs:
-                var_out.value = request.form[var_out.inName]
-                self.inCounter += 1
+            try:
+                for t_in in op.textInputs:
+                    t_in.value = request.form[t_in.inName]
+                    self.inCounter += 1
+                for n_in in op.numberInputs:
+                    n_in.value = request.form[n_in.inName]
+                    self.inCounter += 1
+                for r_in in op.radioInputs:
+                    r_in.value = request.form[r_in.inName]
+                    self.inCounter += 1
+                for c_in in op.checkboxInputs:
+                    c_in.value = request.form.getlist(c_in.inName)
+                    self.inCounter += 1
+                for clr_in in op.colorInputs:
+                    clr_in.value = request.form[clr_in.inName]
+                    self.inCounter += 1
+                for var_out in op.variableOutputs:
+                    var_out.value = request.form[var_out.inName]
+                    self.inCounter += 1
+            except:
+                pass
 
             try:
                 if op.type == OperationType.INPUT:  # INPUT OPERATIONS
@@ -824,6 +830,26 @@ class sky_operator:  # main class responsible for running operations
                     pass
             except:
                 pass
-
         self.process()
+        self.updateOutputOptions()
+
+    def updateOutputOptions(self):
+        self.frameOptions = ""
+        for key in self.values:
+            if isinstance(self.values[key],np.ndarray):
+                if len(np.shape(self.values[key])) >= 2 <= 3:
+                    self.frames.append(key)
+                    self.frameOptions += "<option value=\"" + key + "\" style=\"background-color:#525252;\">" + key + "</option>"
+                else:
+                    # Add to correct values frame
+                    pass
+            elif isinstance(self.values[key],list):
+                # Add to correct values frame
+                pass
+
+        # return self.frameOptions
+        print("RETURNINGOPTOINS -",self.frameOptions)
+        if self.frameOptions != "":
+            return self.frameOptions
+        return "<option value=None>No Available Options</option>"
 # End

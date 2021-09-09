@@ -22,12 +22,21 @@
                 </div><br>
                 
                 <div style="border-radius:25px;height:10%;">
-                    <label style="color: #ebebeb; font-size: 26px;padding-right: 25px;"> Selected Output : </label><input type="text" value={{ curr_out }} name="outID" style="background-color: #373737;color: #ebebeb;font-size: 26px;padding-left: 25px;"/>
+                    <label style="color: #ebebeb; font-size: 26px;padding-right: 25px;"> Selected Output : </label>
+
+                    <!-- <input type="text" value={{ curr_out }} name="outID" style="background-color: #373737;color: #ebebeb;font-size: 26px;padding-left: 25px;"/> -->
+                    <select name="outID" style="background: #282828; color: #ebebeb;font-size: 26px;">
+                        <option value={{ curr_out }} selected hidden style="background-color:#525252;">
+                            {{ curr_out }}
+                        </option>
+                        {{ out_select_options | safe }}
+                    </select>
+                    
                     <br><br>
                     <div style="text-align: center;padding-top: 5px;">
-                        <input type="submit" name="action" value="Update" style="font-size: 25px;margin-right: 15px;color: #ebebeb;background-color:#525252" />>
+                        <input type="submit" name="action" value="Update" style="font-size: 25px;margin-right: 15px;color: #ebebeb;background-color:#525252" />
                         <input type="submit" name="action" value="Save" style="font-size: 25px;margin-left: 15px;color: #ebebeb;background-color:#525252" />
-                        <input type="submit" name="action" value="WindowMode" style="font-size: 25px;margin-left: 15px;color: #ebebeb;background-color:#525252" />
+                        <!-- <input type="submit" name="action" value="WindowMode" style="font-size: 25px;margin-left: 15px;color: #ebebeb;background-color:#525252" /> -->
                     </div>
 
                 </div><br>

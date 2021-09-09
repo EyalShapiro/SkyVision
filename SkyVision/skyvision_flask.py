@@ -13,7 +13,7 @@ required_out = "None"  # Current frame that will be drawn on screen
 error_pic = cv2.imread("ERR.jpg")  # The frame that will be used for drawing when there is an error
 
 windowMode = False
-
+outputOptions = ""
 
 def generate():  # generates the output frame
     # cv2.destroyAllWindows()
@@ -73,6 +73,7 @@ def video_feed():
 @app.route("/", methods=['GET', 'POST'])  # route for main page, allows for GET and POST requests
 def home():  # home page
     global required_out
+    global outputOptions
     # cv2.destroyAllWindows()
     if request.method == "GET":  # if entered page regularly
         try:
@@ -150,8 +151,12 @@ def home():  # home page
             print("Unable to located \"Session.json\"")  # print error if failed to open session.json
 
         session.permanent = True  # Make sure the session will never clear itself
+        operator.update()
+        if len(operator.frames) > 0:
+            required_out = operator.frames[0]
+        outputOptions = operator.frameOptions
         return render_template("mainhtml.html", ops=operator.operations,
-                               curr_out=required_out)  # returns the main html with the array of operations
+                               curr_out=required_out, out_select_options=outputOptions)  # returns the main html with the array of operations
 
     elif request.method == "POST":  # if got to the website from a press of button
         try:
@@ -160,12 +165,14 @@ def home():  # home page
             if request.form["action"] == "Save":  # If the saved button is pressed
                 required_out = request.form["outID"]  # set required frame
                 operator.update()  # activate all operations and update values
+                outputOptions = operator.frameOptions
                 save_session()  # save again ( with set values )
 
             elif request.form["action"] == "Update":  # if update is pressed
                 required_out = request.form["outID"]  # set required frame
                 print("Req Out is", required_out)
                 operator.update()  # activate all operations and set values
+                outputOptions = operator.frameOptions
 
             elif submit == "Delete":
                 value = int((request.form["action"])[6:])
@@ -193,7 +200,7 @@ def home():  # home page
             pass
 
         return render_template("mainhtml.html", ops=operator.operations,
-                               curr_out=required_out)  # return the html page with all the operations
+                               curr_out=required_out,out_select_options = outputOptions)  # return the html page with all the operations
 
 
 def add_operation(operation_name):  # add a new operation
