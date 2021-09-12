@@ -74,11 +74,27 @@ def video_feed():
 def home():  # home page
     global required_out
     global outputOptions
+    saveName = 'session'
+    f = open("lastSession.txt", "r+")
+    
+    print("A")
+    tmpName = request.args.get('save')
+    print("B",tmpName)
+    if tmpName != None and tmpName != '' and tmpName != 'None':
+        print("AaAAAA",tmpName)
+        saveName = tmpName
+        f.write(saveName)
+    else:
+        print("ELSE",type(tmpName))
+        saveName = f.read()
+
+    f.close()
     # cv2.destroyAllWindows()
     if request.method == "GET":  # if entered page regularly
+        operator.operations.clear()
         try:
             required_out = "None"  # set the required output frame to "None"
-            with open('session.json') as json_file:  # open the saved file
+            with open('session_'+str(saveName)+'.json') as json_file:  # open the saved file
                 operator.operations.clear()  # clear all loaded operations
                 data = json.load(json_file)  # get the json data
                 temp_operations = data["operations"]  # load operations from the json file
@@ -148,7 +164,7 @@ def home():  # home page
                     operator.operations.append(op)  # create an operation from all created inputs
             pass
         except:
-            print("Unable to located \"Session.json\"")  # print error if failed to open session.json
+            print("Unable to located \"session_"+str(saveName)+".json'\"")  # print error if failed to open session.json
 
         session.permanent = True  # Make sure the session will never clear itself
         operator.update()
@@ -156,7 +172,7 @@ def home():  # home page
             required_out = operator.frames[0]
         outputOptions = operator.frameOptions
         return render_template("mainhtml.html", ops=operator.operations,
-                               curr_out=required_out, out_select_options=outputOptions)  # returns the main html with the array of operations
+                               curr_out=required_out, out_select_options=outputOptions,currFile=saveName)  # returns the main html with the array of operations
 
     elif request.method == "POST":  # if got to the website from a press of button
         try:
@@ -170,9 +186,13 @@ def home():  # home page
 
             elif request.form["action"] == "Update":  # if update is pressed
                 required_out = request.form["outID"]  # set required frame
-                print("Req Out is", required_out)
                 operator.update()  # activate all operations and set values
                 outputOptions = operator.frameOptions
+
+            elif request.form["action"] == "Load":  # if Load is pressed
+                saveName = request.form["loadedFile"] # set file
+                return redirect(url_for('/',save=saveName))
+
 
             elif submit == "Delete":
                 value = int((request.form["action"])[6:])
@@ -220,7 +240,7 @@ def save_session():  # save the operations
     session["operations"] = operations_dict  # save operations to the session
 
     r = jsonify(dict(session))  # turn the session to json
-    with open("session.json", "w") as file:  # open the save file
+    with open('session_'+str(saveName)+'.json', "w") as file:  # open the save file
         file.write(r.get_data(as_text=True))  # write the session to the save file
         file.close()  # close the save file
         print("Saved Session")

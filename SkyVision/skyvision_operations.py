@@ -709,7 +709,7 @@ class sky_operator:  # main class responsible for running operations
                         onemeter = float(op.numberInputs[0].value)
                         for circ in circles[0]:
                             distance = onemeter / circ[2]
-                            # print("Dist - " + str(distance) + "[", onemeter, circ[2], "]")
+                            print("Dist - " + str(distance) + "[", onemeter, circ[2], "]")
             except:
                 pass
 

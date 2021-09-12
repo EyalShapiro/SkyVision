@@ -18,7 +18,14 @@
     <body style="overflow-x: hidden;">
 
         <div class="row" style="height: 100vh;">
-            <div class="col-md-1" style="background-color: #153772;">.col-md-1</div>
+            <div class="col-md-1" style="background-color: #153772;">
+                <form action="#" method="POST" autocomplete="off" id="mainForm">
+                    <label style="color:white">File:</label>
+                    <br/>
+                    <label style="color:white">{{ currFile | safe}}</label>
+                    
+                </form>
+            </div>
             <div class="col-md-11" style="background-color: #282828;height: 100%;">{% block content%} {% endblock %}</div>
             
         </div>
