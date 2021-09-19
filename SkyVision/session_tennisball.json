@@ -1,0 +1,895 @@
+{
+  "_permanent": true, 
+  "operations": [
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Webcam input", 
+      "number_in": [
+        {
+          "brake": true, 
+          "name": "webcamID9950223586531044684292443693136728658327247728585528826195295291652885938289910537499302927998592367934460318979600498915425277675932971839424511741197038857162283934942365868715371411032678944976767548046056224288794107936878479597573463445771640134752896759392", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Webcam ID", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "1"
+        }
+      ], 
+      "radio_in": [], 
+      "text_in": [], 
+      "type": 1, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "outName9950224586531144684302443694136728758327257728586528826295295391652985938299910538499303027998602367935460319079600508915426277676032971849424512741197138857172283944942366868715471411042678945976768548046156224298794108936878579597583463446771640234752906759393", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Output name", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "cam"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Convert color", 
+      "number_in": [], 
+      "radio_in": [
+        {
+          "brake": true, 
+          "direction": false, 
+          "name": "type35735513488243434836258082704993947576673030926862915669242777625063379913254592267606417991600854102546458595129079153666279459667994591810581547166471923895764039228746984289048062366929917894969968296374687320849917605388989572669821802588775040946749735235546", 
+          "optionTextStyle": "font-size:18px;color:#ebebeb;", 
+          "options": [
+            "BGR2HSV", 
+            "BGR2RGB", 
+            "BGR2GRAY", 
+            "HSV2RGB", 
+            "HSV2BGR", 
+            "GRAY2RGB"
+          ], 
+          "style": "margin-left:12px;", 
+          "text": "Type", 
+          "textStyle": "font-size:28px;color:#ebebeb;", 
+          "value": "BGR2HSV"
+        }
+      ], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src35735503488242434836158082694993946576672930926852915668242776625063279913244592266606417891600844102536458594129079053666269459666994591710581537166470923895664039218746983289047962366919917893969967296374587320839917604388989472669811802587775040846749725235545", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "cam"
+        }
+      ], 
+      "type": 4, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "outName35735523488244434836358082714993948576673130926872915670242778625063479913264592268606418091600864102556458596129079253666289459668994591910581557166472923895864039238746985289048162366939917895969969296374787320859917606388989672669831802589775041046749745235547", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Output name", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "hsv"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "MorphEx", 
+      "number_in": [
+        {
+          "brake": true, 
+          "name": "kernel6023398308766097028809844533403126298124843685283989209604720214693667136801525946375290715492437347343110191341797315568286590471597388063464875167025524629812530607247783018524944463784715873266277344371886646478145850939556880982318515243621292529750746253248232", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Kernel", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "5"
+        }, 
+        {
+          "brake": true, 
+          "name": "itr6023399308766197028819844534403126398124853685284989210604720314693677136802525946475290725492438347343210191351797316568286690471607388064464875267025534629813530607347783028524945463784815873276277345371886746478155850940556881082318525243622292529850746263248233", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Iterations", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "1"
+        }
+      ], 
+      "radio_in": [
+        {
+          "brake": true, 
+          "direction": false, 
+          "name": "type6023400308766297028829844535403126498124863685285989211604720414693687136803525946575290735492439347343310191361797317568286790471617388065464875367025544629814530607447783038524946463784915873286277346371886846478165850941556881182318535243623292529950746273248234", 
+          "optionTextStyle": "font-size:18px;color:#ebebeb;", 
+          "options": [
+            "Erosion", 
+            "Dilation", 
+            "Opening", 
+            "Closing"
+          ], 
+          "style": "margin-left:12px;", 
+          "text": "Type", 
+          "textStyle": "font-size:28px;color:#ebebeb;", 
+          "value": "Closing"
+        }
+      ], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src6023397308765997028799844532403126198124833685282989208604720114693657136800525946275290705492436347343010191331797314568286490471587388062464875067025514629811530607147783008524943463784615873256277343371886546478135850938556880882318505243620292529650746243248231", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "hsv"
+        }
+      ], 
+      "type": 2, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "outName6023401308766397028839844536403126598124873685286989212604720514693697136804525946675290745492440347343410191371797318568286890471627388066464875467025554629815530607547783048524947463785015873296277347371886946478175850942556881282318545243624292530050746283248235", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Output name", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "hsv"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [
+        {
+          "brake": true, 
+          "name": "lower8091420305898497039411216625310511286089976993071243746955084801613550702698780107238859383610902698563793662880008742765829260946946336566257535812474461393526130577245535504558580291728267987465283169337480077429349161214689663613766561916780550436296502991733", 
+          "style": "", 
+          "text": "Lower", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "#1c1a17"
+        }, 
+        {
+          "brake": true, 
+          "name": "higher8091421305898597039421216626310511386089986993072243747055084811613551702699780107338859483610912698564793663880008842765839260947946336666257545812475461393626130587245536504558680291828267997465284169337580077439349162214689763613776561917780550536296512991734", 
+          "style": "", 
+          "text": "Higher", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "#2bff00"
+        }
+      ], 
+      "name": "Color Mask", 
+      "number_in": [], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src8091419305898397039401216624310511186089966993070243746855084791613549702697780107138859283610892698562793661880008642765819260945946336466257525812473461393426130567245534504558480291628267977465282169337380077419349160214689563613756561915780550336296492991732", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "hsv"
+        }
+      ], 
+      "type": 4, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "outName8091422305898697039431216627310511486089996993073243747155084821613552702700780107438859583610922698565793664880008942765849260948946336766257555812476461393726130597245537504558780291928268007465285169337680077449349163214689863613786561918780550636296522991735", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Output name", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "mask"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Bitwise AND", 
+      "number_in": [], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src1205144097102706731576035824101503718398115155153367695515985329068556900356470795140998888303304618022822306348161371551187146663011443657007182367013673715946863218858177374790238599745736512838853611494318555718602569647517477302144710160034871288657259785", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Source 1", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "cam"
+        }, 
+        {
+          "brake": true, 
+          "name": "src2205154097103706731676035834101504718398215155163367696515985429068566900357470795240998898303305618023822306448161471551197146673011444657007282367023673716946863318858187374791238599845736522838953611594318565718603569647617477312144711160034971288667259786", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Source 2", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "cam"
+        }, 
+        {
+          "brake": true, 
+          "name": "mask205164097104706731776035844101505718398315155173367697515985529068576900358470795340998908303306618024822306548161571551207146683011445657007382367033673717946863418858197374792238599945736532839053611694318575718604569647717477322144712160035071288677259787", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Mask", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "mask"
+        }
+      ], 
+      "type": 3, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "outName205174097105706731876035854101506718398415155183367698515985629068586900359470795440998918303307618025822306648161671551217146693011446657007482367043673718946863518858207374793238600045736542839153611794318585718605569647817477332144713160035171288687259788", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Output name", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "masked"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "MorphEx", 
+      "number_in": [
+        {
+          "brake": true, 
+          "name": "kernel190249172600214201124553777067071574686059600586426991766647326057821436914993409746810814169747856970814497427103347", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Kernel", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "3"
+        }, 
+        {
+          "brake": true, 
+          "name": "itr190249272600224201125553777167071674686069600587426991866647336057822436915093409756810815169748856970914497437103348", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Iterations", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "5"
+        }
+      ], 
+      "radio_in": [
+        {
+          "brake": true, 
+          "direction": false, 
+          "name": "type190249372600234201126553777267071774686079600588426991966647346057823436915193409766810816169749856971014497447103349", 
+          "optionTextStyle": "font-size:18px;color:#ebebeb;", 
+          "options": [
+            "Erosion", 
+            "Dilation", 
+            "Opening", 
+            "Closing"
+          ], 
+          "style": "margin-left:12px;", 
+          "text": "Type", 
+          "textStyle": "font-size:28px;color:#ebebeb;", 
+          "value": "Opening"
+        }
+      ], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src190249072600204201123553776967071474686049600585426991666647316057820436914893409736810813169746856970714497417103346", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "masked"
+        }
+      ], 
+      "type": 2, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "outName190249472600244201127553777367071874686089600589426992066647356057824436915293409776810817169750856971114497457103350", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Output name", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "masked"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Convert color", 
+      "number_in": [], 
+      "radio_in": [
+        {
+          "brake": true, 
+          "direction": false, 
+          "name": "type4097624382227249370103056611638785054088105693428687004031024414583401923884513718731037653116336991491287577305840759747078656054397711860840963618347112963308110831862572577106154641342291372185956537", 
+          "optionTextStyle": "font-size:18px;color:#ebebeb;", 
+          "options": [
+            "BGR2HSV", 
+            "BGR2RGB", 
+            "BGR2GRAY", 
+            "HSV2RGB", 
+            "HSV2BGR", 
+            "GRAY2RGB"
+          ], 
+          "style": "margin-left:12px;", 
+          "text": "Type", 
+          "textStyle": "font-size:28px;color:#ebebeb;", 
+          "value": "BGR2GRAY"
+        }
+      ], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src4097623382227149370093056610638784954088095693427687003931024404583400923884413718721037643116335991491187577295840758747078556054387711859840963518347102963307110831762572567106153641342191372175956536", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "masked"
+        }
+      ], 
+      "type": 4, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "outName4097625382227349370113056612638785154088115693429687004131024424583402923884613718741037663116337991491387577315840760747078756054407711861840963718347122963309110831962572587106155641342391372195956538", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Output name", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "masked"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Canny", 
+      "number_in": [
+        {
+          "brake": true, 
+          "name": "thres177854813683378491105177993850621623711362935664394511746917039283382115062724195108171106965143342346825662529070", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Threshold 1", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "70"
+        }, 
+        {
+          "brake": true, 
+          "name": "thres277854823683478492105178093850631623712362935764394611746927039284382115162724205108181106966143342446825672529071", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Threshold 2", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "200"
+        }
+      ], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src77854803683278490105177893850611623710362935564394411746907039282382114962724185108161106964143342246825652529069", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "masked"
+        }
+      ], 
+      "type": 4, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "out77854833683578493105178193850641623713362935864394711746937039285382115262724215108191106967143342546825682529072", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Output", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "canny"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Find Contours", 
+      "number_in": [], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src303608340617022080397982680713646223560253512577590590371818383265635223865777112361890095043260809656279707437832931100419747825659213898", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "masked"
+        }
+      ], 
+      "type": 4, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "outName303608440617122080407982681713646323560263512578590590471818393265636223865877112461890105043261809656379707447832932100419847825669213899", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Output name", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "cnts"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Minimum Contour Area", 
+      "number_in": [
+        {
+          "brake": true, 
+          "name": "area1571053889672154023469529850981413171460638763101482371241885268872346265861891509248964392605632825382423672544895299989217564710949820495825073410984914973474990482021107132429364127485659004195387249189925102522", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Area", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "2000"
+        }
+      ], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src1571052889672054023459529849981413071460628763100482371141885258872345265861791509238964391605632725382413672534895298989217464710939820494825072410984814973374990472021106132429264127475659003195387149189915102521", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "cnts"
+        }
+      ], 
+      "type": 6, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "out1571054889672254023479529851981413271460648763102482371341885278872347265861991509258964393605632925382433672554895300989217664710959820496825074410985014973574990492021108132429464127495659005195387349189935102523", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Output", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "cnts"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Convex Hull", 
+      "number_in": [], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "cnt632922957271975864843956035450878919504003329906934600954381453609331181534293052090579395893552634013038609803641356506311148401508159411111074543457385677156611492404084771986127945824", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Contours", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "cnts"
+        }
+      ], 
+      "type": 6, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "out632923057271985864844956035550878929504004329907034600964381454609331281534303052091579395993552644013039609803741356516311149401518159412111074643457485677166611493404084871986137945825", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Output", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "hulls"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Square Contours", 
+      "number_in": [
+        {
+          "brake": true, 
+          "name": "thres1886935798056874972067471532422739455730073757469374447729693799937495308638929945897524274411424322843727133777367626926451245365978532557040301780426234672243970386320922794508", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Threshold", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "0.7"
+        }
+      ], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "cnt1886934798055874971967471522422738455729973757459374446729693699937395308628929944897524174411414322833727132777367526926441245364978532457040291780425234672143970376320912794507", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Contours", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "hulls"
+        }
+      ], 
+      "type": 6, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "out1886936798057874972167471542422740455730173757479374448729693899937595308648929946897524374411434322853727134777367726926461245366978532657040311780427234672343970396320932794509", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Output", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "hulls"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "ApproxPolyDP", 
+      "number_in": [
+        {
+          "brake": true, 
+          "name": "min2575031609345457980303487812156136353725682322711958347772625597059037103316699103425699991380604757111343471222191005390247263512126467367649000014762234723701318173429995946358742895353177323904176013638958761426295", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Minimum Sides", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "8"
+        }
+      ], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "cnt2575030609345357980293487811156136253725672322710958347672625587059036103316599103415699990380604657111333471221191005290247253512125467367549000004762233723701218173419995945358742795353167323903176013538958751426294", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Contours", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "hulls"
+        }
+      ], 
+      "type": 6, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "out2575032609345557980313487813156136453725692322712958347872625607059038103316799103435699992380604857111353471223191005490247273512127467367749000024762235723701418173439995947358742995353187323905176013738958771426296", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Output", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "hulls"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Blank Image", 
+      "number_in": [], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src8868266801542870380179024017763363420454307036062782462647847913092257946798920626320292025693711740997425406", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "cam"
+        }
+      ], 
+      "type": 6, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "cntOut8868276801543870380279024117763373420455307036162782472647848913092357946808920627320292125693811741007425407", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Output name", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "blank"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [
+        {
+          "brake": true, 
+          "name": "clr778928651305549716951428793417936538928496517604086588549688728921315441661656144215222184127746268377067614355754464646707536602553022387039153553452310535087849602169612717905553813069684826784941951496074632940637219538175875642291781", 
+          "style": "", 
+          "text": "Color", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "#ffffff"
+        }
+      ], 
+      "name": "Draw Contours", 
+      "number_in": [
+        {
+          "brake": true, 
+          "name": "thick778928551305539716950428793317936528928495517603986588539688727921315341661646144214222184027746258377066614355654464636707535602552922387029153552452310435087839602168612716905553713069674826783941951396074622940636219538075875632291780", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Thickness", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "-1"
+        }
+      ], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src778928351305519716948428793117936508928493517603786588519688725921315141661626144212222183827746238377064614355454464616707533602552722387009153550452310235087819602166612714905553513069654826781941951196074602940634219537875875612291778", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "blank"
+        }, 
+        {
+          "brake": true, 
+          "name": "cnt778928451305529716949428793217936518928494517603886588529688726921315241661636144213222183927746248377065614355554464626707534602552822387019153551452310335087829602167612715905553613069664826782941951296074612940635219537975875622291779", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Contours", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "cnts"
+        }
+      ], 
+      "type": 5, 
+      "var_out": []
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [
+        {
+          "brake": true, 
+          "name": "clr29690122778824752163526950222077205810275260291643380798380726874229369346649053649962465230597667492023930349510448873971395550087853830731460859600878441956692170831252463990814254726290", 
+          "style": "", 
+          "text": "Color", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "#ff7b00"
+        }
+      ], 
+      "name": "Draw Contours", 
+      "number_in": [
+        {
+          "brake": true, 
+          "name": "thick29690112778823752163426950212077204810275160291633380797380726774229269346639053648962465130597657492022930349410448863971394550087753830721460858600878341956682170830252463890814244726289", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Thickness", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "10"
+        }
+      ], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src29690092778821752163226950192077202810274960291613380795380726574229069346619053646962464930597637492020930349210448843971392550087553830701460856600878141956662170828252463690814224726287", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "cam"
+        }, 
+        {
+          "brake": true, 
+          "name": "cnt29690102778822752163326950202077203810275060291623380796380726674229169346629053647962465030597647492021930349310448853971393550087653830711460857600878241956672170829252463790814234726288", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Contours", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "hulls"
+        }
+      ], 
+      "type": 5, 
+      "var_out": []
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Convert color", 
+      "number_in": [], 
+      "radio_in": [
+        {
+          "brake": true, 
+          "direction": false, 
+          "name": "type6551905954626923027168995958494029836943636724699805563397256251108258115507424721240549156548017", 
+          "optionTextStyle": "font-size:18px;color:#ebebeb;", 
+          "options": [
+            "BGR2HSV", 
+            "BGR2RGB", 
+            "BGR2GRAY", 
+            "HSV2RGB", 
+            "HSV2BGR", 
+            "GRAY2RGB"
+          ], 
+          "style": "margin-left:12px;", 
+          "text": "Type", 
+          "textStyle": "font-size:28px;color:#ebebeb;", 
+          "value": "BGR2GRAY"
+        }
+      ], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src6551904954626823027158995957494029736943536724689805562397256151108248115506424721140549146548016", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "blank"
+        }
+      ], 
+      "type": 4, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "outName6551906954627023027178995959494029936943736724709805564397256351108268115508424721340549166548018", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Output name", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "blank"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Hough Circles", 
+      "number_in": [
+        {
+          "brake": true, 
+          "name": "dp1724335481765706226798136433934960741524460826534733657632863424924239538037276413839535392642543", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "dp", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "1"
+        }, 
+        {
+          "brake": true, 
+          "name": "md1725335482765707226798236433944960751524461826534833657642863425924239638037286413849535402642544", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "minDist", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "200"
+        }, 
+        {
+          "brake": true, 
+          "name": "ht1726335483765708226798336433954960761524462826534933657652863426924239738037296413859535412642545", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Higher Threshold", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "300"
+        }, 
+        {
+          "brake": true, 
+          "name": "at1727335484765709226798436433964960771524463826535033657662863427924239838037306413869535422642546", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Accumulator Threshold", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "10"
+        }, 
+        {
+          "brake": true, 
+          "name": "minr1728335485765710226798536433974960781524464826535133657672863428924239938037316413879535432642547", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Minimum Radius", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "50"
+        }, 
+        {
+          "brake": true, 
+          "name": "maxr1729335486765711226798636433984960791524465826535233657682863429924240038037326413889535442642548", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Maximum Radius", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "200"
+        }
+      ], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src1723335480765705226798036433924960731524459826534633657622863423924239438037266413829535382642542", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "blank"
+        }
+      ], 
+      "type": 6, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "out1730335487765712226798736433994960801524466826535333657692863430924240138037336413899535452642549", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Output", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "circls"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Average Circle Radius", 
+      "number_in": [], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src7373711207714678931329695253385048853157552753253257764777713322793495", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "circls"
+        }
+      ], 
+      "type": 6, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "out7373712207714778931339695254385048953157562753254257764877713332793496", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Output", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "circls"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [
+        {
+          "brake": true, 
+          "name": "clr3891436996239520938375777879577697298194178492026801139429944748271477242045", 
+          "style": "", 
+          "text": "Color", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "#bb00ff"
+        }
+      ], 
+      "name": "Draw Found Circles", 
+      "number_in": [
+        {
+          "brake": true, 
+          "name": "num3891435996239420938365777878577697198194168492016801138429944648271467242044", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Thickness", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "20"
+        }
+      ], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src3891433996239220938345777876577696998194148491996801136429944448271447242042", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "cam"
+        }, 
+        {
+          "brake": true, 
+          "name": "circle3891434996239320938355777877577697098194158492006801137429944548271457242043", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Circles", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "circls"
+        }
+      ], 
+      "type": 5, 
+      "var_out": []
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Circle Coords", 
+      "number_in": [
+        {
+          "brake": true, 
+          "name": "onemeter80420022509830258842955823552971973190407169852", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Size at 1 meter", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "85"
+        }
+      ], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src80420012509829258841955823452971873190397169851", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "circles", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "circls"
+        }
+      ], 
+      "type": 6, 
+      "var_out": []
+    }
+  ]
+}

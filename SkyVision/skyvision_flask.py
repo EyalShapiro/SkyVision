@@ -77,15 +77,11 @@ def home():  # home page
     saveName = 'session'
     f = open("lastSession.txt", "r+")
     
-    print("A")
     tmpName = request.args.get('save')
-    print("B",tmpName)
     if tmpName != None and tmpName != '' and tmpName != 'None':
-        print("AaAAAA",tmpName)
         saveName = tmpName
         f.write(saveName)
     else:
-        print("ELSE",type(tmpName))
         saveName = f.read()
 
     f.close()
@@ -179,10 +175,15 @@ def home():  # home page
             submit = request.form["action"][:6]
             print("FOUND - " + request.form["action"])
             if request.form["action"] == "Save":  # If the saved button is pressed
+                print("SAVING_A")
                 required_out = request.form["outID"]  # set required frame
+                print("SAVING_B")
                 operator.update()  # activate all operations and update values
+                print("SAVING_C")
                 outputOptions = operator.frameOptions
-                save_session()  # save again ( with set values )
+                print("SAVING_D")
+                save_session(saveName)  # save again ( with set values )
+                print("SAVING_E")
 
             elif request.form["action"] == "Update":  # if update is pressed
                 required_out = request.form["outID"]  # set required frame
@@ -231,7 +232,7 @@ def add_operation(operation_name):  # add a new operation
     operator.operations.append(new_op)  # add the new operation to the array of operations
 
 
-def save_session():  # save the operations
+def save_session(saveName):  # save the operations
     print("Saving Session")
     operations_dict = []  # initialize operation_dict
     for op in operator.operations:

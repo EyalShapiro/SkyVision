@@ -708,9 +708,38 @@ class sky_operator:  # main class responsible for running operations
                         circles = self.values[circs]
                         onemeter = float(op.numberInputs[0].value)
                         for circ in circles[0]:
-                            distance = onemeter / circ[2]
-                            print("Dist - " + str(distance) + "[", onemeter, circ[2], "]")
-            except:
+
+                            # distance = onemeter / circ[2]
+                            # print("Dist - " + str(distance) + "[", onemeter, circ[2], "]")
+                            # print(circ)
+                            Resolution = (1280,720)
+                            F_Length =  10
+                            Dot_Pitch = 9.84375
+                            hFOV = 60
+
+                            S_Width = Dot_Pitch * Resolution[1]# in um
+                            S_Width = S_Width / 1000 # in mm
+                            F_Pix = (1280 / S_Width) * F_Length
+
+                            K = np.array([[F_Pix,0,Resolution[0] / 2],[0,F_Pix,Resolution[1] / 2],[0,0,1]]) # pinhole camera matrix
+
+                            def FrameToWorldRay(Fx,Fy):
+                                Ki = np.linalg.inv(K)
+                                r = Ki.dot([Fx,Fy,1])
+                                return r # a "ray" in the sense that all the 3D points R = s * r, obtained by multiplying it for an arbitrary number s, will lie on the same line going through the camera center and pixel (x, y).
+
+                            def RaysToAngle(R1,R2): # calculate the angle between two rays using advanced math none of us understand. It is theoretically possible to find the 3D coords of a point and use simple trigonometry, but this looks nicer.
+                                cos_angle = R1.dot(R2) / (np.linalg.norm(R1) * np.linalg.norm(R2))
+                                angle_radians = np.arccos(cos_angle)
+                                return angle_radians
+                            
+                            
+                            final_angle = np.degrees(RaysToAngle(FrameToWorldRay(circ[0],Resolution[1]/2),FrameToWorldRay(Resolution[0]/2,Resolution[1]/2)))
+                            final_angle = final_angle/20 * hFOV
+                            final_angle = 90 - (final_angle - (hFOV / 2))
+                            print(final_angle)
+            except Exception as e:
+                # print(e)
                 pass
 
     def MoveUP(self, num):  # move operation up
