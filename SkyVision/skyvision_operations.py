@@ -80,8 +80,8 @@ sky_operations = {  # sky operation is a dictionary that defines the inputs each
                                  operation_TextInput("src1", "Source 1"),
                                  operation_TextInput("src2", "Source 2"),
                                  operation_TextInput("mask", "Mask"),
-                             ]
-                             , variable_outputs=[operation_TextInput("outName", "Output name")]
+                             ],
+                             variable_outputs=[operation_TextInput("outName", "Output name")]
                              ),
 
     "Find Contours": operation("Find Contours", OperationType.COLORS,
@@ -597,7 +597,7 @@ class sky_operator:  # main class responsible for running operations
                         outcnts = []
                         for cnt in contours:
                             currarea = cv2.contourArea(cnt)
-                            if (currarea > area):
+                            if currarea > area:
                                 outcnts.append(cnt)
 
                         self.values[op.variableOutputs[0].value] = outcnts
@@ -655,7 +655,7 @@ class sky_operator:  # main class responsible for running operations
                         contour_list = []
                         for contour in contours:
                             approx = cv2.approxPolyDP(contour, 0.01 * cv2.arcLength(contour, True), True)
-                            if ((len(approx) >= minsides and len(approx) <= maxsides)):
+                            if minsides <= len(approx) <= maxsides:
                                 contour_list.append(contour)
 
                         self.values[op.variableOutputs[0].value] = contour_list
@@ -679,7 +679,7 @@ class sky_operator:  # main class responsible for running operations
                         for i in range(len(contours)):
                             _, _, w, h = cv2.boundingRect(contours[i])
 
-                            if (w >= h * thres and w <= h * ((1 - thres) + 1)):
+                            if h * thres <= w <= h * ((1 - thres) + 1):
                                 cnt_list.append(contours[i])
                         self.values[op.variableOutputs[0].value] = cnt_list
 
@@ -699,7 +699,7 @@ class sky_operator:  # main class responsible for running operations
                         avg = csum / ccounter
 
                         for circle in circles:
-                            if (circle[2] >= avg):
+                            if circle[2] >= avg:
                                 circle_list.append(circle)
                         self.values[op.variableOutputs[0].value] = circle_list
 
@@ -708,34 +708,35 @@ class sky_operator:  # main class responsible for running operations
                         circles = self.values[circs]
                         onemeter = float(op.numberInputs[0].value)
                         for circ in circles[0]:
-
                             # distance = onemeter / circ[2]
                             # print("Dist - " + str(distance) + "[", onemeter, circ[2], "]")
                             # print(circ)
-                            Resolution = (1280,720)
-                            F_Length =  10
+                            Resolution = (1280, 720)
+                            F_Length = 10
                             Dot_Pitch = 9.84375
                             hFOV = 60
 
-                            S_Width = Dot_Pitch * Resolution[1]# in um
-                            S_Width = S_Width / 1000 # in mm
+                            S_Width = Dot_Pitch * Resolution[1]  # in um
+                            S_Width = S_Width / 1000  # in mm
                             F_Pix = (1280 / S_Width) * F_Length
 
-                            K = np.array([[F_Pix,0,Resolution[0] / 2],[0,F_Pix,Resolution[1] / 2],[0,0,1]]) # pinhole camera matrix
+                            K = np.array([[F_Pix, 0, Resolution[0] / 2], [0, F_Pix, Resolution[1] / 2],
+                                          [0, 0, 1]])  # pinhole camera matrix
 
-                            def FrameToWorldRay(Fx,Fy):
+                            def FrameToWorldRay(Fx, Fy):
                                 Ki = np.linalg.inv(K)
-                                r = Ki.dot([Fx,Fy,1])
-                                return r # a "ray" in the sense that all the 3D points R = s * r, obtained by multiplying it for an arbitrary number s, will lie on the same line going through the camera center and pixel (x, y).
+                                r = Ki.dot([Fx, Fy, 1])
+                                return r  # a "ray" in the sense that all the 3D points R = s * r, obtained by multiplying it for an arbitrary number s, will lie on the same line going through the camera center and pixel (x, y).
 
-                            def RaysToAngle(R1,R2): # calculate the angle between two rays using advanced math none of us understand. It is theoretically possible to find the 3D coords of a point and use simple trigonometry, but this looks nicer.
+                            def RaysToAngle(R1,
+                                            R2):  # calculate the angle between two rays using advanced math none of us understand. It is theoretically possible to find the 3D coords of a point and use simple trigonometry, but this looks nicer.
                                 cos_angle = R1.dot(R2) / (np.linalg.norm(R1) * np.linalg.norm(R2))
                                 angle_radians = np.arccos(cos_angle)
                                 return angle_radians
-                            
-                            
-                            final_angle = np.degrees(RaysToAngle(FrameToWorldRay(circ[0],Resolution[1]/2),FrameToWorldRay(Resolution[0]/2,Resolution[1]/2)))
-                            final_angle = final_angle/20 * hFOV
+
+                            final_angle = np.degrees(RaysToAngle(FrameToWorldRay(circ[0], Resolution[1] / 2),
+                                                                 FrameToWorldRay(Resolution[0] / 2, Resolution[1] / 2)))
+                            final_angle = final_angle / 20 * hFOV
                             final_angle = 90 - (final_angle - (hFOV / 2))
                             print(final_angle)
             except Exception as e:
@@ -851,14 +852,14 @@ class sky_operator:  # main class responsible for running operations
     def updateOutputOptions(self):
         self.frameOptions = ""
         for key in self.values:
-            if isinstance(self.values[key],np.ndarray):
+            if isinstance(self.values[key], np.ndarray):
                 if len(np.shape(self.values[key])) >= 2 <= 3:
                     self.frames.append(key)
                     self.frameOptions += "<option value=\"" + key + "\" style=\"background-color:#525252;\">" + key + "</option>"
                 else:
                     # Add to correct values frame
                     pass
-            elif isinstance(self.values[key],list):
+            elif isinstance(self.values[key], list):
                 # Add to correct values frame
                 pass
 

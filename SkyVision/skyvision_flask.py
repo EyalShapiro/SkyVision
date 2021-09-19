@@ -15,6 +15,7 @@ error_pic = cv2.imread("ERR.jpg")  # The frame that will be used for drawing whe
 windowMode = False
 outputOptions = ""
 
+
 def generate():  # generates the output frame
     # cv2.destroyAllWindows()
     time.sleep(3)  # delay to allow for camera reconnection
@@ -24,7 +25,7 @@ def generate():  # generates the output frame
 
         try:  # try to set the output frame to the required frame
             selected_out = outputs[required_out]  # set the output to the required frame
-        except:  # if setting output frame fales, set it to the error pic
+        except:  # if setting output frame false, set it to the error pic
             selected_out = error_pic  # set the output frame to the error pic
 
         if selected_out is None:
@@ -47,7 +48,7 @@ def generateWindow():  # generates the output frame
 
         try:  # try to set the output frame to the required frame
             selected_out = outputs[required_out]  # set the output to the required frame
-        except:  # if setting output frame fales, set it to the error pic
+        except:  # if setting output frame false, set it to the error pic
             selected_out = error_pic  # set the output frame to the error pic
 
         if selected_out is None:
@@ -76,9 +77,9 @@ def home():  # home page
     global outputOptions
     saveName = 'session'
     f = open("lastSession.txt", "r+")
-    
+
     tmpName = request.args.get('save')
-    if tmpName != None and tmpName != '' and tmpName != 'None':
+    if tmpName is not None and tmpName != '' and tmpName != 'None':
         saveName = tmpName
         f.write(saveName)
     else:
@@ -90,7 +91,7 @@ def home():  # home page
         operator.operations.clear()
         try:
             required_out = "None"  # set the required output frame to "None"
-            with open('session_'+str(saveName)+'.json') as json_file:  # open the saved file
+            with open('session_' + str(saveName) + '.json') as json_file:  # open the saved file
                 operator.operations.clear()  # clear all loaded operations
                 data = json.load(json_file)  # get the json data
                 temp_operations = data["operations"]  # load operations from the json file
@@ -99,25 +100,25 @@ def home():  # home page
                 cc = 0
                 for op in temp_operations:  # for operation in loaded operations
 
-                    textinputs = []  # all text inputs in the loaded operation
+                    text_inputs = []  # all text inputs in the loaded operation
                     for temp_input in op["text_in"]:
-                        textinputs.append(
+                        text_inputs.append(
                             operation_TextInput(temp_input["name"], temp_input["text"], temp_input["style"],
                                                 temp_input["textStyle"], temp_input["value"],
                                                 temp_input["brake"]))  # create a operation_TextInput from loaded data
                         counter += 1
 
-                    numinputs = []  # all number inputs in the loaded operation
+                    num_inputs = []  # all number inputs in the loaded operation
                     for temp_input in op["number_in"]:
-                        numinputs.append(
+                        num_inputs.append(
                             operation_NumberInput(temp_input["name"], temp_input["text"], temp_input["style"],
                                                   temp_input["textStyle"], temp_input["value"], temp_input[
                                                       "brake"]))  # create a operation_NumberInput from loaded data
                         counter += 1
 
-                    radinputs = []  # all radio inputs in the loaded operation
+                    rad_inputs = []  # all radio inputs in the loaded operation
                     for temp_input in op["radio_in"]:
-                        radinputs.append(
+                        rad_inputs.append(
                             operation_RadioInput(temp_input["name"], temp_input["text"], temp_input["options"],
                                                  temp_input["style"], temp_input["textStyle"],
                                                  temp_input["optionTextStyle"], temp_input["value"],
@@ -125,9 +126,9 @@ def home():  # home page
                                                  temp_input["brake"]))  # create a operation_RadioInput from loaded data
                         counter += 1
 
-                    checkinputs = []  # all checkbox inputs in the loaded operation
+                    check_inputs = []  # all checkbox inputs in the loaded operation
                     for temp_input in op["check_in"]:
-                        checkinputs.append(
+                        check_inputs.append(
                             operation_CheckboxInput(temp_input["name"], temp_input["text"], temp_input["options"],
                                                     temp_input["style"], temp_input["textStyle"],
                                                     temp_input["optionTextStyle"], temp_input["value"],
@@ -135,9 +136,9 @@ def home():  # home page
                                                         "brake"]))  # create a operation_CheckboxInput from loaded data
                         counter += 1
 
-                    colorinputs = []  # all color inputs in the loaded operation
+                    color_inputs = []  # all color inputs in the loaded operation
                     for temp_input in op["color_in"]:
-                        colorinputs.append(
+                        color_inputs.append(
                             operation_ColorInput(temp_input["name"], temp_input["text"], temp_input["style"],
                                                  temp_input["textStyle"], temp_input["value"],
                                                  temp_input["brake"]))  # create a operation_ColorInput from loaded data
@@ -151,8 +152,8 @@ def home():  # home page
                                                 temp_output["brake"]))  # create a operation_TextInput from loaded data
                         counter += 1
 
-                    op = operation(op["name"], op["type"], text_inputs=textinputs, number_inputs=numinputs,
-                                   radio_inputs=radinputs, checkbox_inputs=checkinputs, color_inputs=colorinputs,
+                    op = operation(op["name"], op["type"], text_inputs=text_inputs, number_inputs=num_inputs,
+                                   radio_inputs=rad_inputs, checkbox_inputs=check_inputs, color_inputs=color_inputs,
                                    variable_outputs=varOutputs)
                     op.add_num(cc)  # add num is used to differentiate each input from another
                     cc += 1
@@ -160,7 +161,8 @@ def home():  # home page
                     operator.operations.append(op)  # create an operation from all created inputs
             pass
         except:
-            print("Unable to located \"session_"+str(saveName)+".json'\"")  # print error if failed to open session.json
+            print("Unable to located \"session_" + str(
+                saveName) + ".json'\"")  # print error if failed to open session.json
 
         session.permanent = True  # Make sure the session will never clear itself
         operator.update()
@@ -168,7 +170,8 @@ def home():  # home page
             required_out = operator.frames[0]
         outputOptions = operator.frameOptions
         return render_template("mainhtml.html", ops=operator.operations,
-                               curr_out=required_out, out_select_options=outputOptions,currFile=saveName)  # returns the main html with the array of operations
+                               curr_out=required_out, out_select_options=outputOptions,
+                               currFile=saveName)  # returns the main html with the array of operations
 
     elif request.method == "POST":  # if got to the website from a press of button
         try:
@@ -191,9 +194,8 @@ def home():  # home page
                 outputOptions = operator.frameOptions
 
             elif request.form["action"] == "Load":  # if Load is pressed
-                saveName = request.form["loadedFile"] # set file
-                return redirect(url_for('/',save=saveName))
-
+                saveName = request.form["loadedFile"]  # set file
+                return redirect(url_for('/', save=saveName))
 
             elif submit == "Delete":
                 value = int((request.form["action"])[6:])
@@ -215,13 +217,11 @@ def home():  # home page
             else:  # if not update nor save was pressed, add an operation
                 value = request.form["action"]  # get the pressed button's name
                 add_operation(value)  # add operation with the name of the button
-
-
         except:
             pass
-
         return render_template("mainhtml.html", ops=operator.operations,
-                               curr_out=required_out,out_select_options = outputOptions)  # return the html page with all the operations
+                               curr_out=required_out,
+                               out_select_options=outputOptions)  # return the html page with all the operations
 
 
 def add_operation(operation_name):  # add a new operation
@@ -236,12 +236,12 @@ def save_session(saveName):  # save the operations
     print("Saving Session")
     operations_dict = []  # initialize operation_dict
     for op in operator.operations:
-        operations_dict.append(op.conv_dict())  # add the opeartion to the array after converting it to a dictionary
+        operations_dict.append(op.conv_dict())  # add the operation to the array after converting it to a dictionary
 
     session["operations"] = operations_dict  # save operations to the session
 
     r = jsonify(dict(session))  # turn the session to json
-    with open('session_'+str(saveName)+'.json', "w") as file:  # open the save file
+    with open('session_' + str(saveName) + '.json', "w") as file:  # open the save file
         file.write(r.get_data(as_text=True))  # write the session to the save file
         file.close()  # close the save file
         print("Saved Session")
