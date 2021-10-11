@@ -271,6 +271,7 @@ class sky_operator:  # main class responsible for running operations
         self.frameOptions = "<option value=None>No Available Options</option>"
         self.inCounter = 0  # differ between inputs
         self.values = {}  # dictionary of all values
+        self.allAnglesA = []
 
     def process(self):  # process operations each frame
         self.values.clear()
@@ -736,9 +737,15 @@ class sky_operator:  # main class responsible for running operations
 
                             final_angle = np.degrees(RaysToAngle(FrameToWorldRay(circ[0], Resolution[1] / 2),
                                                                  FrameToWorldRay(Resolution[0] / 2, Resolution[1] / 2)))
-                            final_angle = final_angle / 20 * hFOV
-                            final_angle = 90 - (final_angle - (hFOV / 2))
-                            print(final_angle)
+                            final_angle = (final_angle / 20 * hFOV) / 2
+                            # final_angle = 90 - (final_angle - (hFOV / 2))
+
+                            self.allAnglesA .append(final_angle)
+
+                            if(len(self.allAnglesA) >= 10):
+                                print(final_angle)
+                                self.allAnglesA  = []
+                            
             except Exception as e:
                 # print(e)
                 pass
