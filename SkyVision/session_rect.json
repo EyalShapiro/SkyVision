@@ -1,0 +1,263 @@
+{
+  "_permanent": true, 
+  "operations": [
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Image input", 
+      "number_in": [], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "imgPath553409677943819662609", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Image Path", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "images\\whiteRect.png"
+        }
+      ], 
+      "type": 1, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "outName553409777943829662610", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Output name", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "img"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Convert color", 
+      "number_in": [], 
+      "radio_in": [
+        {
+          "brake": true, 
+          "direction": false, 
+          "name": "type428144670675098293038", 
+          "optionTextStyle": "font-size:18px;color:#ebebeb;", 
+          "options": [
+            "BGR2HSV", 
+            "BGR2RGB", 
+            "BGR2GRAY", 
+            "HSV2RGB", 
+            "HSV2BGR", 
+            "GRAY2RGB"
+          ], 
+          "style": "margin-left:12px;", 
+          "text": "Type", 
+          "textStyle": "font-size:28px;color:#ebebeb;", 
+          "value": "BGR2GRAY"
+        }
+      ], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src428144570675088293037", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "img"
+        }
+      ], 
+      "type": 4, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "outName428144770675108293039", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Output name", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "mask"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Find Contours", 
+      "number_in": [], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src796581992419403454329", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "mask"
+        }
+      ], 
+      "type": 4, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "outName796582092419413454330", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Output name", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "cnts"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Convex Hull", 
+      "number_in": [], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "cnt42520222934731029124", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Contours", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "cnts"
+        }
+      ], 
+      "type": 6, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "out42520322934741029125", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Output", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "cnvx"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [
+        {
+          "brake": true, 
+          "name": "clr51632987902131265395", 
+          "style": "", 
+          "text": "Color", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "#ff0000"
+        }
+      ], 
+      "name": "Draw Contours", 
+      "number_in": [
+        {
+          "brake": true, 
+          "name": "thick51632977902130265394", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Thickness", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "2"
+        }
+      ], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src51632957902128265392", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "img"
+        }, 
+        {
+          "brake": true, 
+          "name": "cnt51632967902129265393", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Contours", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "cnvx"
+        }
+      ], 
+      "type": 5, 
+      "var_out": []
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [], 
+      "name": "Almost Equal Sides", 
+      "number_in": [
+        {
+          "brake": true, 
+          "name": "tol6684721786576", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "tolerance", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "0.1"
+        }
+      ], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "cnts6684711786575", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Contours", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "cnvx"
+        }
+      ], 
+      "type": 3, 
+      "var_out": [
+        {
+          "brake": true, 
+          "name": "out6684731786577", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Output", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "filter"
+        }
+      ]
+    }, 
+    {
+      "check_in": [], 
+      "color_in": [
+        {
+          "brake": true, 
+          "name": "clr8946722950957", 
+          "style": "", 
+          "text": "Color", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "#00ff00"
+        }
+      ], 
+      "name": "Draw Contours", 
+      "number_in": [
+        {
+          "brake": true, 
+          "name": "thick8946712950956", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Thickness", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "4"
+        }
+      ], 
+      "radio_in": [], 
+      "text_in": [
+        {
+          "brake": true, 
+          "name": "src8946692950954", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Source", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "img"
+        }, 
+        {
+          "brake": true, 
+          "name": "cnt8946702950955", 
+          "style": "color: #ebebeb;background-color:#525252;", 
+          "text": "Contours", 
+          "textStyle": "font-size:28px;margin-right:10px;color:#ebebeb;", 
+          "value": "filter"
+        }
+      ], 
+      "type": 5, 
+      "var_out": []
+    }
+  ]
+}

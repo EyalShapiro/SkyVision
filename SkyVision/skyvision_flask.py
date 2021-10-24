@@ -5,7 +5,7 @@ import time
 from skyvision_operations import *
 
 app = Flask(__name__)  # app
-app.secret_key = "#4416"  # secret key used for session saving
+app.secret_key = "#4416"  # -secret key used for session saving
 
 operator = sky_operator()  # main class responsible for organizing and activating operations
 required_out = "None"  # Current frame that will be drawn on screen
@@ -178,15 +178,10 @@ def home():  # home page
             submit = request.form["action"][:6]
             print("FOUND - " + request.form["action"])
             if request.form["action"] == "Save":  # If the saved button is pressed
-                print("SAVING_A")
                 required_out = request.form["outID"]  # set required frame
-                print("SAVING_B")
                 operator.update()  # activate all operations and update values
-                print("SAVING_C")
                 outputOptions = operator.frameOptions
-                print("SAVING_D")
                 save_session(saveName)  # save again ( with set values )
-                print("SAVING_E")
 
             elif request.form["action"] == "Update":  # if update is pressed
                 required_out = request.form["outID"]  # set required frame

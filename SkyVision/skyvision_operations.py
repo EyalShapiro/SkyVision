@@ -3,6 +3,7 @@ from SkyVision_Tools import *
 from flask import *
 import cv2
 import numpy as np
+import math
 
 sky_operations = {  # sky operation is a dictionary that defines the inputs each operation has
 
@@ -260,6 +261,10 @@ sky_operations = {  # sky operation is a dictionary that defines the inputs each
                        number_inputs=[operation_NumberInput("wth", "Width"), operation_NumberInput("height", "Height"),
                                       operation_NumberInput("thresh", "Threshold"), ],
                        variable_outputs=[operation_TextInput("out", "Output")]),
+
+    "Almost Equal Sides": operation("Almost Equal Sides", OperationType.ARITHMETIC, text_inputs=[operation_TextInput("cnts", "Contours")],
+                                    number_inputs=[operation_NumberInput("tol", "tolerance")],
+                                    variable_outputs=[operation_TextInput("out", "Output")]),
 }
 
 
@@ -384,6 +389,29 @@ class sky_operator:  # main class responsible for running operations
                                 validCnt.append(cnt)
 
                         self.values[op.variableOutputs[0].value] = validCnt
+
+                    if op.name == "Almost Equal Sides":
+                        
+                        contours = self.values[op.textInputs[0].value]
+
+                        tol = float(op.numberInputs[0].value)
+
+                        correct = []
+
+                        for cnt in contours:
+                            distances = [math.dist(list(cnt[i][0]), list(cnt[i+1][0])) for i in range(len(cnt)-1)]
+                            avg = sum(distances)/len(distances)
+                            found = False
+
+                            for d in distances:
+                                if abs((d - avg)/avg) > tol:
+                                    found = True
+                                    break
+                            
+                            if not found:
+                                correct.append(cnt)
+                        
+                        self.values[op.variableOutputs[0].value] = correct
 
                 if op.type == OperationType.COLORS:  # COLOR OPERATIONS
                     if op.name == "Convert color":
@@ -747,7 +775,7 @@ class sky_operator:  # main class responsible for running operations
                                 self.allAnglesA  = []
                             
             except Exception as e:
-                # print(e)
+                print(e)
                 pass
 
     def MoveUP(self, num):  # move operation up
