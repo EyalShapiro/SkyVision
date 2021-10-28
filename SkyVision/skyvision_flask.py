@@ -76,15 +76,16 @@ def home():  # home page
     global required_out
     global outputOptions
     saveName = 'session'
-    f = open("lastSession.txt", "r+")
+    f = open("lastSession.txt", "r")
+    saveName = f.read()
+    f.close()
+    f = open("lastSession.txt", "w")
 
     tmpName = request.args.get('save')
+
     if tmpName is not None and tmpName != '' and tmpName != 'None':
         saveName = tmpName
         f.write(saveName)
-    else:
-        saveName = f.read()
-
     f.close()
     # cv2.destroyAllWindows()
     if request.method == "GET":  # if entered page regularly
