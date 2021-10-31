@@ -5,6 +5,8 @@ import cv2
 import numpy as np
 import math
 
+import network_api
+
 sky_operations = {  # sky operation is a dictionary that defines the inputs each operation has
 
     # EXAMPLE ->
@@ -250,7 +252,8 @@ sky_operations = {  # sky operation is a dictionary that defines the inputs each
                                        variable_outputs=[operation_TextInput("out", "Output")]),
 
     "Circle Coords": operation("Circle Coords", OperationType.MISC, text_inputs=[operation_TextInput("src", "circles")],
-                               number_inputs=[operation_TextInput("onemeter", "Size at 1 meter")]),
+                               number_inputs=[operation_TextInput("onemeter", "Size at 1 meter")],
+                               variable_outputs=[operation_TextInput("out","Output")]),
 
     "Split Channel": operation("Split Channel", OperationType.ARITHMETIC,
                                text_inputs=[operation_TextInput("src", "Source")],
@@ -265,6 +268,8 @@ sky_operations = {  # sky operation is a dictionary that defines the inputs each
     "Almost Equal Sides": operation("Almost Equal Sides", OperationType.ARITHMETIC, text_inputs=[operation_TextInput("cnts", "Contours")],
                                     number_inputs=[operation_NumberInput("tol", "tolerance")],
                                     variable_outputs=[operation_TextInput("out", "Output")]),
+
+    "Network Send Num Var": operation("Network Send Num Var", OperationType.MISC, text_inputs=[operation_TextInput("key", "Key"),operation_TextInput("var", "Number Variable")]),
 }
 
 
@@ -276,7 +281,7 @@ class sky_operator:  # main class responsible for running operations
         self.frameOptions = "<option value=None>No Available Options</option>"
         self.inCounter = 0  # differ between inputs
         self.values = {}  # dictionary of all values
-        self.allAnglesA = []
+        # self.allAnglesA = []
 
     def process(self):  # process operations each frame
         self.values.clear()
@@ -570,6 +575,14 @@ class sky_operator:  # main class responsible for running operations
                         src = self.values[src]
 
                 if op.type == OperationType.MISC:  # MISC OPERATIONS
+                    if op.name == "Network Send Num Var":
+
+                        self.values[op.textInputs[1].value] = int(self.values[op.textInputs[1].value])
+
+                        print("Expected Val:",self.values[op.textInputs[1].value])
+                        # print("Setting",op.textInputs[0].value,"to",self.values[op.textInputs[1].value])
+                        network_api.set_number(op.textInputs[0].value,int(self.values[op.textInputs[1].value]))
+                        print("Received Val:",network_api.get_number(op.textInputs[0].value,-1))
 
                     if op.name == "Flip":
 
@@ -736,46 +749,46 @@ class sky_operator:  # main class responsible for running operations
                         circs = op.textInputs[0].value
                         circles = self.values[circs]
                         onemeter = float(op.numberInputs[0].value)
-                        for circ in circles[0]:
-                            # distance = onemeter / circ[2]
-                            # print("Dist - " + str(distance) + "[", onemeter, circ[2], "]")
-                            # print(circ)
-                            Resolution = (1280, 720)
-                            F_Length = 10
-                            Dot_Pitch = 9.84375
-                            hFOV = 60
+                        if len(circles[0]) > 0:
+                            for circ in circles[0]:
+                                # distance = onemeter / circ[2]
+                                # print("Dist - " + str(distance) + "[", onemeter, circ[2], "]")
+                                # print(circ)
+                                Resolution = (1280, 720)
+                                F_Length = 10
+                                Dot_Pitch = 9.84375
+                                hFOV = 60
 
-                            S_Width = Dot_Pitch * Resolution[1]  # in um
-                            S_Width = S_Width / 1000  # in mm
-                            F_Pix = (1280 / S_Width) * F_Length
+                                S_Width = Dot_Pitch * Resolution[1]  # in um
+                                S_Width = S_Width / 1000  # in mm
+                                F_Pix = (Resolution[0] / 2 / S_Width) * F_Length
 
-                            K = np.array([[F_Pix, 0, Resolution[0] / 2], [0, F_Pix, Resolution[1] / 2],
-                                          [0, 0, 1]])  # pinhole camera matrix
+                                K = np.array([[F_Pix, 0, Resolution[0] / 2], [0, F_Pix, Resolution[1] / 2],
+                                            [0, 0, 1]])  # pinhole camera matrix
 
-                            def FrameToWorldRay(Fx, Fy):
-                                Ki = np.linalg.inv(K)
-                                r = Ki.dot([Fx, Fy, 1])
-                                return r  # a "ray" in the sense that all the 3D points R = s * r, obtained by multiplying it for an arbitrary number s, will lie on the same line going through the camera center and pixel (x, y).
+                                def FrameToWorldRay(Fx, Fy):
+                                    Ki = np.linalg.inv(K)
+                                    r = Ki.dot([Fx, Fy, 1])
+                                    return r  # a "ray" in the sense that all the 3D points R = s * r, obtained by multiplying it for an arbitrary number s, will lie on the same line going through the camera center and pixel (x, y).
 
-                            def RaysToAngle(R1,
-                                            R2):  # calculate the angle between two rays using advanced math none of us understand. It is theoretically possible to find the 3D coords of a point and use simple trigonometry, but this looks nicer.
-                                cos_angle = R1.dot(R2) / (np.linalg.norm(R1) * np.linalg.norm(R2))
-                                angle_radians = np.arccos(cos_angle)
-                                return angle_radians
+                                def RaysToAngle(R1,
+                                                R2):  # calculate the angle between two rays using advanced math none of us understand. It is theoretically possible to find the 3D coords of a point and use simple trigonometry, but this looks nicer.
+                                    cos_angle = R1.dot(R2) / (np.linalg.norm(R1) * np.linalg.norm(R2))
+                                    angle_radians = np.arccos(cos_angle)
+                                    return angle_radians
 
-                            final_angle = np.degrees(RaysToAngle(FrameToWorldRay(circ[0], Resolution[1] / 2),
-                                                                 FrameToWorldRay(Resolution[0] / 2, Resolution[1] / 2)))
-                            final_angle = (final_angle / 20 * hFOV) / 2
-                            # final_angle = 90 - (final_angle - (hFOV / 2))
+                                final_angle = np.degrees(RaysToAngle(FrameToWorldRay(circ[0], Resolution[1] / 2),
+                                                                    FrameToWorldRay(Resolution[0] / 2, Resolution[1] / 2)))
 
-                            self.allAnglesA .append(final_angle)
+                                dir = 1 if(circ[0] > Resolution[0] / 2) else -1
+                                final_angle = dir * (final_angle)
 
-                            if(len(self.allAnglesA) >= 10):
-                                print(final_angle)
-                                self.allAnglesA  = []
+                                self.values[op.variableOutputs[0].value] = final_angle
+                        else:
+                            self.values[op.variableOutputs[0].value] = -1
                             
             except Exception as e:
-                print(e)
+                # print(e) # prints exception
                 pass
 
     def MoveUP(self, num):  # move operation up

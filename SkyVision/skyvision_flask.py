@@ -4,13 +4,18 @@ import time
 
 from skyvision_operations import *
 
+import network_api
+
 app = Flask(__name__)  # app
 app.secret_key = "#4416"  # -secret key used for session saving
+
+print("Connecting to Network table...")
+network_api.init_and_wait()
 
 operator = sky_operator()  # main class responsible for organizing and activating operations
 required_out = "None"  # Current frame that will be drawn on screen
 
-error_pic = cv2.imread("ERR.jpg")  # The frame that will be used for drawing when there is an error
+error_pic = cv2.imread("images/ERR.jpg")  # The frame that will be used for drawing when there is an error
 
 windowMode = False
 outputOptions = ""
@@ -25,11 +30,12 @@ def generate():  # generates the output frame
 
         try:  # try to set the output frame to the required frame
             selected_out = outputs[required_out]  # set the output to the required frame
+            selected_out = cv2.resize(selected_out,(int(selected_out.shape[1] * 50 / 100),int(selected_out.shape[0] * 50 / 100)))
         except:  # if setting output frame false, set it to the error pic
-            selected_out = error_pic  # set the output frame to the error pic
+            selected_out = cv2.resize(error_pic,(int(selected_out.shape[1] * 25 / 100),int(selected_out.shape[0] * 25 / 100)))  # set the output frame to the error pic
 
         if selected_out is None:
-            selected_out = error_pic
+            selected_out = cv2.resize(error_pic,(int(selected_out.shape[1] * 25 / 100),int(selected_out.shape[0] * 25 / 100)))  # set the output frame to the error pic
 
         ret, encodedImage = cv2.imencode(".jpg", selected_out)  # turn the output pic to a jpg
 
@@ -79,14 +85,17 @@ def home():  # home page
     f = open("lastSession.txt", "r")
     saveName = f.read()
     f.close()
-    f = open("lastSession.txt", "w")
+    
 
     tmpName = request.args.get('save')
 
-    if tmpName is not None and tmpName != '' and tmpName != 'None':
-        saveName = tmpName
-        f.write(saveName)
-    f.close()
+    if tmpName is not None:
+        if len(tmpName) > 0:
+            f = open("lastSession.txt", "w")
+            saveName = tmpName
+            f.write(saveName)
+            f.close()
+    
     # cv2.destroyAllWindows()
     if request.method == "GET":  # if entered page regularly
         operator.operations.clear()
