@@ -15,7 +15,7 @@ error_pic = cv2.imread("res/images/ERR.jpg")  # The frame that will be used for 
 outputOptions = "" # Options for frames the user can show
 required_out = "None"  # Current frame that will be drawn on screen
 
-def generateVideo(resolution = 0.03):  # generates the output frame
+def generateVideo(resolution = 0.5):  # generates the output frame
     time.sleep(3)  # delay to allow for camera reconnection
     while True:
         operator.process()  # activate all operations
@@ -76,7 +76,7 @@ def home():  # home page
                                currFile=saveName)  # returns the main html with the array of operations
 
     elif request.method == "POST":  # if got to the website from a press of button
-        submit = request.form["action"][:6]
+        submit = request.form["action"]
         print("FOUND - " + request.form["action"])
         if request.form["action"] == "Save":  # If the saved button is pressed
             required_out = request.form["outID"]  # set required frame
@@ -93,19 +93,20 @@ def home():  # home page
             saveName = request.form["loadedFile"]  # set file
             return redirect(url_for('/', save=saveName))
 
-        elif submit == "Delete":
+        elif "Delete" in submit:
             value = int((request.form["action"])[6:])
             operator.removeOperation(value)
 
-        elif submit == "MoveUP":
+        elif "MoveUP" in submit:
             value = int((request.form["action"])[6:])
-            operator.MoveUP(value)
+            operator.moveOperation(value,-1)
 
-        elif submit == "MovDON":
-            value = int((request.form["action"])[6:])
-            operator.MoveDOWN(value)
+        elif "MoveDOWN" in submit:
+            value = int((request.form["action"])[8:])
+            operator.moveOperation(value,1)
 
         else:  # if unkown button was pressed, add an operation
+            print(submit)
             value = request.form["action"]  # get the pressed button's name
             add_operation(value)  # add operation with the name of the button
         return render_template("mainhtml.html", ops=operator.htmlOps(),

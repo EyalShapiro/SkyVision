@@ -1073,6 +1073,9 @@ class oldOperation:  # main class for operation
 
 class operation:
     def __init__(self, name, type, function):
+        if "MoveUP" in name or "MoveDOWN" in name or "Delete" in name:
+            raise Exception("You may not use 'MoveUP/ MoveDOWN/ Delete' in an operation's name.")
+
         self.name = name
         self.type = type
         self.function = function
@@ -1085,9 +1088,11 @@ class operation:
     def addInputNumber(self,name,step = 0.0001):
         self.inputs.append({"NumberInput" : [name,0,step] })
         return self
+    def addOutput(self,name = "Output"):
+        self.inputs.append({"Output" : [name,"Value"] })
+        return self
     
     def html(self,operation,operation_id=0):  # return the html version of the operation
-
         retdiv = "<div style=\"margin-top:7px;margin-bottom:7px;background-color:#525252;border-style: solid;border-color:"  # init div
 
         # set div color based on operation type
@@ -1107,9 +1112,9 @@ class operation:
         # div contents here ->
         retdiv += html_header(self.name, brake=False, style="color:#ebebeb;")  # div Title
         retdiv += "<div style=\"text-align: right;display: inline-block;\">"
-        retdiv += "<button type=\"submit\" formmethod=\"post\" name=\"action\" value=\"Delete" + str(operation_id) + "\" style=\"margin-left:15px;color: #ebebeb;background-color:#525252\">Delete</button>" # Delete operation button
-        retdiv += "<button type=\"submit\" formmethod=\"post\" name=\"action\" value=\"MoveUP" + str(operation_id) + "\" style=\"margin-left:15px;color: #ebebeb;background-color:#525252\">Move UP</button>"# Move UP operation button
-        retdiv += "<button type=\"submit\" formmethod=\"post\" name=\"action\" value=\"MovDON" + str(operation_id) + "\" style=\"margin-left:15px;color: #ebebeb;background-color:#525252\">Move DOWN</button><br/>"# Move DOWN operation button
+
+        for button in ['Delete','MoveUP', 'MoveDOWN']: # create buttons to move and delete operation
+            retdiv += "<button type=\"submit\" formmethod=\"post\" name=\"action\" value=\"" + button + str(operation_id) + "\" style=\"margin-left:15px;color: #ebebeb;background-color:#525252\">" + button + "</button>"
         retdiv += "</div><br>"
 
         for input in operation["inputs"]:
@@ -1118,7 +1123,8 @@ class operation:
                 name = input[key][0]
                 value = input[key][1]
 
-
+                if key == 'Output':
+                    retdiv += str(operation_TextInput(name+str(operation_id)+str(id),text=name,value=value))
                 if key == 'TextInput':
                     retdiv += str(operation_TextInput(name+str(operation_id)+str(id),text=name,value=value))
                 if key == 'NumberInput':
@@ -1138,16 +1144,19 @@ class operation:
 
         # <- div contents end here
         retdiv += "</div></div>"  # Close divs
-
         return retdiv
 
-def camInput(op):
-    # print("CAM INPUT OPERATION")
+def camInput(values):
+    print("CAM INPUT OPERATION VALUE -",values["Id"])
     pass
-  
+
+def imageInput(values):
+    return [cv2.imread(values["Path"])]
+    
+
 new_operations = [
-    operation("Webcam Input",OperationType.INPUT,camInput).addInputNumber("Id",1),
-    operation("Image Input",OperationType.INPUT,camInput).addInputNumber("Id"),
+    operation("Webcam Input",OperationType.INPUT,camInput).addInputNumber("Id",step=1),
+    operation("Image Input",OperationType.INPUT,imageInput).addInputText("Path").addOutput(),
 ]
 
 
@@ -1162,23 +1171,32 @@ class new_operator:
         self.frameOptions = "<option value=None>No Available Options</option>"
 
         self.opValues = {}
+        self.opOutputs = []
         self.values = {}  # dictionary of all values
 
     def process(self):
         for op in self.operations:
-            opInputs = self.getOperationSource(op).inputs
             self.opValues.clear()
-            for key in opInputs:
-                # name = self.inputs[key][0]
-                # value = float(self.inputs[key][1]) if value.isNumeric() else self.inputs[key][1]
+            self.opOutputs.clear()
+            for input in op["inputs"]:
+                for key in input:
+                    name = input[key][0]
+                    value = input[key][1]
+                    if "Input" in key:
+                        value = float(value) if str(value).isnumeric() else value
+                        if(type(value) == str):
+                            if(value[0] == '&' and value[-1] == '&'):
+                                value = self.values[value]
 
-                # self.opValues[name] = value
-                pass
-            self.getOperationSource(op).function(op)
+                        self.opValues[name] = value
+                    elif "Output" in key:
+                        self.opOutputs.append(value)
+            operation_outputs = self.getOperationSource(op).function(self.opValues)
+            if operation_outputs is not None:
+                self.values.update(dict(zip(self.opOutputs,operation_outputs)))
 
-    def update(self,fromUpdate):
-        tmp_operations = copy.deepcopy(self.operations)
-        
+    def update(self,fromUpdate = True):
+        tmp_operations = copy.deepcopy(self.operations)  
         for op_id in range(len(tmp_operations)):
             op = tmp_operations[op_id]
             for input_id in range(len(op["inputs"])):
@@ -1192,9 +1210,10 @@ class new_operator:
                         tmp_operations[op_id]["inputs"][input_id][key][1] = value
             
         self.operations = copy.deepcopy(tmp_operations)
+        del tmp_operations
         self.process()
+        self.getOutputOptions()
         
-
     def loadOperation(self,op):
         self.loaded_operations[op.name] = op
         return
@@ -1212,11 +1231,26 @@ class new_operator:
     def removeOperation(self,op_id):
         self.operations.pop(op_id)
 
+    def moveOperation(self,op_id,direction):
+        self.update()
+        self.operations.insert(max(0,op_id+direction), self.operations.pop(op_id))
+
     def clearOperations(self):
         self.operations.clear()
 
     def getOperationSource(self,op) -> operation:
         return self.loaded_operations[op["name"][5:]]
+
+    def getOutputOptions(self):
+        self.frameOptions = ""
+        for key in self.values:
+            if isinstance(self.values[key], np.ndarray):
+                if len(np.shape(self.values[key])) >= 2 <= 3:
+                    self.frames.append(key)
+                    self.frameOptions += "<option value=\"" + key + "\" style=\"background-color:#525252;\">" + key + "</option>"
+        if self.frameOptions != "":
+            return self.frameOptions
+        return "<option value=None>No Available Options</option>"
 
     def htmlOps(self):
         htmls = []
