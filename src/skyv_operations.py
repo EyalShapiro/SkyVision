@@ -4,6 +4,7 @@ from flask import *
 import cv2
 import numpy as np
 import math
+import copy
 
 import src.skyv_network as skyv_network
 
@@ -1081,11 +1082,11 @@ class operation:
     def addInputText(self,name):
         self.inputs.append({"TextInput" : [name,"Value"]})
         return self
-    def addInputNumber(self,name):
-        self.inputs.append({"NumberInput" : [name,0] })
+    def addInputNumber(self,name,step = 0.0001):
+        self.inputs.append({"NumberInput" : [name,0,step] })
         return self
     
-    def html(self,operation_id=0):  # return the html version of the operation
+    def html(self,operation,operation_id=0):  # return the html version of the operation
 
         retdiv = "<div style=\"margin-top:7px;margin-bottom:7px;background-color:#525252;border-style: solid;border-color:"  # init div
 
@@ -1111,16 +1112,17 @@ class operation:
         retdiv += "<button type=\"submit\" formmethod=\"post\" name=\"action\" value=\"MovDON" + str(operation_id) + "\" style=\"margin-left:15px;color: #ebebeb;background-color:#525252\">Move DOWN</button><br/>"# Move DOWN operation button
         retdiv += "</div><br>"
 
-        for input in self.inputs:
+        for input in operation["inputs"]:
             for key in input:
                 id = 0
                 name = input[key][0]
                 value = input[key][1]
 
+
                 if key == 'TextInput':
                     retdiv += str(operation_TextInput(name+str(operation_id)+str(id),text=name,value=value))
                 if key == 'NumberInput':
-                    retdiv += str(operation_NumberInput(name+str(operation_id)+str(id),text=name,value=value))
+                    retdiv += str(operation_NumberInput(name+str(operation_id)+str(id),text=name,value=value,step = input[key][2]))
 
                 # if key == 'RadioInput':
                 #     retdiv += str(radio_input)
@@ -1144,8 +1146,8 @@ def camInput(op):
     pass
   
 new_operations = [
-    operation("Webcam Input",OperationType.INPUT,camInput).addInputNumber("Id"),
-    operation("Image Input",OperationType.INPUT,camInput).addInputNumber("Id")
+    operation("Webcam Input",OperationType.INPUT,camInput).addInputNumber("Id",1),
+    operation("Image Input",OperationType.INPUT,camInput).addInputNumber("Id"),
 ]
 
 
@@ -1175,9 +1177,10 @@ class new_operator:
             self.getOperationSource(op).function(op)
 
     def update(self,fromUpdate):
-        for op_id in range(len(self.operations)):
-            op = self.operations[op_id]
-            print("OPERATION IS",op,"\nIdx",op_id)
+        tmp_operations = copy.deepcopy(self.operations)
+        
+        for op_id in range(len(tmp_operations)):
+            op = tmp_operations[op_id]
             for input_id in range(len(op["inputs"])):
                 input = op["inputs"][input_id]
                 for key in input:
@@ -1185,17 +1188,10 @@ class new_operator:
                     name = input[key][0]
                     value = input[key][1]
                     if fromUpdate:
-                        print("\n\n\n")
                         value = request.form[name+str(op_id)+str(id)]
-                        # print(self.operations[op_id])
-                        # print(self.operations[op_id]["inputs"])
-                        # print(self.operations[op_id]["inputs"][input_id])
-                        # print(self.operations[op_id]["inputs"][input_id][key])
-                        # print(self.operations[op_id]["inputs"][input_id][key][1])
-                        print("SET VALUE",name+str(op_id)+str(id),"to",value)
-                        self.operations[op_id]["inputs"][input_id][key][1] = value
-                        print("\n\n\n")
-        print(self.operations)
+                        tmp_operations[op_id]["inputs"][input_id][key][1] = value
+            
+        self.operations = copy.deepcopy(tmp_operations)
         self.process()
         
 
@@ -1226,5 +1222,5 @@ class new_operator:
         htmls = []
         for id in range(len(self.operations)):
             op = self.operations[id]
-            htmls.append(self.getOperationSource(op).html(id))
+            htmls.append(self.getOperationSource(op).html(op,id))
         return htmls

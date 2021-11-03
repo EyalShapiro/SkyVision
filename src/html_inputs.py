@@ -6,8 +6,8 @@ def html_header(text, style="", size=1, brake=True):  # make a html <h>
 def html_paragraph(text, style="", brake=True):  # make a html <p>
     return "<p style=\"" + style + "display:inline-block;\">" + text + "</p>" + ("<br/>" if brake else "")
 
-def html_input(text, input_type, name, style="", text_style="", value="", brake=True):  # make a html <input>
-    return "<h3 style=\"" + text_style + "display:inline-block;\">" + text + ": </h3><input type=\"" + input_type + "\" " + name + " style=\"" + style + "display:inline-block;\"" + "value=\"" + str(value) + "\"" + "step=\"0.0001\"></input>" + (
+def html_input(text, input_type, name, style="", text_style="", value="", brake=True,step=0.0001):  # make a html <input>
+    return "<h3 style=\"" + text_style + "display:inline-block;\">" + text + ": </h3><input type=\"" + input_type + "\" " + name + " style=\"" + style + "display:inline-block;\"" + "value=\"" + str(value) + "\"" + "step=\"" + str(step) + "\"></input>" + (
         "<br/>" if brake else "")
 
 def html_radio(name, value, style="", text_style="", option_style="", brake=True):  # make a html <input type="radio">

@@ -42,7 +42,7 @@ class operation_TextInput:  # text input for operation
 
 class operation_NumberInput:  # number input for operation ( like text but can only get numbers )
     def __init__(self, name, text="", style="color: #ebebeb;background-color:#525252;",
-                 text_style="font-size:28px;margin-right:10px;color:#ebebeb;", value="", brake=True):
+                 text_style="font-size:28px;margin-right:10px;color:#ebebeb;", value="", brake=True,step = 0.0001):
         self.name = "name=\"" + name + "\""
         self.inName = name
 
@@ -51,6 +51,7 @@ class operation_NumberInput:  # number input for operation ( like text but can o
         self.txtStyle = text_style
         self.br = brake
         self.value = value
+        self.step = step
 
     def conv_dict(self):
         ret_dict = {
@@ -66,7 +67,7 @@ class operation_NumberInput:  # number input for operation ( like text but can o
 
     def __str__(self):
         return html_input(self.text, "number", self.name, self.style, self.txtStyle, self.value,
-                          brake=self.br)  # return the html version of the input
+                          brake=self.br,step = self.step)  # return the html version of the input
 
 class operation_RadioInput:  # radio input for operation ( select one of options )
     def __init__(self, name, text="", options=[], radio_style="margin-left:12px;",
