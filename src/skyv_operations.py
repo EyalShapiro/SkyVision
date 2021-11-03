@@ -1,13 +1,13 @@
-from skyvision import *
-from SkyVision_Tools import *
+from src.skyv_inputs import *
+from src.skyv_tools import *
 from flask import *
 import cv2
 import numpy as np
 import math
 
-import network_api
+import src.skyv_network as skyv_network
 
-sky_operations = {  # sky operation is a dictionary that defines the inputs each operation has
+"""sky_operations = {  # sky operation is a dictionary that defines the inputs each operation has
 
     # EXAMPLE ->
     # Key : operation("operation name",OperationType,
@@ -270,8 +270,7 @@ sky_operations = {  # sky operation is a dictionary that defines the inputs each
                                     variable_outputs=[operation_TextInput("out", "Output")]),
 
     "Network Send Num Var": operation("Network Send Num Var", OperationType.MISC, text_inputs=[operation_TextInput("key", "Key"),operation_TextInput("var", "Number Variable")]),
-}
-
+}"""
 
 class sky_operator:  # main class responsible for running operations
     def __init__(self):
@@ -581,8 +580,8 @@ class sky_operator:  # main class responsible for running operations
 
                         print("Expected Val:",self.values[op.textInputs[1].value])
                         # print("Setting",op.textInputs[0].value,"to",self.values[op.textInputs[1].value])
-                        network_api.set_number(op.textInputs[0].value,int(self.values[op.textInputs[1].value]))
-                        print("Received Val:",network_api.get_number(op.textInputs[0].value,-1))
+                        skyv_network.set_number(op.textInputs[0].value,int(self.values[op.textInputs[1].value]))
+                        print("Received Val:",skyv_network.get_number(op.textInputs[0].value,-1))
 
                     if op.name == "Flip":
 
@@ -916,3 +915,316 @@ class sky_operator:  # main class responsible for running operations
             return self.frameOptions
         return "<option value=None>No Available Options</option>"
 # End
+
+class oldOperation:  # main class for operation
+    def __init__(self, name, operation_Type, text_inputs=[], number_inputs=[], radio_inputs=[], checkbox_inputs=[],
+                 color_inputs=[], variable_outputs=[]):
+        self.name = name
+        self.type = operation_Type
+
+        self.textInputs = text_inputs
+        self.numberInputs = number_inputs
+        self.radioInputs = radio_inputs
+        self.checkboxInputs = checkbox_inputs
+        self.colorInputs = color_inputs
+        self.variableOutputs = variable_outputs
+
+        self.op_move_counter = 0
+
+    def add_num(self, num):  # add num adds a unique number to each input
+        counter = randint(num, 9999999)
+        for op_input in self.textInputs:
+            counter += 1
+
+            value = num + counter
+            op_input.name = "name=\"" + op_input.inName + str(value) + "\""
+            op_input.inName = op_input.inName + str(value)
+
+        for op_input in self.numberInputs:
+            counter += 1
+
+            value = num + counter
+            op_input.name = "name=\"" + op_input.inName + str(value) + "\""
+            op_input.inName = op_input.inName + str(value)
+
+        for op_input in self.radioInputs:
+            counter += 1
+
+            value = num + counter
+            op_input.name = "name=\"" + op_input.inName + str(value) + "\""
+            op_input.inName = op_input.inName + str(value)
+
+        for op_input in self.checkboxInputs:
+            counter += 1
+
+            value = num + counter
+            op_input.name = "name=\"" + op_input.inName + str(value) + "\""
+            op_input.inName = op_input.inName + str(value)
+
+        for op_input in self.colorInputs:
+            counter += 1
+
+            value = num + counter
+            op_input.name = "name=\"" + op_input.inName + str(value) + "\""
+            op_input.inName = op_input.inName + str(value)
+
+        for op_input in self.variableOutputs:
+            counter += 1
+
+            value = num + counter
+            op_input.name = "name=\"" + op_input.inName + str(value) + "\""
+            op_input.inName = op_input.inName + str(value)
+
+        self.op_move_counter = str(num)
+
+    def conv_dict(self):  # turns the operation and it's inputs to a dictionary, required for json files
+
+        text_in_dict = []
+        for op_input in self.textInputs:
+            text_in_dict.append(op_input.conv_dict())
+
+        number_in_dict = []
+        for op_input in self.numberInputs:
+            number_in_dict.append(op_input.conv_dict())
+
+        radio_in_dict = []
+        for op_input in self.radioInputs:
+            radio_in_dict.append(op_input.conv_dict())
+
+        checkbox_in_dict = []
+        for op_input in self.checkboxInputs:
+            checkbox_in_dict.append(op_input.conv_dict())
+
+        color_in_dict = []
+        for op_input in self.colorInputs:
+            color_in_dict.append(op_input.conv_dict())
+
+        var_out_dict = []
+        for op_output in self.variableOutputs:
+            var_out_dict.append(op_output.conv_dict())
+
+        ret_dict = {
+            "name": self.name,
+            "type": self.type,
+            "text_in": text_in_dict,
+            "number_in": number_in_dict,
+            "radio_in": radio_in_dict,
+            "check_in": checkbox_in_dict,
+            "color_in": color_in_dict,
+            "var_out": var_out_dict
+        }
+
+        return ret_dict
+
+    def __str__(self):  # return the html version of the operation
+
+        retdiv = "<div style=\"margin-top:7px;margin-bottom:7px;background-color:#525252;border-style: solid;border-color:"  # init div
+
+        # set div color based on operation type
+        div_color = "black"
+        div_color = "#00fff7" if self.type == OperationType.INPUT else div_color
+        div_color = "#ff9100" if self.type == OperationType.MORPH else div_color
+        div_color = "#11ff00" if self.type == OperationType.ARITHMETIC else div_color
+        div_color = "#e100ff" if self.type == OperationType.COLORS else div_color
+        div_color = "#ff0000" if self.type == OperationType.DRAW else div_color
+        div_color = "#fff200" if self.type == OperationType.MISC else div_color
+
+        retdiv += div_color  # add div color
+        retdiv += ";border-radius: 25px;\">"  # end div init
+
+        retdiv += "<div style=\"padding-left:25px;padding-right:25px;padding-up:25px;padding-down:25px;display:inline-block;\">"  # add inner div
+
+        # div contents here ->
+        retdiv += html_header(self.name, brake=False, style="color:#ebebeb;")  # div Title
+        # margin-right: 15px;margin-left: 65px;\"
+        retdiv += "<div style=\"text-align: right;display: inline-block;\">"
+        retdiv += "<button type=\"submit\" formmethod=\"post\" name=\"action\" value=\"Delete" + str(
+            self.op_move_counter) + "\" style=\"margin-left:15px;color: #ebebeb;background-color:#525252\">Delete</button>"
+        retdiv += "<button type=\"submit\" formmethod=\"post\" name=\"action\" value=\"MoveUP" + str(
+            self.op_move_counter) + "\" style=\"margin-left:15px;color: #ebebeb;background-color:#525252\">Move UP</button>"
+        retdiv += "<button type=\"submit\" formmethod=\"post\" name=\"action\" value=\"MovDON" + str(
+            self.op_move_counter) + "\" style=\"margin-left:15px;color: #ebebeb;background-color:#525252\">Move DOWN</button><br/>"
+        retdiv += "</div><br>"
+
+        # add the html versions of all the inputs of the operation
+        for text_input in self.textInputs:
+            retdiv += str(text_input)
+
+        for number_input in self.numberInputs:
+            retdiv += str(number_input)
+
+        for radio_input in self.radioInputs:
+            retdiv += str(radio_input)
+
+        for check_input in self.checkboxInputs:
+            retdiv += str(check_input)
+
+        for color_input in self.colorInputs:
+            retdiv += str(color_input)
+
+        for var_output in self.variableOutputs:
+            retdiv += str(var_output)
+
+        # <- div contents end here
+        retdiv += "</div></div>"  # Close divs
+
+        return retdiv
+
+class operation:
+    def __init__(self, name, type, function):
+        self.name = name
+        self.type = type
+        self.function = function
+
+        self.inputs = []
+
+    def addInputText(self,name):
+        self.inputs.append({"TextInput" : [name,"Value"]})
+        return self
+    def addInputNumber(self,name):
+        self.inputs.append({"NumberInput" : [name,0] })
+        return self
+    
+    def html(self,operation_id=0):  # return the html version of the operation
+
+        retdiv = "<div style=\"margin-top:7px;margin-bottom:7px;background-color:#525252;border-style: solid;border-color:"  # init div
+
+        # set div color based on operation type
+        div_color = "black"
+        div_color = "#00fff7" if self.type == OperationType.INPUT else div_color
+        div_color = "#ff9100" if self.type == OperationType.MORPH else div_color
+        div_color = "#11ff00" if self.type == OperationType.ARITHMETIC else div_color
+        div_color = "#e100ff" if self.type == OperationType.COLORS else div_color
+        div_color = "#ff0000" if self.type == OperationType.DRAW else div_color
+        div_color = "#fff200" if self.type == OperationType.MISC else div_color
+
+        retdiv += div_color  # add div color
+        retdiv += ";border-radius: 25px;\">"  # end div init
+
+        retdiv += "<div style=\"padding-left:25px;padding-right:25px;padding-up:25px;padding-down:25px;display:inline-block;\">"  # add inner div
+
+        # div contents here ->
+        retdiv += html_header(self.name, brake=False, style="color:#ebebeb;")  # div Title
+        retdiv += "<div style=\"text-align: right;display: inline-block;\">"
+        retdiv += "<button type=\"submit\" formmethod=\"post\" name=\"action\" value=\"Delete" + str(operation_id) + "\" style=\"margin-left:15px;color: #ebebeb;background-color:#525252\">Delete</button>" # Delete operation button
+        retdiv += "<button type=\"submit\" formmethod=\"post\" name=\"action\" value=\"MoveUP" + str(operation_id) + "\" style=\"margin-left:15px;color: #ebebeb;background-color:#525252\">Move UP</button>"# Move UP operation button
+        retdiv += "<button type=\"submit\" formmethod=\"post\" name=\"action\" value=\"MovDON" + str(operation_id) + "\" style=\"margin-left:15px;color: #ebebeb;background-color:#525252\">Move DOWN</button><br/>"# Move DOWN operation button
+        retdiv += "</div><br>"
+
+        for input in self.inputs:
+            for key in input:
+                id = 0
+                name = input[key][0]
+                value = input[key][1]
+
+                if key == 'TextInput':
+                    retdiv += str(operation_TextInput(name+str(operation_id)+str(id),text=name,value=value))
+                if key == 'NumberInput':
+                    retdiv += str(operation_NumberInput(name+str(operation_id)+str(id),text=name,value=value))
+
+                # if key == 'RadioInput':
+                #     retdiv += str(radio_input)
+
+                # if key == 'CheckInput':
+                #     retdiv += str(check_input)
+
+                # if key == 'ColorInput':
+                #     retdiv += str(color_input)
+
+                # if key == 'Output':
+                #     retdiv += str(var_output)
+
+        # <- div contents end here
+        retdiv += "</div></div>"  # Close divs
+
+        return retdiv
+
+def camInput(op):
+    # print("CAM INPUT OPERATION")
+    pass
+  
+new_operations = [
+    operation("Webcam Input",OperationType.INPUT,camInput).addInputNumber("Id"),
+    operation("Image Input",OperationType.INPUT,camInput).addInputNumber("Id")
+]
+
+
+
+class new_operator:
+    def __init__(self,) -> None:
+        self.loaded_operations = {}  # array of blocks (operations)
+        self.operations = []  # array of blocks (operations)
+
+        self.sources = []  # array of cameras
+        self.frames = []
+        self.frameOptions = "<option value=None>No Available Options</option>"
+
+        self.opValues = {}
+        self.values = {}  # dictionary of all values
+
+    def process(self):
+        for op in self.operations:
+            opInputs = self.getOperationSource(op).inputs
+            self.opValues.clear()
+            for key in opInputs:
+                # name = self.inputs[key][0]
+                # value = float(self.inputs[key][1]) if value.isNumeric() else self.inputs[key][1]
+
+                # self.opValues[name] = value
+                pass
+            self.getOperationSource(op).function(op)
+
+    def update(self,fromUpdate):
+        for op_id in range(len(self.operations)):
+            op = self.operations[op_id]
+            print("OPERATION IS",op,"\nIdx",op_id)
+            for input_id in range(len(op["inputs"])):
+                input = op["inputs"][input_id]
+                for key in input:
+                    id = 0
+                    name = input[key][0]
+                    value = input[key][1]
+                    if fromUpdate:
+                        print("\n\n\n")
+                        value = request.form[name+str(op_id)+str(id)]
+                        # print(self.operations[op_id])
+                        # print(self.operations[op_id]["inputs"])
+                        # print(self.operations[op_id]["inputs"][input_id])
+                        # print(self.operations[op_id]["inputs"][input_id][key])
+                        # print(self.operations[op_id]["inputs"][input_id][key][1])
+                        print("SET VALUE",name+str(op_id)+str(id),"to",value)
+                        self.operations[op_id]["inputs"][input_id][key][1] = value
+                        print("\n\n\n")
+        print(self.operations)
+        self.process()
+        
+
+    def loadOperation(self,op):
+        self.loaded_operations[op.name] = op
+        return
+    
+    def loadOperationArray(self,ops):
+        for op in ops:
+            self.loadOperation(op)
+
+    def addOperation(self,op_name):
+        if op_name in self.loaded_operations:
+            self.operations.append({'name'  : str(format((len(self.operations) + 1),'05d')) + op_name,"inputs" : self.loaded_operations[op_name].inputs})
+        else:
+            print("Unable to add operation \"" + op_name + "\"" )
+
+    def removeOperation(self,op_id):
+        self.operations.pop(op_id)
+
+    def clearOperations(self):
+        self.operations.clear()
+
+    def getOperationSource(self,op) -> operation:
+        return self.loaded_operations[op["name"][5:]]
+
+    def htmlOps(self):
+        htmls = []
+        for id in range(len(self.operations)):
+            op = self.operations[id]
+            htmls.append(self.getOperationSource(op).html(id))
+        return htmls

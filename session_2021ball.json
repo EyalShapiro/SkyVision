@@ -1,0 +1,27 @@
+{
+  "_permanent": true, 
+  "operations": [
+    {
+      "inputs": [
+        {
+          "NumberInput": [
+            "Id", 
+            "2"
+          ]
+        }
+      ], 
+      "name": "Webcam Input"
+    }, 
+    {
+      "inputs": [
+        {
+          "NumberInput": [
+            "Id", 
+            "2"
+          ]
+        }
+      ], 
+      "name": "Webcam Input"
+    }
+  ]
+}
