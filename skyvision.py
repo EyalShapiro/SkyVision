@@ -127,7 +127,7 @@ def save_session(saveName):  # save the operations
     session["operations"] = operations_dict  # save operations to the session
 
     r = jsonify(dict(session))  # turn the session to json
-    with open('session_' + str(saveName) + '.json', "w") as file:  # open the save file
+    with open('sessions/session_' + str(saveName) + '.json', "w") as file:  # open the save file
         file.write(r.get_data(as_text=True))  # write the session to the save file
         file.close()  # close the save file
         print("Saved Session")
@@ -150,10 +150,7 @@ def loadFromFile(saveName):
     with open('sessions/session_' + str(saveName) + '.json') as json_file:  # open the saved file
         operator.clearOperations()  # clear all loaded operations
         data = json.load(json_file)  # get the json data
-        loaded_ops = data["operations"]  # load operations from the json file
-
-        for op in loaded_ops:  # for operation in loaded operations
-            operator.addOperation(op["name"])  # create an operation from all created inputs
+        operator.operations = data["operations"]  # load operations from the json file
     operator.update(False)
 
 initWeb(network_table=False)
