@@ -14,13 +14,14 @@ log = logging.getLogger('werkzeug')
 log.disabled = True
 print("\n")
 
-operator = new_operator()  # main class responsible for organizing and activating operations
+operator = operator()  # main class responsible for organizing and activating operations
 
 def threadedProcess():
     time.sleep(1)
     while True:
         operator.process()
 
+# sets the resolution of the output frames
 def setResolution(resolution):
     operator.outResolution = resolution
 
@@ -78,10 +79,10 @@ def home():  # home page
             operator.removeOperation(value)
         elif "MoveUP" in submit:
             value = int((request.form["action"])[6:])
-            operator.moveOperation(value,-1)
+            operator.moveOperation(value, -1)
         elif "MoveDOWN" in submit:
             value = int((request.form["action"])[8:])
-            operator.moveOperation(value,1)
+            operator.moveOperation(value, 1)
         else:  # if unkown button was pressed, add an operation
             value = request.form["action"]  # get the pressed button's name
             add_operation(value)  # add operation with the name of the button
@@ -123,7 +124,8 @@ def loadFromFile(saveName):
         operator.operations = json.load(json_file)  # load operations from the json file
     operator.update(False)
 
-def run(operations):
+# runs the main application
+def run(operations: list[operation]):
     operator.loadOperationArray(operations)
     Thread(target=threadedProcess).start()
 

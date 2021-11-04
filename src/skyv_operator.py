@@ -6,6 +6,8 @@ import numpy as np
 import math
 import copy
 import time
+from enum import Enum
+from collections.abc import Callable
 
 import src.skyv_network as skyv_network
 
@@ -276,7 +278,8 @@ error_pic = cv2.imread("res/images/ERR.jpg")  # The frame that will be used for 
     "Network Send Num Var": operation("Network Send Num Var", OperationType.MISC, text_inputs=[operation_TextInput("key", "Key"),operation_TextInput("var", "Number Variable")]),
 }"""
 
-class sky_operator:  # main class responsible for running operations
+@deprecated
+class oldSky_operator:  # main class responsible for running operations
     def __init__(self):
         self.operations = []  # array of blocks (operations)
         self.sources = []  # array of cameras
@@ -920,7 +923,7 @@ class sky_operator:  # main class responsible for running operations
         return "<option value=None>No Available Options</option>"
 # End
 
-class OperationType:  # operation type . mostly for the operation's color
+class OperationType(Enum):  # operation type. mostly used for the operation's color
     NONE = 0
     INPUT = 1
     MORPH = 2
@@ -929,6 +932,7 @@ class OperationType:  # operation type . mostly for the operation's color
     DRAW = 5
     MISC = 6
 
+@deprecated
 class oldOperation:  # main class for operation
     def __init__(self, name, operation_Type, text_inputs=[], number_inputs=[], radio_inputs=[], checkbox_inputs=[],
                  color_inputs=[], variable_outputs=[]):
@@ -1084,7 +1088,7 @@ class oldOperation:  # main class for operation
         return retdiv
 
 class operation:
-    def __init__(self, name, type, function):
+    def __init__(self, name: str, type: OperationType, function: Callable):
         if "MoveUP" in name or "MoveDOWN" in name or "Delete" in name:
             raise Exception("You may not use 'MoveUP/ MoveDOWN/ Delete' in an operation's name.")
 
@@ -1094,20 +1098,20 @@ class operation:
 
         self.inputs = []
 
-    def addInputText(self,name,value = ""):
+    def addInputText(self, name: str, value: str = ""):
         self.inputs.append({"TextInput" : [name,value]})
         return self
-    def addInputNumber(self,name,value = 0,step = 0.0001):
+    def addInputNumber(self, name: str, value: str = 0, step: float = 0.0001):
         self.inputs.append({"NumberInput" : [name,value,step] })
         return self
-    def addInputRadio(self,name,value="",options=[]):
+    def addInputRadio(self, name: str, value: str = "", options: list = []):
         self.inputs.append({"RadioInput" : [name,value,options]})
         return self
-    def addOutput(self,name = "Output"):
+    def addOutput(self, name: str = "Output"):
         self.inputs.append({"Output" : [name,""] })
         return self
     
-    def html(self,operation,operation_id=0):  # return the html version of the operation
+    def html(self, operation, operation_id: int = 0) -> str:  # return the html version of the operation
         retdiv = "<div style=\"margin-top:7px;margin-bottom:7px;background-color:#525252;border-style: solid;border-color:"  # init div
 
         # set div color based on operation type
@@ -1161,7 +1165,7 @@ class operation:
         retdiv += "</div></div>"  # Close divs
         return retdiv
 
-class new_operator:
+class operator:
     def __init__(self,) -> None:
         self.loaded_operations = {}  # array of blocks (operations)
         self.operations = []  # array of blocks (operations)
@@ -1203,7 +1207,7 @@ class new_operator:
             if operation_outputs is not None:
                 self.values.update(dict(zip(self.opOutputs,operation_outputs)))
 
-    def update(self,fromUpdate = True):
+    def update(self, fromUpdate: bool = True):
         self.updating = True
         self.sources.clear()
         self.values.clear()
@@ -1226,32 +1230,32 @@ class new_operator:
         self.getOutputOptions()
         self.updating = False
         
-    def loadOperation(self,op):
+    def loadOperation(self, op: operation):
         self.loaded_operations[op.name] = op
         return
     
-    def loadOperationArray(self,ops):
+    def loadOperationArray(self, ops: list[operation]):
         for op in ops:
             self.loadOperation(op)
         # self.update(True)
 
-    def addOperation(self,op_name):
+    def addOperation(self, op_name: str):
         if op_name in self.loaded_operations:
             self.operations.append({'name'  : str(format((len(self.operations) + 1),'05d')) + op_name,"inputs" : self.loaded_operations[op_name].inputs})
         else:
             print(tColors.FAIL+getTime()+"Unable to add operation \"" + op_name + "\""+tColors.ENDC )
 
-    def removeOperation(self,op_id):
+    def removeOperation(self, op_id: int):
         self.operations.pop(op_id)
 
-    def moveOperation(self,op_id,direction):
+    def moveOperation(self, op_id: int, direction: int):
         self.update()
         self.operations.insert(max(0,op_id+direction), self.operations.pop(op_id))
 
     def clearOperations(self):
         self.operations.clear()
 
-    def getOperationSource(self,op) -> operation:
+    def getOperationSource(self, op: operation) -> operation:
         return self.loaded_operations[op["name"][5:]]
 
     def getOutputOptions(self):
