@@ -27,6 +27,7 @@ def generateVideo(resolution = 0.5):  # generates the output frame
         except:  # if setting output frame fails, set it to the error pic
             selected_out = None
             selected_out = cv2.resize(error_pic,(int(error_pic.shape[1] * 0.25),int(error_pic.shape[0] * 0.25)))  # set the output frame to the error pic
+            
 
         ret, encodedImage = cv2.imencode(".jpg", selected_out)  # turn the output pic to a jpg
 

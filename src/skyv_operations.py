@@ -5,6 +5,7 @@ import cv2
 import numpy as np
 import math
 import copy
+import time
 
 import src.skyv_network as skyv_network
 
@@ -1146,16 +1147,21 @@ class operation:
         retdiv += "</div></div>"  # Close divs
         return retdiv
 
-def camInput(values):
-    print("CAM INPUT OPERATION VALUE -",values["Id"])
-    pass
 
-def imageInput(values):
-    return [cv2.imread(values["Path"])]
+def camInput(inputs,operator):
+    if(operator.opOutputs[0] in operator.sources):
+        _, frame = operator.sources[operator.opOutputs[0]].read()
+        return [frame]
+    operator.sources[operator.opOutputs[0]] = cv2.VideoCapture(int(inputs["Id"]))
+    _, frame = operator.sources[operator.opOutputs[0]].read()
+    return [frame]
+
+def imageInput(inputs,operator):
+    return [cv2.imread(inputs["Path"])]
     
 
 new_operations = [
-    operation("Webcam Input",OperationType.INPUT,camInput).addInputNumber("Id",step=1),
+    operation("Webcam Input",OperationType.INPUT,camInput).addInputNumber("Id",step=1).addOutput(),
     operation("Image Input",OperationType.INPUT,imageInput).addInputText("Path").addOutput(),
 ]
 
@@ -1166,7 +1172,7 @@ class new_operator:
         self.loaded_operations = {}  # array of blocks (operations)
         self.operations = []  # array of blocks (operations)
 
-        self.sources = []  # array of cameras
+        self.sources = {}  # array of cameras
         self.frames = []
         self.frameOptions = "<option value=None>No Available Options</option>"
 
@@ -1191,11 +1197,13 @@ class new_operator:
                         self.opValues[name] = value
                     elif "Output" in key:
                         self.opOutputs.append(value)
-            operation_outputs = self.getOperationSource(op).function(self.opValues)
+            operation_outputs = self.getOperationSource(op).function(self.opValues,self)
             if operation_outputs is not None:
                 self.values.update(dict(zip(self.opOutputs,operation_outputs)))
 
     def update(self,fromUpdate = True):
+        self.sources.clear()
+        self.values.clear()
         tmp_operations = copy.deepcopy(self.operations)  
         for op_id in range(len(tmp_operations)):
             op = tmp_operations[op_id]
