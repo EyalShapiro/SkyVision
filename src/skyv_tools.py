@@ -1,6 +1,6 @@
-import cv2
 import numpy as np
 from colorutils import Color
+from datetime import datetime
 
 def hex_to_hsv(hex):  # turn hex to hsv
     c = Color(hex=hex)
@@ -33,3 +33,20 @@ def hstack_array(images):  # put all images to the right of each other
     for image in images[1:]:
         stack = hstack_images(stack, image)
     return stack
+
+class tColors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+def getTime():
+    return "[" + str(datetime.now().strftime("%H:%M:%S")) + "] "
+
+def log(msg):
+    print(tColors.OKCYAN + getTime() + msg + tColors.ENDC)

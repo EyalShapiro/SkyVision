@@ -33,5 +33,36 @@
       }
     ], 
     "name": "00002Image Input"
+  }, 
+  {
+    "inputs": [
+      {
+        "TextInput": [
+          "Source", 
+          "&camera&"
+        ]
+      }, 
+      {
+        "RadioInput": [
+          "Type", 
+          "BGR2HSV", 
+          [
+            "BGR2HSV", 
+            "BGR2RGB", 
+            "BGR2GRAY", 
+            "HSV2RGB", 
+            "HSV2BGR", 
+            "GRAY2RGB"
+          ]
+        ]
+      }, 
+      {
+        "Output": [
+          "Output", 
+          "hsv"
+        ]
+      }
+    ], 
+    "name": "00003Convert Color"
   }
 ]

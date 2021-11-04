@@ -2,16 +2,6 @@ from src.html_inputs import *
 from flask import *
 from random import randint
 
-
-class OperationType:  # operation type . mostly for the operation's color
-    NONE = 0
-    INPUT = 1
-    MORPH = 2
-    ARITHMETIC = 3
-    COLORS = 4
-    DRAW = 5
-    MISC = 6
-
 class operation_TextInput:  # text input for operation
     def __init__(self, name, text="", style="color: #ebebeb;background-color:#525252;",
                  text_style="font-size:28px;margin-right:10px;color:#ebebeb;", value="", brake=True):

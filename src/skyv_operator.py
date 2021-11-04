@@ -6,9 +6,10 @@ import numpy as np
 import math
 import copy
 import time
-import threading
 
 import src.skyv_network as skyv_network
+
+error_pic = cv2.imread("res/images/ERR.jpg")  # The frame that will be used for drawing when there is an error
 
 """sky_operations = {  # sky operation is a dictionary that defines the inputs each operation has
 
@@ -919,6 +920,15 @@ class sky_operator:  # main class responsible for running operations
         return "<option value=None>No Available Options</option>"
 # End
 
+class OperationType:  # operation type . mostly for the operation's color
+    NONE = 0
+    INPUT = 1
+    MORPH = 2
+    ARITHMETIC = 3
+    COLORS = 4
+    DRAW = 5
+    MISC = 6
+
 class oldOperation:  # main class for operation
     def __init__(self, name, operation_Type, text_inputs=[], number_inputs=[], radio_inputs=[], checkbox_inputs=[],
                  color_inputs=[], variable_outputs=[]):
@@ -1073,8 +1083,6 @@ class oldOperation:  # main class for operation
 
         return retdiv
 
-error_pic = cv2.imread("res/images/ERR.jpg")  # The frame that will be used for drawing when there is an error
-
 class operation:
     def __init__(self, name, type, function):
         if "MoveUP" in name or "MoveDOWN" in name or "Delete" in name:
@@ -1086,14 +1094,17 @@ class operation:
 
         self.inputs = []
 
-    def addInputText(self,name):
-        self.inputs.append({"TextInput" : [name,"Value"]})
+    def addInputText(self,name,value = ""):
+        self.inputs.append({"TextInput" : [name,value]})
         return self
-    def addInputNumber(self,name,step = 0.0001):
-        self.inputs.append({"NumberInput" : [name,0,step] })
+    def addInputNumber(self,name,value = 0,step = 0.0001):
+        self.inputs.append({"NumberInput" : [name,value,step] })
+        return self
+    def addInputRadio(self,name,value="",options=[]):
+        self.inputs.append({"RadioInput" : [name,value,options]})
         return self
     def addOutput(self,name = "Output"):
-        self.inputs.append({"Output" : [name,"Value"] })
+        self.inputs.append({"Output" : [name,""] })
         return self
     
     def html(self,operation,operation_id=0):  # return the html version of the operation
@@ -1123,19 +1134,19 @@ class operation:
 
         for input in operation["inputs"]:
             for key in input:
+                input = input[key]
                 id = 0
-                name = input[key][0]
-                value = input[key][1]
+                name = input[0]
+                value = input[1]
 
                 if key == 'Output':
                     retdiv += str(operation_TextInput(name+str(operation_id)+str(id),text=name,value=value))
                 if key == 'TextInput':
                     retdiv += str(operation_TextInput(name+str(operation_id)+str(id),text=name,value=value))
                 if key == 'NumberInput':
-                    retdiv += str(operation_NumberInput(name+str(operation_id)+str(id),text=name,value=value,step = input[key][2]))
-
-                # if key == 'RadioInput':
-                #     retdiv += str(radio_input)
+                    retdiv += str(operation_NumberInput(name+str(operation_id)+str(id),text=name,value=value,step = input[2]))
+                if key == 'RadioInput':
+                    retdiv += str(operation_RadioInput(name+str(operation_id)+str(id),text=name,value=value,options=input[2]))
 
                 # if key == 'CheckInput':
                 #     retdiv += str(check_input)
@@ -1149,25 +1160,6 @@ class operation:
         # <- div contents end here
         retdiv += "</div></div>"  # Close divs
         return retdiv
-
-
-def camInput(inputs,operator):
-    if operator.updating:
-        operator.sources[operator.opOutputs[0]] = cv2.VideoCapture(int(inputs["Id"]))
-    _, frame = operator.sources[operator.opOutputs[0]].read()
-    return [frame]
-
-def imageInput(inputs,operator):
-    print("PROCESSING")
-    return [cv2.imread(inputs["Path"])]
-    
-
-new_operations = [
-    operation("Webcam Input",OperationType.INPUT,camInput).addInputNumber("Id",step=1).addOutput(),
-    operation("Image Input",OperationType.INPUT,imageInput).addInputText("Path").addOutput(),
-]
-
-
 
 class new_operator:
     def __init__(self,) -> None:
@@ -1184,6 +1176,8 @@ class new_operator:
         self.updating = False
         self.required_out = "None"
 
+        self.outResolution = 0.5
+
     def process(self):
         for op in self.operations:
             self.opValues.clear()
@@ -1195,13 +1189,17 @@ class new_operator:
                     if "Input" in key:
                         value = float(value) if str(value).isnumeric() else value
                         if(type(value) == str):
-                            if(value[0] == '&' and value[-1] == '&'):
-                                value = self.values[value]
+                            if(len(value) > 2):
+                                if(value[0] == '&' and value[-1] == '&'):
+                                    value = self.values[value[1:-1]]
 
                         self.opValues[name] = value
                     elif "Output" in key:
                         self.opOutputs.append(value)
-            operation_outputs = self.getOperationSource(op).function(self.opValues,self)
+            try:
+                operation_outputs = self.getOperationSource(op).function(self.opValues,self)
+            except Exception as error:
+                print(tColors.FAIL + getTime() + "OPERATION ERROR\n===============\n" + str(error) + tColors.ENDC)
             if operation_outputs is not None:
                 self.values.update(dict(zip(self.opOutputs,operation_outputs)))
 
@@ -1241,7 +1239,7 @@ class new_operator:
         if op_name in self.loaded_operations:
             self.operations.append({'name'  : str(format((len(self.operations) + 1),'05d')) + op_name,"inputs" : self.loaded_operations[op_name].inputs})
         else:
-            print("Unable to add operation \"" + op_name + "\"" )
+            print(tColors.FAIL+getTime()+"Unable to add operation \"" + op_name + "\""+tColors.ENDC )
 
     def removeOperation(self,op_id):
         self.operations.pop(op_id)
@@ -1274,14 +1272,14 @@ class new_operator:
             htmls.append(self.getOperationSource(op).html(op,id))
         return htmls
 
-    def generateVideo(self,resolution = 0.5):  # generates the output frame
+    def generateVideo(self):  # generates the output frame
         time.sleep(1)  # delay to allow for camera reconnection
         while True:
             outputs = self.values  # get all values from the operator
 
             try:  # try to set the output frame to the required frame
                 selected_out = outputs[self.required_out]  # set the output to the required frame
-                selected_out = cv2.resize(selected_out,(int(selected_out.shape[1] * resolution),int(selected_out.shape[0] * resolution)))
+                selected_out = cv2.resize(selected_out,(int(selected_out.shape[1] * self.outResolution),int(selected_out.shape[0] * self.outResolution)))
             except:  # if setting output frame fails, set it to the error pic
                 selected_out = None
                 selected_out = cv2.resize(error_pic,(int(error_pic.shape[1] * 0.25),int(error_pic.shape[0] * 0.25)))  # set the output frame to the error pic
