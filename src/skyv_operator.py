@@ -6,6 +6,7 @@ import numpy as np
 import math
 import copy
 import time
+import threading
 
 import src.skyv_network as skyv_network
 
@@ -1072,6 +1073,8 @@ class oldOperation:  # main class for operation
 
         return retdiv
 
+error_pic = cv2.imread("res/images/ERR.jpg")  # The frame that will be used for drawing when there is an error
+
 class operation:
     def __init__(self, name, type, function):
         if "MoveUP" in name or "MoveDOWN" in name or "Delete" in name:
@@ -1149,14 +1152,13 @@ class operation:
 
 
 def camInput(inputs,operator):
-    if(operator.opOutputs[0] in operator.sources):
-        _, frame = operator.sources[operator.opOutputs[0]].read()
-        return [frame]
-    operator.sources[operator.opOutputs[0]] = cv2.VideoCapture(int(inputs["Id"]))
+    if operator.updating:
+        operator.sources[operator.opOutputs[0]] = cv2.VideoCapture(int(inputs["Id"]))
     _, frame = operator.sources[operator.opOutputs[0]].read()
     return [frame]
 
 def imageInput(inputs,operator):
+    print("PROCESSING")
     return [cv2.imread(inputs["Path"])]
     
 
@@ -1179,6 +1181,8 @@ class new_operator:
         self.opValues = {}
         self.opOutputs = []
         self.values = {}  # dictionary of all values
+        self.updating = False
+        self.required_out = "None"
 
     def process(self):
         for op in self.operations:
@@ -1202,9 +1206,10 @@ class new_operator:
                 self.values.update(dict(zip(self.opOutputs,operation_outputs)))
 
     def update(self,fromUpdate = True):
+        self.updating = True
         self.sources.clear()
         self.values.clear()
-        tmp_operations = copy.deepcopy(self.operations)  
+        tmp_operations = copy.deepcopy(self.operations)  # duplicate the operations array
         for op_id in range(len(tmp_operations)):
             op = tmp_operations[op_id]
             for input_id in range(len(op["inputs"])):
@@ -1217,10 +1222,11 @@ class new_operator:
                         value = request.form[name+str(op_id)+str(id)]
                         tmp_operations[op_id]["inputs"][input_id][key][1] = value
             
-        self.operations = copy.deepcopy(tmp_operations)
+        self.operations = copy.deepcopy(tmp_operations) # update operations to duplicate
         del tmp_operations
         self.process()
         self.getOutputOptions()
+        self.updating = False
         
     def loadOperation(self,op):
         self.loaded_operations[op.name] = op
@@ -1229,6 +1235,7 @@ class new_operator:
     def loadOperationArray(self,ops):
         for op in ops:
             self.loadOperation(op)
+        # self.update(True)
 
     def addOperation(self,op_name):
         if op_name in self.loaded_operations:
@@ -1266,3 +1273,20 @@ class new_operator:
             op = self.operations[id]
             htmls.append(self.getOperationSource(op).html(op,id))
         return htmls
+
+    def generateVideo(self,resolution = 0.5):  # generates the output frame
+        time.sleep(1)  # delay to allow for camera reconnection
+        while True:
+            outputs = self.values  # get all values from the operator
+
+            try:  # try to set the output frame to the required frame
+                selected_out = outputs[self.required_out]  # set the output to the required frame
+                selected_out = cv2.resize(selected_out,(int(selected_out.shape[1] * resolution),int(selected_out.shape[0] * resolution)))
+            except:  # if setting output frame fails, set it to the error pic
+                selected_out = None
+                selected_out = cv2.resize(error_pic,(int(error_pic.shape[1] * 0.25),int(error_pic.shape[0] * 0.25)))  # set the output frame to the error pic
+                
+            ret, encodedImage = cv2.imencode(".jpg", selected_out)  # turn the output pic to a jpg
+            if ret:  # if encoding to jpg fails, skip this frame
+                self.outputVid = (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + bytearray(encodedImage) + b'\r\n')
+                yield self.outputVid  # output the frame in a format that the browser can read

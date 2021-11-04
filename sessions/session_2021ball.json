@@ -1,40 +1,37 @@
-{
-  "_permanent": true, 
-  "operations": [
-    {
-      "inputs": [
-        {
-          "NumberInput": [
-            "Id", 
-            "0", 
-            1
-          ]
-        }, 
-        {
-          "Output": [
-            "Output", 
-            "cam"
-          ]
-        }
-      ], 
-      "name": "00001Webcam Input"
-    }, 
-    {
-      "inputs": [
-        {
-          "TextInput": [
-            "Path", 
-            "res/images/F360Render.PNG"
-          ]
-        }, 
-        {
-          "Output": [
-            "Output", 
-            "img"
-          ]
-        }
-      ], 
-      "name": "00002Image Input"
-    }
-  ]
-}
+[
+  {
+    "inputs": [
+      {
+        "NumberInput": [
+          "Id", 
+          "0", 
+          1
+        ]
+      }, 
+      {
+        "Output": [
+          "Output", 
+          "camera"
+        ]
+      }
+    ], 
+    "name": "00001Webcam Input"
+  }, 
+  {
+    "inputs": [
+      {
+        "TextInput": [
+          "Path", 
+          "res/images/F360Render.PNG"
+        ]
+      }, 
+      {
+        "Output": [
+          "Output", 
+          "img"
+        ]
+      }
+    ], 
+    "name": "00002Image Input"
+  }
+]
