@@ -59,7 +59,7 @@ def home():  # home page
         operator.update(False)
         outputOptions = operator.frameOptions
         return render_template("mainhtml.html", ops=operator.htmlOps(),
-                               opOptions=operator.operations,
+                               opOptions=operator.loaded_operations,
                                curr_out=operator.required_out, out_select_options=outputOptions,
                                currFile=saveName)  # returns the main html with the array of operations
 
@@ -88,6 +88,7 @@ def home():  # home page
             value = request.form["action"]  # get the pressed button's name
             add_operation(value)  # add operation with the name of the button
         return render_template("mainhtml.html", ops=operator.htmlOps(),
+                                opOptions=operator.loaded_operations,
                                curr_out=operator.required_out,
                                out_select_options=outputOptions,
                                currFile=saveName
@@ -132,3 +133,4 @@ def run(operations: list[operation]):
 
     initWeb(network_table=False)
     app.run(debug=True, host='0.0.0.0',threaded=True)  # run the app on main
+    logMessage("STARTING WEB INTERFACE")

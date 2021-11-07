@@ -50,7 +50,7 @@ class tColors:
 def getTime():
     return "[" + str(datetime.now().strftime("%H:%M:%S")) + "] "
 
-def log(msg):
+def logMessage(msg):
     print(tColors.OKCYAN + getTime() + msg + tColors.ENDC)
 
 def deprecated(func):

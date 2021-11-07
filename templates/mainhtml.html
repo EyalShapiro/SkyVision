@@ -53,8 +53,8 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="text-align: left;background-color:rgba(0, 0, 0, 0.5);">
                                 {% for operation in opOptions%}
-                                    {% if(True): %}
-                                    <input type="submit" name="action" value="{{operation["name"][5:]}}{{operation["type"]}}" style="font-size: 20px;background-color:#6c757d;color:white" />
+                                    {% if(opOptions[operation]["type"].value == 1): %}
+                                    <input type="submit" name="action" value="{{operation}}" style="font-size: 20px;background-color:#6c757d;color:white" />
                                     {% endif %}
                                 {% endfor %}
                             </div>
@@ -65,8 +65,11 @@
                             <label style="color: #ebebeb;">Morph</label>
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="text-align: left;background-color:rgba(0, 0, 0, 0.5);">
-                                <input type="submit" name="action" value="Gaussian Blur" style="font-size: 20px;background-color:#6c757d;color:white" />
-                                <input type="submit" name="action" value="MorphEx" style="font-size: 20px;background-color:#6c757d;color:white" />
+                                {% for operation in opOptions%}
+                                    {% if(opOptions[operation]["type"].value == 2): %}
+                                    <input type="submit" name="action" value="{{operation}}" style="font-size: 20px;background-color:#6c757d;color:white" />
+                                    {% endif %}
+                                {% endfor %}
                             </div>
                         </div>
 
@@ -75,11 +78,11 @@
                             <label style="color: #ebebeb;">Arithmetic</label>
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="text-align: left;background-color:rgba(0, 0, 0, 0.5);">
-                                <input type="submit" name="action" value="Bitwise And" style="font-size: 20px;background-color:#6c757d;color:white" />
-                                <input type="submit" name="action" value="Math Add" style="font-size: 20px;background-color:#6c757d;color:white" />
-                                <input type="submit" name="action" value="Split Channel" style="font-size: 20px;background-color:#6c757d;color:white" />
-                                <input type="submit" name="action" value="Ratio" style="font-size: 20px;background-color:#6c757d;color:white" />
-                                <input type="submit" name="action" value="Almost Equal Sides" style="font-size: 20px;background-color:#6c757d;color:white" />
+                                {% for operation in opOptions%}
+                                    {% if(opOptions[operation]["type"].value == 3): %}
+                                    <input type="submit" name="action" value="{{operation}}" style="font-size: 20px;background-color:#6c757d;color:white" />
+                                    {% endif %}
+                                {% endfor %}
                             </div>
                         </div>
 
@@ -88,10 +91,11 @@
                             <label style="color: #ebebeb;">Colors</label>
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="text-align: left;background-color:rgba(0, 0, 0, 0.5);">
-                                <input type="submit" name="action" value="Color Mask" style="font-size: 20px;background-color:#6c757d;color:white" />
-                                <input type="submit" name="action" value="Convert Color" style="font-size: 20px;background-color:#6c757d;color:white" />
-                                <input type="submit" name="action" value="Find Contours" style="font-size: 20px;background-color:#6c757d;color:white" />
-                                <input type="submit" name="action" value="Canny" style="font-size: 20px;background-color:#6c757d;color:white" />
+                                {% for operation in opOptions%}
+                                    {% if(opOptions[operation]["type"].value == 4): %}
+                                    <input type="submit" name="action" value="{{operation}}" style="font-size: 20px;background-color:#6c757d;color:white" />
+                                    {% endif %}
+                                {% endfor %}
                             </div>
                         </div>
 
@@ -100,15 +104,11 @@
                             <label style="color: #ebebeb;">Draw</label>
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="text-align: left;background-color:rgba(0, 0, 0, 0.5);">
-                                <input type="submit" name="action" value="Draw Contours" style="font-size: 20px;background-color:#6c757d;color:white" />
-                                <input type="submit" name="action" value="Draw Contour" style="font-size: 20px;background-color:#6c757d;color:white" />
-                                <input type="submit" name="action" value="Draw Circle" style="font-size: 20px;background-color:#6c757d;color:white" />
-                                <input type="submit" name="action" value="Draw Circle Params" style="font-size: 20px;background-color:#6c757d;color:white" />
-                                <input type="submit" name="action" value="Draw Rectangle Params" style="font-size: 20px;background-color:#6c757d;color:white" />
-                                <input type="submit" name="action" value="Draw ellipse" style="font-size: 20px;background-color:#6c757d;color:white" />
-                                <input type="submit" name="action" value="Draw Found Circle" style="font-size: 20px;background-color:#6c757d;color:white" />
-                                <input type="submit" name="action" value="Draw Found Circles" style="font-size: 20px;background-color:#6c757d;color:white" />
-                                <input type="submit" name="action" value="Text" style="font-size: 20px;background-color:#6c757d;color:white" />
+                                {% for operation in opOptions%}
+                                    {% if(opOptions[operation]["type"].value == 5): %}
+                                    <input type="submit" name="action" value="{{operation}}" style="font-size: 20px;background-color:#6c757d;color:white" />
+                                    {% endif %}
+                                {% endfor %}
                             </div>
                         </div>
 
@@ -117,21 +117,11 @@
                             <label style="color: #ebebeb;">Misc</label>
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="text-align: left;background-color:rgba(0, 0, 0, 0.5);">
-                                <input type="submit" name="action" value="Flip" style="font-size: 20px;background-color:#6c757d;color:white" />
-                                <input type="submit" name="action" value="LargestContour" style="font-size: 20px;background-color:#6c757d;color:white" />
-                                <input type="submit" name="action" value="Fit ellipse" style="font-size: 20px;background-color:#6c757d;color:white" />
-                                <input type="submit" name="action" value="Minimum Enclosing Circle" style="font-size: 20px;background-color:#6c757d;color:white" />
-                                <input type="submit" name="action" value="Minimum Contour Area" style="font-size: 20px;background-color:#6c757d;color:white" />
-                                <input type="submit" name="action" value="Bounding Rectangle" style="font-size: 20px;background-color:#6c757d;color:white" />
-                                <input type="submit" name="action" value="Rotated Rectangle" style="font-size: 20px;background-color:#6c757d;color:white" />
-                                <input type="submit" name="action" value="Blank Image" style="font-size: 20px;background-color:#6c757d;color:white" />
-                                <input type="submit" name="action" value="Hough Circles" style="font-size: 20px;background-color:#6c757d;color:white" />
-                                <input type="submit" name="action" value="ApproxPolyDP" style="font-size: 20px;background-color:#6c757d;color:white" />
-                                <input type="submit" name="action" value="Convex Hull" style="font-size: 20px;background-color:#6c757d;color:white" />
-                                <input type="submit" name="action" value="Square Contours" style="font-size: 20px;background-color:#6c757d;color:white" />
-                                <input type="submit" name="action" value="Average Circle Radius" style="font-size: 20px;background-color:#6c757d;color:white" />
-                                <input type="submit" name="action" value="Circle Coords" style="font-size: 20px;background-color:#6c757d;color:white" />
-                                <input type="submit" name="action" value="Network Send Num Var" style="font-size: 20px;background-color:#6c757d;color:white" />
+                                {% for operation in opOptions%}
+                                    {% if(opOptions[operation]["type"].value == 6): %}
+                                    <input type="submit" name="action" value="{{operation}}" style="font-size: 20px;background-color:#6c757d;color:white" />
+                                    {% endif %}
+                                {% endfor %}
                             </div>
                         </div>
 
