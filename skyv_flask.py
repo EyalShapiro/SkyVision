@@ -59,6 +59,7 @@ def home():  # home page
         operator.update(False)
         outputOptions = operator.frameOptions
         return render_template("mainhtml.html", ops=operator.htmlOps(),
+                               opOptions=operator.operations,
                                curr_out=operator.required_out, out_select_options=outputOptions,
                                currFile=saveName)  # returns the main html with the array of operations
 

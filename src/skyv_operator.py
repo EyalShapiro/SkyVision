@@ -1241,7 +1241,9 @@ class operator:
 
     def addOperation(self, op_name: str):
         if op_name in self.loaded_operations:
-            self.operations.append({'name'  : str(format((len(self.operations) + 1),'05d')) + op_name,"inputs" : self.loaded_operations[op_name].inputs})
+            self.operations.append({'name'  : str(format((len(self.operations) + 1),'05d')) + op_name,
+                                    "inputs" : self.loaded_operations[op_name].inputs,
+                                    "type" : 1})
         else:
             print(tColors.FAIL+getTime()+"Unable to add operation \"" + op_name + "\""+tColors.ENDC )
 

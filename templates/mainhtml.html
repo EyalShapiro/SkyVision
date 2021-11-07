@@ -52,8 +52,11 @@
                             <label style="color: #ebebeb;">Input</label>
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="text-align: left;background-color:rgba(0, 0, 0, 0.5);">
-                                <input type="submit" name="action" value="Image Input" style="font-size: 20px;background-color:#6c757d;color:white" />
-                                <input type="submit" name="action" value="Webcam Input" style="font-size: 20px;background-color:#6c757d;color:white" />
+                                {% for operation in opOptions%}
+                                    {% if(True): %}
+                                    <input type="submit" name="action" value="{{operation["name"][5:]}}{{operation["type"]}}" style="font-size: 20px;background-color:#6c757d;color:white" />
+                                    {% endif %}
+                                {% endfor %}
                             </div>
                         </div>
 
