@@ -1,26 +1,7 @@
 [
   {
     "ERR": false, 
-    "inputs": [
-      {
-        "NumberInput": [
-          "Id", 
-          "0", 
-          1
-        ]
-      }, 
-      {
-        "Output": [
-          "Output", 
-          "cam"
-        ]
-      }
-    ], 
-    "name": "00001Webcam Input", 
-    "type": 1
-  }, 
-  {
-    "ERR": false, 
+    "ERRMSG": "", 
     "inputs": [
       {
         "TextInput": [
@@ -40,6 +21,27 @@
   }, 
   {
     "ERR": false, 
+    "ERRMSG": "", 
+    "inputs": [
+      {
+        "TextInput": [
+          "Path", 
+          "res/images/donald-trump.jpg"
+        ]
+      }, 
+      {
+        "Output": [
+          "Output", 
+          "cam"
+        ]
+      }
+    ], 
+    "name": "00003Image Input", 
+    "type": 1
+  }, 
+  {
+    "ERR": true, 
+    "ERRMSG": "OpenCV(4.5.2) C:\\Users\\runneradmin\\AppData\\Local\\Temp\\pip-req-build-1hfhc_rd\\opencv\\modules\\core\\src\\arithm.cpp:230: error: (-215:Assertion failed) (mtype == CV_8U || mtype == CV_8S) && _mask.sameSize(*psrc1) in function 'cv::binary_op'\n", 
     "inputs": [
       {
         "TextInput": [
@@ -56,7 +58,7 @@
       {
         "TextInput": [
           "Mask", 
-          ""
+          "&j&"
         ]
       }, 
       {
@@ -68,5 +70,26 @@
     ], 
     "name": "00003Bitwise And", 
     "type": 3
+  }, 
+  {
+    "ERR": false, 
+    "ERRMSG": "", 
+    "inputs": [
+      {
+        "NumberInput": [
+          "Id", 
+          "0", 
+          1
+        ]
+      }, 
+      {
+        "Output": [
+          "Output", 
+          "cam"
+        ]
+      }
+    ], 
+    "name": "00004Webcam Input", 
+    "type": 1
   }
 ]

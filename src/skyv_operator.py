@@ -1074,7 +1074,7 @@ class operation:
         self.inputs.append({"Output" : [name,""] })
         return self
     
-    def html(self, operation, operation_id: int = 0, ERR: bool = False) -> str:  # return the html version of the operation
+    def html(self, operation, operation_id: int = 0, ERR: bool = False, ErrMSG: str = "") -> str:  # return the html version of the operation
         if not ERR:
             retdiv = "<div style=\"margin-top:7px;margin-bottom:7px;background-color:#525252;border-style: solid;border-color:"  # init div
         else:
@@ -1128,6 +1128,7 @@ class operation:
                 #     retdiv += str(var_output)
 
         # <- div contents end here
+        retdiv += "<br/><label style=\"color: #ff9999\">" + ErrMSG + "</label>"
         retdiv += "</div></div>"  # Close divs
         return retdiv
 
@@ -1158,21 +1159,26 @@ class operator:
                     value = input[key][1]
                     if "Input" in key:
                         value = float(value) if str(value).isnumeric() else value
-                        if(type(value) == str):
-                            if(len(value) > 2):
-                                if(value[0] == '&' and value[-1] == '&'):
-                                    value = self.values[value[1:-1]]
+                        try:
+                            if(type(value) == str):
+                                if(len(value) > 2):
+                                    if(value[0] == '&' and value[-1] == '&'):
+                                        value = self.values[value[1:-1]]
+                        except:
+                            logMessage("Cant find key \"" + value[1:-1] + "\" ignoring &&")
 
                         self.opValues[name] = value
                     elif "Output" in key:
                         self.opOutputs.append(value)
             try:
                 op["ERR"]=False
+                op["ERRMSG"]=""
                 operation_outputs = self.getOperationSource(op).function(self.opValues,self)
                 if operation_outputs is not None:
                     self.values.update(dict(zip(self.opOutputs,operation_outputs)))
             except Exception as error:
                 op["ERR"]=True
+                op["ERRMSG"]=str(error)
                 print(tColors.FAIL + getTime() + "OPERATION ERROR [" + op["name"][5:] + "]\n===============\n" + str(error) + tColors.ENDC)
             
 
@@ -1244,7 +1250,10 @@ class operator:
         htmls = []
         for id in range(len(self.operations)):
             op = self.operations[id]
-            htmls.append(self.getOperationSource(op).html(op,id,op["ERR"]))
+            try:
+                htmls.append(self.getOperationSource(op).html(op,id,op["ERR"],op["ERRMSG"]))
+            except:
+                htmls.append(self.getOperationSource(op).html(op,id))
         return htmls
 
     def generateVideo(self):  # generates the output frame
