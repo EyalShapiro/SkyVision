@@ -19,17 +19,6 @@ error_pic = cv2.imread("res/images/ERR.jpg")  # The frame that will be used for 
     # Key : operation("operation name",OperationType,
     #   text_inputs=[operation_TextInput("html Name", " html Text")],
     #   number_inputs=[operation_NumberInput("html Name", "html Text")])
-    "Image Input": operation("Image input", OperationType.INPUT,
-                             text_inputs=[operation_TextInput("imgPath", "Image Path")],
-                             variable_outputs=[operation_TextInput("outName", "Output name")]),
-
-    "Webcam Input": operation("Webcam input", OperationType.INPUT,
-                              number_inputs=[operation_NumberInput("webcamID", "Webcam ID")],
-                              variable_outputs=[operation_TextInput("outName", "Output name")]),
-
-    "IP Input": operation("IP input [DEPRECATED]", OperationType.INPUT,
-                          text_inputs=[operation_TextInput("webcamID", "Webcam ID")],
-                          variable_outputs=[operation_TextInput("outName", "Output name")]),
 
     "Color Mask": operation("Color Mask", OperationType.COLORS,
                             text_inputs=[
@@ -40,32 +29,6 @@ error_pic = cv2.imread("res/images/ERR.jpg")  # The frame that will be used for 
                             variable_outputs=[
                                 operation_TextInput("outName", "Output name")]
                             ),
-
-    "Convert Color": operation("Convert color", OperationType.COLORS,
-                               text_inputs=[
-                                   operation_TextInput("src", "Source")],
-                               radio_inputs=[
-                                   operation_RadioInput("type", "Type",
-                                                        options=[
-                                                            "BGR2HSV",
-                                                            "BGR2RGB",
-                                                            "BGR2GRAY",
-                                                            "HSV2RGB",
-                                                            "HSV2BGR",
-                                                            "GRAY2RGB",
-                                                        ])],
-                               variable_outputs=[operation_TextInput("outName", "Output name")]
-                               ),
-
-    "Gaussian Blur": operation("Gaussian Blur", OperationType.MORPH,
-                               text_inputs=[
-                                   operation_TextInput("src", "Source")],
-                               number_inputs=[
-                                   operation_NumberInput("kernel", "Kernel Value"),
-                                   operation_NumberInput("iter", "Iterations")
-                               ],
-                               variable_outputs=[operation_TextInput("outName", "Output name")]
-                               ),
 
     "MorphEx": operation("MorphEx", OperationType.MORPH,
                          text_inputs=[
@@ -314,7 +277,7 @@ class oldSky_operator:  # main class responsible for running operations
                             self.values[op.variableOutputs[0].value] = frame
                             source_counter += 1
 
-                if op.type == OperationType.MORPH:  # MORPH OPERATIONS
+                if op.type == OperationType.SHAPE:  # MORPH OPERATIONS
 
                     if op.name == "Gaussian Blur":
                         src = op.textInputs[0].value
@@ -884,7 +847,7 @@ class oldSky_operator:  # main class responsible for running operations
                         camera = cv2.VideoCapture(id)
                         self.sources.append(camera)
 
-                if op.type == OperationType.MORPH:  # MORPH OPERATIONS
+                if op.type == OperationType.SHAPE:  # MORPH OPERATIONS
                     pass
 
                 if op.type == OperationType.ARITHMETIC:  # ARITHMETIC OPERATIONS
@@ -926,7 +889,7 @@ class oldSky_operator:  # main class responsible for running operations
 class OperationType(Enum):  # operation type. mostly used for the operation's color
     NONE = 0
     INPUT = 1
-    MORPH = 2
+    SHAPE = 2
     ARITHMETIC = 3
     COLORS = 4
     DRAW = 5
@@ -1040,7 +1003,7 @@ class oldOperation:  # main class for operation
         # set div color based on operation type
         div_color = "black"
         div_color = "#00fff7" if self.type == OperationType.INPUT else div_color
-        div_color = "#ff9100" if self.type == OperationType.MORPH else div_color
+        div_color = "#ff9100" if self.type == OperationType.SHAPE else div_color
         div_color = "#11ff00" if self.type == OperationType.ARITHMETIC else div_color
         div_color = "#e100ff" if self.type == OperationType.COLORS else div_color
         div_color = "#ff0000" if self.type == OperationType.DRAW else div_color
@@ -1111,13 +1074,16 @@ class operation:
         self.inputs.append({"Output" : [name,""] })
         return self
     
-    def html(self, operation, operation_id: int = 0) -> str:  # return the html version of the operation
-        retdiv = "<div style=\"margin-top:7px;margin-bottom:7px;background-color:#525252;border-style: solid;border-color:"  # init div
+    def html(self, operation, operation_id: int = 0, ERR: bool = False) -> str:  # return the html version of the operation
+        if not ERR:
+            retdiv = "<div style=\"margin-top:7px;margin-bottom:7px;background-color:#525252;border-style: solid;border-color:"  # init div
+        else:
+            retdiv = "<div style=\"margin-top:7px;margin-bottom:7px;background-color:#ff0000;border-style: solid;border-color:"  # init div
 
         # set div color based on operation type
         div_color = "black"
         div_color = "#00fff7" if self.type == OperationType.INPUT else div_color
-        div_color = "#ff9100" if self.type == OperationType.MORPH else div_color
+        div_color = "#ff9100" if self.type == OperationType.SHAPE else div_color
         div_color = "#11ff00" if self.type == OperationType.ARITHMETIC else div_color
         div_color = "#e100ff" if self.type == OperationType.COLORS else div_color
         div_color = "#ff0000" if self.type == OperationType.DRAW else div_color
@@ -1201,10 +1167,12 @@ class operator:
                     elif "Output" in key:
                         self.opOutputs.append(value)
             try:
+                op["ERR"]=False
                 operation_outputs = self.getOperationSource(op).function(self.opValues,self)
                 if operation_outputs is not None:
                     self.values.update(dict(zip(self.opOutputs,operation_outputs)))
             except Exception as error:
+                op["ERR"]=True
                 print(tColors.FAIL + getTime() + "OPERATION ERROR [" + op["name"][5:] + "]\n===============\n" + str(error) + tColors.ENDC)
             
 
@@ -1276,7 +1244,7 @@ class operator:
         htmls = []
         for id in range(len(self.operations)):
             op = self.operations[id]
-            htmls.append(self.getOperationSource(op).html(op,id))
+            htmls.append(self.getOperationSource(op).html(op,id,op["ERR"]))
         return htmls
 
     def generateVideo(self):  # generates the output frame

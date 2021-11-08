@@ -1,5 +1,6 @@
 [
   {
+    "ERR": false, 
     "inputs": [
       {
         "NumberInput": [
@@ -11,58 +12,61 @@
       {
         "Output": [
           "Output", 
-          "camera"
+          "cam"
         ]
       }
     ], 
-    "name": "00001Webcam Input"
+    "name": "00001Webcam Input", 
+    "type": 1
   }, 
   {
+    "ERR": false, 
     "inputs": [
       {
         "TextInput": [
           "Path", 
-          "res/images/F360Render.PNG"
+          "res/images/J.png"
         ]
       }, 
       {
         "Output": [
           "Output", 
-          "img"
+          "j"
         ]
       }
     ], 
-    "name": "00002Image Input"
+    "name": "00002Image Input", 
+    "type": 1
   }, 
   {
+    "ERR": false, 
     "inputs": [
       {
         "TextInput": [
-          "Source", 
-          "&camera&"
+          "Source 1", 
+          "&cam&"
         ]
       }, 
       {
-        "RadioInput": [
-          "Type", 
-          "BGR2HSV", 
-          [
-            "BGR2HSV", 
-            "BGR2RGB", 
-            "BGR2GRAY", 
-            "HSV2RGB", 
-            "HSV2BGR", 
-            "GRAY2RGB"
-          ]
+        "TextInput": [
+          "Source 2", 
+          "&cam&"
+        ]
+      }, 
+      {
+        "TextInput": [
+          "Mask", 
+          ""
         ]
       }, 
       {
         "Output": [
           "Output", 
-          "hsv"
+          "masked"
         ]
       }
     ], 
-    "name": "00003Convert Color"
+    "name": "00003Bitwise And", 
+    "type": 3
   }
 ]

@@ -51,7 +51,7 @@ def getTime():
     return "[" + str(datetime.now().strftime("%H:%M:%S")) + "] "
 
 def logMessage(msg):
-    print(tColors.OKCYAN + getTime() + msg + tColors.ENDC)
+    print(tColors.OKCYAN + getTime() + str(msg) + tColors.ENDC)
 
 def deprecated(func):
     """This is a decorator which can be used to mark functions
