@@ -34,6 +34,7 @@ def imageInput(inputs, operator):
 # COLOR
 def convertColor(inputs, operator):
     modes = {
+        "BGR2HLS":cv2.COLOR_BGR2HLS,
         "BGR2HSV":cv2.COLOR_BGR2HSV,
         "BGR2RGB":cv2.COLOR_BGR2RGB,
         "BGR2GRAY":cv2.COLOR_BGR2GRAY,
