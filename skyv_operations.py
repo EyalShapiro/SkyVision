@@ -8,9 +8,11 @@ def getOperations() -> list[operation]:
         operation("Webcam Input",OperationType.INPUT,camInput).addInputNumber("Id",step=1).addOutput(),
         operation("Image Input",OperationType.INPUT,imageInput).addInputText("Path").addOutput(),
         # COLOR
-        operation("Convert Color",OperationType.COLORS,convertColor).addInputText("Source").addInputRadio("Type",value="BGR2HSV",options=["BGR2HSV","BGR2RGB","BGR2GRAY","HSV2RGB","HSV2BGR","GRAY2RGB","GRAY2BGR"]).addOutput(),
+        operation("Convert Color",OperationType.COLORS,convertColor).addInputText("Source").addInputRadio("Type",options=list(colorModes.keys())).addOutput(),
+        operation("Color Mask",OperationType.COLORS,colorMask).addInputText("Source").addInputColor("Lower").addInputColor("Higher").addOutput(),
         # SHAPE
-        operation("Gaussian Blur",OperationType.SHAPE,gaussianBlur).addInputText("Source").addInputNumber("Kernel",3,step=1).addInputNumber("Iterations",1,step=1).addOutput(),
+        operation("Gaussian Blur",OperationType.SHAPE,gaussianBlur).addInputText("Source").addInputNumber("Kernel",value=3,step=1).addInputNumber("Iterations",1,step=1).addOutput(),
+        operation("MorphologyEx",OperationType.SHAPE,morphEX).addInputText("Source").addInputRadio("Mode",options=list(morphModes.keys())).addInputNumber("Kernel",value=3,step=1).addInputNumber("Iterations",value=1,step=1).addOutput(),
         # ARITHMETIC
         operation("Bitwise And",OperationType.ARITHMETIC,bitwiseAnd).addInputText("Source 1").addInputText("Source 2").addInputText("Mask").addOutput(),
     ]
@@ -32,24 +34,45 @@ def imageInput(inputs, operator):
     return [operator.sources[operator.opOutputs[0]]]
 
 # COLOR
-def convertColor(inputs, operator):
-    modes = {
-        "BGR2HLS":cv2.COLOR_BGR2HLS,
+colorModes = {
         "BGR2HSV":cv2.COLOR_BGR2HSV,
+        "BGR2HLS":cv2.COLOR_BGR2HLS,
         "BGR2RGB":cv2.COLOR_BGR2RGB,
         "BGR2GRAY":cv2.COLOR_BGR2GRAY,
         "HSV2RGB":cv2.COLOR_HSV2RGB,
         "HSV2BGR":cv2.COLOR_HSV2BGR,
         "GRAY2RGB":cv2.COLOR_GRAY2RGB,
         "GRAY2BGR":cv2.COLOR_GRAY2BGR,}
-    return [cv2.cvtColor(inputs["Source"],modes[inputs["Type"]])]
+
+def convertColor(inputs, operator):
+    return [cv2.cvtColor(inputs["Source"],colorModes[inputs["Type"]])]
+
+def colorMask(inputs, operator):
+    return [cv2.inRange(inputs["Source"],np.array(inputs["Lower"]),np.array(inputs["Higher"]))]
 
 # SHAPE
-def gaussianBlur(inputs, operator):
+morphModes = {
+        "CLOSE":cv2.MORPH_CLOSE,
+        "OPEN":cv2.MORPH_OPEN,
+        "BLACKHAT":cv2.MORPH_BLACKHAT,
+        "TOPHAT":cv2.MORPH_TOPHAT,
+        "RECT":cv2.MORPH_RECT,
+        "CROSS":cv2.MORPH_CROSS,
+        "ERODE":cv2.MORPH_ERODE,
+        "DILATE":cv2.MORPH_DILATE,
+        "GRADIENT":cv2.MORPH_GRADIENT,
+        "HITMISS":cv2.MORPH_HITMISS,
+        "ELLIPSE":cv2.MORPH_ELLIPSE,}
+
+def morphEX(inputs, operator):
+    return [cv2.morphologyEx(inputs["Source"],morphModes[inputs["Mode"]],(int(inputs["Kernel"]),int(inputs["Kernel"])),iterations=int(inputs["Iterations"]))]
+
+
+def gaussianBlur(inputs, _):
     return [cv2.GaussianBlur(inputs["Source"],(int(inputs["Kernel"]),int(inputs["Kernel"])),inputs["Iterations"])]
 
 # ARITHMETIC
-def bitwiseAnd(inputs,operator):
+def bitwiseAnd(inputs,_):
     if(inputs["Mask"] != ""):
         return [cv2.bitwise_and(inputs["Source 1"],inputs["Source 2"],mask=inputs["Mask"])]
     return [cv2.bitwise_and(inputs["Source 1"],inputs["Source 2"])]

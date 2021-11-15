@@ -3,10 +3,24 @@ from colorutils import Color
 from datetime import datetime
 import warnings
 import functools
+import colorsys
+
+def rgb_to_hls(rgb):
+    r, g, b = rgb
+    h, l, s = colorsys.rgb_to_hls(r, g, b)
+    return (round(h*360), round(l/255*100),round(s*-100))
 
 def hex_to_hsv(hex):  # turn hex to hsv
     c = Color(hex=hex)
     return c.hsv
+
+def hex_to_hsv(hex):  # turn hex to hsv
+    c = Color(hex=hex)
+    return (round(c.hsv[0]/2),round(c.hsv[1]*255),round(c.hsv[2]*255))
+
+def hex_to_hls(hex):  # turn hex to hsv
+    c = Color(hex=hex)
+    return rgb_to_hls(c.rgb)
 
 def hex_to_rgb(hex):  # turn hex to hsv
     c = Color(hex=hex)

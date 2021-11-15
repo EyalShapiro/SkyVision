@@ -94,7 +94,6 @@ def home():  # home page
                                currFile=saveName
                                )  # return the html page with all the operations
 
-
 def add_operation(operation_name):  # add a new operation
     operator.update(True)  # activate all operations and set input values
     operator.addOperation(operation_name)  # add the new operation to the array of operations

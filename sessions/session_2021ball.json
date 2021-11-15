@@ -4,29 +4,10 @@
     "ERRMSG": "", 
     "inputs": [
       {
-        "TextInput": [
-          "Path", 
-          "res/images/J.png"
-        ]
-      }, 
-      {
-        "Output": [
-          "Output", 
-          "j"
-        ]
-      }
-    ], 
-    "name": "00002Image Input", 
-    "type": 1
-  }, 
-  {
-    "ERR": false, 
-    "ERRMSG": "", 
-    "inputs": [
-      {
-        "TextInput": [
-          "Path", 
-          "res/images/donald-trump.jpg"
+        "NumberInput": [
+          "Id", 
+          "0", 
+          1
         ]
       }, 
       {
@@ -36,12 +17,80 @@
         ]
       }
     ], 
-    "name": "00003Image Input", 
+    "name": "00001Webcam Input", 
     "type": 1
   }, 
   {
-    "ERR": true, 
-    "ERRMSG": "OpenCV(4.5.2) C:\\Users\\runneradmin\\AppData\\Local\\Temp\\pip-req-build-1hfhc_rd\\opencv\\modules\\core\\src\\arithm.cpp:230: error: (-215:Assertion failed) (mtype == CV_8U || mtype == CV_8S) && _mask.sameSize(*psrc1) in function 'cv::binary_op'\n", 
+    "ERR": false, 
+    "ERRMSG": "", 
+    "inputs": [
+      {
+        "TextInput": [
+          "Source", 
+          "&cam&"
+        ]
+      }, 
+      {
+        "RadioInput": [
+          "Type", 
+          "BGR2HSV", 
+          [
+            "BGR2HSV", 
+            "BGR2HLS", 
+            "BGR2RGB", 
+            "BGR2GRAY", 
+            "HSV2RGB", 
+            "HSV2BGR", 
+            "GRAY2RGB", 
+            "GRAY2BGR"
+          ]
+        ]
+      }, 
+      {
+        "Output": [
+          "Output", 
+          "hsv"
+        ]
+      }
+    ], 
+    "name": "00004Convert Color", 
+    "type": 4
+  }, 
+  {
+    "ERR": false, 
+    "ERRMSG": "", 
+    "inputs": [
+      {
+        "TextInput": [
+          "Source", 
+          "&hsv&"
+        ]
+      }, 
+      {
+        "ColorInput": [
+          "Lower", 
+          "#494131"
+        ]
+      }, 
+      {
+        "ColorInput": [
+          "Higher", 
+          "#b3ff00"
+        ]
+      }, 
+      {
+        "Output": [
+          "Output", 
+          "mask"
+        ]
+      }
+    ], 
+    "name": "00003Color Mask", 
+    "type": 4
+  }, 
+  {
+    "ERR": false, 
+    "ERRMSG": "", 
     "inputs": [
       {
         "TextInput": [
@@ -58,7 +107,7 @@
       {
         "TextInput": [
           "Mask", 
-          "&j&"
+          "&mask&"
         ]
       }, 
       {
@@ -68,28 +117,7 @@
         ]
       }
     ], 
-    "name": "00003Bitwise And", 
+    "name": "00004Bitwise And", 
     "type": 3
-  }, 
-  {
-    "ERR": false, 
-    "ERRMSG": "", 
-    "inputs": [
-      {
-        "NumberInput": [
-          "Id", 
-          "0", 
-          1
-        ]
-      }, 
-      {
-        "Output": [
-          "Output", 
-          "cam"
-        ]
-      }
-    ], 
-    "name": "00004Webcam Input", 
-    "type": 1
   }
 ]

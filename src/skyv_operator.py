@@ -20,16 +20,6 @@ error_pic = cv2.imread("res/images/ERR.jpg")  # The frame that will be used for 
     #   text_inputs=[operation_TextInput("html Name", " html Text")],
     #   number_inputs=[operation_NumberInput("html Name", "html Text")])
 
-    "Color Mask": operation("Color Mask", OperationType.COLORS,
-                            text_inputs=[
-                                operation_TextInput("src", "Source")],
-                            color_inputs=[
-                                operation_ColorInput("lower", "Lower"),
-                                operation_ColorInput("higher", "Higher")],
-                            variable_outputs=[
-                                operation_TextInput("outName", "Output name")]
-                            ),
-
     "MorphEx": operation("MorphEx", OperationType.MORPH,
                          text_inputs=[
                              operation_TextInput("src", "Source")],
@@ -1067,8 +1057,14 @@ class operation:
     def addInputNumber(self, name: str, value: str = 0, step: float = 0.0001):
         self.inputs.append({"NumberInput" : [name,value,step] })
         return self
-    def addInputRadio(self, name: str, value: str = "", options: list = []):
+    def addInputRadio(self, name: str, value: str = "None", options: list = []):
+        # .addInputRadio("Type",value=list(colorModes.keys())[0],options=list(colorModes.keys()))
+        if value == "None":
+            value: list(options.keys())[0]
         self.inputs.append({"RadioInput" : [name,value,options]})
+        return self
+    def addInputColor(self, name: str, value: str = 0, step: float = 0.0001):
+        self.inputs.append({"ColorInput" : [name,value] })
         return self
     def addOutput(self, name: str = "Output"):
         self.inputs.append({"Output" : [name,""] })
@@ -1117,12 +1113,13 @@ class operation:
                     retdiv += str(operation_NumberInput(name+str(operation_id)+str(id),text=name,value=value,step = input[2]))
                 if key == 'RadioInput':
                     retdiv += str(operation_RadioInput(name+str(operation_id)+str(id),text=name,value=value,options=input[2]))
+                if key == 'ColorInput':
+                    retdiv += str(operation_ColorInput(name+str(operation_id)+str(id),text=name,value=value))
 
                 # if key == 'CheckInput':
                 #     retdiv += str(check_input)
 
-                # if key == 'ColorInput':
-                #     retdiv += str(color_input)
+                
 
                 # if key == 'Output':
                 #     retdiv += str(var_output)
@@ -1158,7 +1155,10 @@ class operator:
                     name = input[key][0]
                     value = input[key][1]
                     if "Input" in key:
-                        value = float(value) if str(value).isnumeric() else value
+                        if "Color" in key:
+                            value = hex_to_hsv(value)
+                        else:
+                            value = float(value) if str(value).isnumeric() else value
                         try:
                             if(type(value) == str):
                                 if(len(value) > 2):
@@ -1196,8 +1196,11 @@ class operator:
                     name = input[key][0]
                     value = input[key][1]
                     if fromUpdate:
-                        value = request.form[name+str(op_id)+str(id)]
-                        tmp_operations[op_id]["inputs"][input_id][key][1] = value
+                        try:
+                            value = request.form[name+str(op_id)+str(id)]
+                            tmp_operations[op_id]["inputs"][input_id][key][1] = value
+                        except:
+                            print(tColors.FAIL + getTime() + "UNABLE TO GET VALUE " + name+str(op_id)+str(id) + ".")
             
         self.operations = copy.deepcopy(tmp_operations) # update operations to duplicate
         del tmp_operations
