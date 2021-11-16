@@ -21,12 +21,12 @@ def threadedProcess():
     while True:
         operator.process()
 
-# sets the resolution of the output frames
+# sets the resolution of the output frame
 def setResolution(resolution):
     operator.outResolution = resolution
 
 @app.route("/video_feed")
-def video_feed(): # return the output from the generate() function
+def video_feed(): # return the video output from the generate() function
     return Response(operator.generateVideo(), mimetype="multipart/x-mixed-replace; boundary=frame")  
 
 @app.route("/", methods=['GET', 'POST'])  # route for main page, allows for GET and POST requests
