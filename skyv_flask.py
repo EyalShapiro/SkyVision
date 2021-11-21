@@ -14,7 +14,7 @@ log = logging.getLogger('werkzeug')
 log.disabled = True
 print("\n")
 
-operator = operator()  # main class responsible for organizing and activating operations
+operator = operator(verbose=False)  # main class responsible for organizing and activating operations
 
 def threadedProcess():
     time.sleep(1)
@@ -50,11 +50,7 @@ def home():  # home page
     
     # if entered page regularly
     if request.method == "GET":
-        operator.clearOperations()
-        try:
-            loadFromFile(saveName)
-        except:
-            print(tColors.FAIL + getTime() + "Unable to locate \"session_" + str(saveName) + ".json'\"" + tColors.ENDC)  # print error if failed to open session.json
+        loadFromFile(saveName)
 
         operator.update(False)
         outputOptions = operator.frameOptions
@@ -119,17 +115,29 @@ def initWeb(network_table = True):
     loadFromFile(saveName)
 
 def loadFromFile(saveName):
-    operator.required_out = "None"  # set the required output frame to "None"
-    with open('sessions/session_' + str(saveName) + '.json') as json_file:  # open the saved file
-        operator.clearOperations()  # clear all loaded operations
-        operator.operations = json.load(json_file)  # load operations from the json file
-    operator.update(False)
+    if(operator.currSave != str(saveName)):
+        operator.required_out = "None"  # set the required output frame to "None"
+        print(tColors.OKBLUE + getTime() + "Loading Save '" + str(saveName) + "'" + tColors.ENDC)
+        try:
+            with open('sessions/session_' + str(saveName) + '.json') as json_file:  # open the saved file
+                operator.clearOperations()  # clear all loaded operations
+                data = json.load(json_file)  # load operations from the json file
+                operator.operations = data
+                operator.currSave = str(saveName)
+            operator.update(False)
+            print(tColors.OKGREEN + getTime() + "Loaded '" + str(saveName) + "' successfully. " + tColors.ENDC)
+        except FileNotFoundError:
+            print(tColors.FAIL + getTime() + "Failed to locate '" + str(saveName) + "'. Creating new save '" + str(saveName) +"'." + tColors.ENDC)
+            open('sessions/session_' + str(saveName) + '.json', 'w+').write('[]')
+            loadFromFile(saveName)
 
 # runs the main application
-def run(operations: list[operation]):
+def run(operations: list[operation],verbose = False):
     operator.loadOperationArray(operations)
+    operator.verbose = verbose
     Thread(target=threadedProcess).start()
 
     initWeb(network_table=False)
-    app.run(debug=True, host='0.0.0.0',threaded=True)  # run the app on main
     logMessage("STARTING WEB INTERFACE")
+    time.sleep(1)
+    app.run(debug=False, host='0.0.0.0',threaded=True)  # run the app on main

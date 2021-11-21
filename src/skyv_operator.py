@@ -6,6 +6,7 @@ import numpy as np
 import math
 import copy
 import time
+import re
 from enum import Enum
 from collections.abc import Callable
 
@@ -19,115 +20,6 @@ error_pic = cv2.imread("res/images/ERR.jpg")  # The frame that will be used for 
     # Key : operation("operation name",OperationType,
     #   text_inputs=[operation_TextInput("html Name", " html Text")],
     #   number_inputs=[operation_NumberInput("html Name", "html Text")])
-
-    "MorphEx": operation("MorphEx", OperationType.MORPH,
-                         text_inputs=[
-                             operation_TextInput("src", "Source")],
-                         number_inputs=[
-                             operation_NumberInput("kernel", "Kernel"),
-                             operation_NumberInput("itr", "Iterations")],
-                         radio_inputs=[
-                             operation_RadioInput("type", "Type",
-                                                  options=[
-                                                      "Erosion",
-                                                      "Dilation",
-                                                      "Opening",
-                                                      "Closing",
-                                                  ])],
-                         variable_outputs=[operation_TextInput("outName", "Output name")]
-                         ),
-
-    "Bitwise And": operation("Bitwise AND", OperationType.ARITHMETIC,
-                             text_inputs=[
-                                 operation_TextInput("src1", "Source 1"),
-                                 operation_TextInput("src2", "Source 2"),
-                                 operation_TextInput("mask", "Mask"),
-                             ],
-                             variable_outputs=[operation_TextInput("outName", "Output name")]
-                             ),
-
-    "Find Contours": operation("Find Contours", OperationType.COLORS,
-                               text_inputs=[
-                                   operation_TextInput("src", "Source"),
-                               ]
-                               , variable_outputs=[operation_TextInput("outName", "Output name")]
-                               ),
-
-    "Draw Contours": operation("Draw Contours", OperationType.DRAW,
-                               text_inputs=[
-                                   operation_TextInput("src", "Source"),
-                                   operation_TextInput("cnt", "Contours"),
-                               ],
-                               number_inputs=[
-                                   operation_NumberInput("thick", "Thickness"),
-                               ],
-                               color_inputs=[
-                                   operation_ColorInput("clr", "Color"), ]
-                               ),
-
-    "Draw Contour": operation("Draw Contour", OperationType.DRAW,
-                              text_inputs=[
-                                  operation_TextInput("src", "Source"),
-                                  operation_TextInput("cnt", "Contours"),
-                              ],
-                              number_inputs=[
-                                  operation_NumberInput("thick", "Thickness"),
-                              ],
-                              color_inputs=[
-                                  operation_ColorInput("clr", "Color"), ]
-                              ),
-
-    "Draw Circle": operation("Draw Circle", OperationType.DRAW,
-                             text_inputs=[
-                                 operation_TextInput("src", "Source"),
-                             ],
-                             number_inputs=[
-                                 operation_NumberInput("radius", "Radius"),
-                                 operation_NumberInput("xValue", "X", "padding-right:5px", brake=False),
-                                 operation_NumberInput("yValue", "Y"),
-                                 operation_NumberInput("thickness", "Thickness")
-                             ],
-                             color_inputs=[
-                                 operation_ColorInput("Color", "Color")
-                             ]
-                             ),
-
-    "Draw Circle Params": operation("Draw Circle Params", OperationType.DRAW,
-                                    text_inputs=[
-                                        operation_TextInput("src", "Source"),
-                                        operation_TextInput("radius", "Radius"),
-                                        operation_TextInput("xValue", "X", "padding-right:5px", brake=False),
-                                        operation_TextInput("yValue", "Y"),
-                                    ],
-                                    number_inputs=[
-                                        operation_TextInput("thickness", "Thickness")
-                                    ],
-                                    color_inputs=[
-                                        operation_ColorInput("Color", "Color")
-                                    ]
-                                    ),
-
-    "Draw Rectangle Params": operation("Draw Rectangle Params", OperationType.DRAW,
-                                       text_inputs=[
-                                           operation_TextInput("src", "Source"),
-                                           operation_TextInput("wth", "Width"),
-                                           operation_TextInput("hght", "Height"),
-                                           operation_TextInput("xValue", "X",
-                                                               "padding-right:5px;color: #ebebeb;background-color:#525252;",
-                                                               brake=False),
-                                           operation_TextInput("yValue", "Y"),
-                                       ],
-                                       number_inputs=[
-                                           operation_TextInput("thickness", "Thickness")
-                                       ],
-                                       color_inputs=[
-                                           operation_ColorInput("Color", "Color")
-                                       ]
-                                       ),
-
-    "Flip": operation("Flip", OperationType.MISC, text_inputs=[operation_TextInput("imgPath", "Source")], radio_inputs=[
-        operation_RadioInput("flipMode", "Mode", ["Horizontal", "Vertical", "Horizontal and Vertical"])],
-                      variable_outputs=[operation_TextInput("outName", "Output name")]),
 
     "LargestContour": operation("Largest Contour", OperationType.MISC,
                                 text_inputs=[operation_TextInput("cntrs", "Contours")],
@@ -537,11 +429,7 @@ class oldSky_operator:  # main class responsible for running operations
                     if op.name == "Network Send Num Var":
 
                         self.values[op.textInputs[1].value] = int(self.values[op.textInputs[1].value])
-
-                        print("Expected Val:",self.values[op.textInputs[1].value])
-                        # print("Setting",op.textInputs[0].value,"to",self.values[op.textInputs[1].value])
                         skyv_network.set_number(op.textInputs[0].value,int(self.values[op.textInputs[1].value]))
-                        print("Received Val:",skyv_network.get_number(op.textInputs[0].value,-1))
 
                     if op.name == "Flip":
 
@@ -747,7 +635,8 @@ class oldSky_operator:  # main class responsible for running operations
                             self.values[op.variableOutputs[0].value] = -1
                             
             except Exception as e:
-                # print(e) # prints exception
+                if(self.verbose):
+                    print(e)
                 pass
 
     def MoveUP(self, num):  # move operation up
@@ -797,7 +686,8 @@ class oldSky_operator:  # main class responsible for running operations
     def update(self):  # process operations when update is pressed
 
         self.inCounter = len(self.values.values())
-        print("UPDATING")
+        if(self.verbose):
+            print("UPDATING")
 
         self.sources.clear()
         self.frames.clear()
@@ -1052,7 +942,7 @@ class operation:
         self.inputs = []
 
     def addInputText(self, name: str, value: str = ""):
-        self.inputs.append({"TextInput" : [name,value]})
+        self.inputs.append({"TextInput" : [name,str(value)]})
         return self
     def addInputNumber(self, name: str, value: str = 0, step: float = 0.0001):
         self.inputs.append({"NumberInput" : [name,value,step] })
@@ -1063,7 +953,7 @@ class operation:
             value: list(options.keys())[0]
         self.inputs.append({"RadioInput" : [name,value,options]})
         return self
-    def addInputColor(self, name: str, value: str = 0, step: float = 0.0001):
+    def addInputColor(self, name: str, value: str = 0):
         self.inputs.append({"ColorInput" : [name,value] })
         return self
     def addOutput(self, name: str = "Output"):
@@ -1130,7 +1020,7 @@ class operation:
         return retdiv
 
 class operator:
-    def __init__(self,) -> None:
+    def __init__(self,verbose) -> None:
         self.loaded_operations = {}  # array of blocks (operations)
         self.operations = []  # array of blocks (operations)
 
@@ -1145,6 +1035,8 @@ class operator:
         self.required_out = "None"
 
         self.outResolution = 0.5
+        self.currSave = ""
+        self.verbose = verbose
 
     def process(self):
         for op in self.operations:
@@ -1153,19 +1045,26 @@ class operator:
             for input in op["inputs"]:
                 for key in input:
                     name = input[key][0]
-                    value = input[key][1]
+                    value = str(input[key][1])
                     if "Input" in key:
                         if "Color" in key:
                             value = hex_to_hsv(value)
-                        else:
-                            value = float(value) if str(value).isnumeric() else value
                         try:
-                            if(type(value) == str):
-                                if(len(value) > 2):
-                                    if(value[0] == '&' and value[-1] == '&'):
-                                        value = self.values[value[1:-1]]
-                        except:
-                            logMessage("Cant find key \"" + value[1:-1] + "\" ignoring &&")
+                            if "Text" in key or "Number" in key:
+                                match = re.search('&[a-zA-Z]+',value)
+                                if(match is not None):
+                                    string = str(value[:match.start()] + 'self.values[\'' + match.group()[1:] + '\']'  + value[match.end():])
+                                    try:
+                                        value = eval(string)
+                                    except Exception as e:
+                                        pass
+                                else:
+                                    value = eval(value)
+                        except Exception as e:
+                            value = input[key][1]
+                            if(self.verbose):
+                                # logMessage("Cant parse value \"" + str(value)[1:] + "\"")
+                                pass
 
                         self.opValues[name] = value
                     elif "Output" in key:
@@ -1179,34 +1078,46 @@ class operator:
             except Exception as error:
                 op["ERR"]=True
                 op["ERRMSG"]=str(error)
-                print(tColors.FAIL + getTime() + "OPERATION ERROR [" + op["name"][5:] + "]\n===============\n" + str(error) + tColors.ENDC)
-            
+                if(self.verbose):
+                    print("\n" + tColors.FAIL + getTime() + "OPERATION ERROR [" + op["name"][5:] + "]\n" + str(error) + tColors.ENDC)
+        try:  # try to set the output frame to the required frame
+            self.outputVideo = self.values[self.required_out]  # set the output to the required frame
+            self.outputVideo = cv2.resize(self.outputVideo,(int(self.outputVideo.shape[1] * self.outResolution),int(self.outputVideo.shape[0] * self.outResolution)))
+        except:  # if setting output frame fails, set it to the error pic
+            self.outputVideo = cv2.resize(error_pic,(int(error_pic.shape[1] * 0.25),int(error_pic.shape[0] * 0.25)))  # set the output frame to the error pic
 
     def update(self, fromUpdate: bool = True):
-        self.updating = True
-        self.sources.clear()
-        self.values.clear()
-        tmp_operations = copy.deepcopy(self.operations)  # duplicate the operations array
-        for op_id in range(len(tmp_operations)):
-            op = tmp_operations[op_id]
-            for input_id in range(len(op["inputs"])):
-                input = op["inputs"][input_id]
-                for key in input:
-                    id = 0
-                    name = input[key][0]
-                    value = input[key][1]
-                    if fromUpdate:
-                        try:
-                            value = request.form[name+str(op_id)+str(id)]
-                            tmp_operations[op_id]["inputs"][input_id][key][1] = value
-                        except:
-                            print(tColors.FAIL + getTime() + "UNABLE TO GET VALUE " + name+str(op_id)+str(id) + ".")
-            
-        self.operations = copy.deepcopy(tmp_operations) # update operations to duplicate
-        del tmp_operations
-        self.process()
-        self.getOutputOptions()
-        self.updating = False
+        if(self.currSave != ""):
+            self.updating = True
+            if fromUpdate:
+                self.sources.clear()
+            self.values.clear()
+            tmp_operations = copy.deepcopy(self.operations)  # duplicate the operations array
+            for op_id in range(len(tmp_operations)):
+                op = tmp_operations[op_id]
+                for input_id in range(len(op["inputs"])):
+                    input = op["inputs"][input_id]
+                    for key in input:
+                        id = 0
+                        name = input[key][0]
+                        value = input[key][1]
+                        if fromUpdate:
+                            try:
+                                value = request.form[name+str(op_id)+str(id)]
+                                tmp_operations[op_id]["inputs"][input_id][key][1] = value
+                            except:
+                                if(self.verbose):
+                                    print(tColors.FAIL + getTime() + "UNABLE TO GET VALUE " + name+str(op_id)+str(id) + ".")
+                
+            self.operations = copy.deepcopy(tmp_operations) # update operations to duplicate
+            del tmp_operations
+            time.sleep(3)
+            self.process()
+            self.getOutputOptions()
+            self.updating = False
+        else:
+            if(self.verbose):
+                print(tColors.FAIL + getTime() + "UNABLE TO UPDATE, PLEASE LOAD FILE.")
         
     def loadOperation(self, op: operation):
         self.loaded_operations[op.name] = op
@@ -1223,7 +1134,8 @@ class operator:
                                     "inputs" : self.loaded_operations[op_name].inputs,
                                     "type" : self.loaded_operations[op_name].type.value})
         else:
-            print(tColors.FAIL+getTime()+"Unable to add operation \"" + op_name + "\""+tColors.ENDC )
+            if(self.verbose):
+                print(tColors.FAIL+getTime()+"Unable to add operation \"" + op_name + "\""+tColors.ENDC )
 
     def removeOperation(self, op_id: int):
         self.operations.pop(op_id)
@@ -1262,16 +1174,7 @@ class operator:
     def generateVideo(self):  # generates the output frame
         time.sleep(1)  # delay to allow for camera reconnection
         while True:
-            outputs = self.values  # get all values from the operator
-
-            try:  # try to set the output frame to the required frame
-                selected_out = outputs[self.required_out]  # set the output to the required frame
-                selected_out = cv2.resize(selected_out,(int(selected_out.shape[1] * self.outResolution),int(selected_out.shape[0] * self.outResolution)))
-            except:  # if setting output frame fails, set it to the error pic
-                selected_out = None
-                selected_out = cv2.resize(error_pic,(int(error_pic.shape[1] * 0.25),int(error_pic.shape[0] * 0.25)))  # set the output frame to the error pic
-                
-            ret, encodedImage = cv2.imencode(".jpg", selected_out)  # turn the output pic to a jpg
+            ret, encodedImage = cv2.imencode(".jpg", self.outputVideo)  # turn the output pic to a jpg
             if ret:  # if encoding to jpg fails, skip this frame
                 self.outputVid = (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + bytearray(encodedImage) + b'\r\n')
                 yield self.outputVid  # output the frame in a format that the browser can read
