@@ -16,6 +16,7 @@ def getOperations() -> list[operation]:
         operation("MorphologyEx",OperationType.SHAPE,morphEX).addInputText("Source").addInputRadio("Mode",options=list(morphModes.keys())).addInputNumber("Kernel",value=3,step=1).addInputNumber("Iterations",value=1,step=1).addOutput(),
         operation("Find Contours",OperationType.SHAPE,findContours).addInputText("Source").addOutput(),
         operation("Largest Contour",OperationType.SHAPE,largestContour).addInputText("Contours").addOutput(),
+        operation("Minimum Enclosing Circle",OperationType.SHAPE,minEnclosingCircle).addInputText("Contour").addOutput(),
         # ARITHMETIC
         operation("Bitwise And",OperationType.ARITHMETIC,bitwiseAnd).addInputText("Source 1").addInputText("Source 2").addInputText("Mask").addOutput(),
         # DRAW
@@ -23,7 +24,7 @@ def getOperations() -> list[operation]:
         operation("Draw Circle",OperationType.DRAW,drawCircle).addInputText("Source").addInputText("X",value=0).addInputText("Y",value=0).addInputText("Radius",value=0).addInputText("Thickness").addInputColor("Color"),
         operation("Draw Rectangle",OperationType.DRAW,drawRect).addInputText("Source").addInputText("P1",value=(0,0)).addInputText("P2",value=(0,0)).addInputText("Thickness").addInputColor("Color"),
         # MISC
-        operation("Flip",OperationType.MISC,flip).addInputText("Source").addInputRadio("Flip Mode",options=list({"Horizontal":1, "Vertical":0, "Horizontal and Vertical":-1})).addOutput()
+        operation("Flip",OperationType.MISC,flip).addInputText("Source").addInputRadio("Flip Mode",options=list({"Horizontal":1, "Vertical":0, "Horizontal and Vertical":-1})).addOutput(),
     ]
 
 # INPUT
@@ -99,9 +100,13 @@ def largestContour(inputs,_):
             if(cv2.contourArea(cnt) > 5):
                 largest = cnt
     if(largest is not None):
-        print(len(inputs["Contours"][0]),len([largest]))
         return [[[largest]]]
     return []
+
+def minEnclosingCircle(inputs,_):
+    cnt = inputs["Contour"][0][0]
+    (x, y), radius = cv2.minEnclosingCircle(cnt)
+    return [((x,y),radius)]
 
 # ARITHMETIC
 def bitwiseAnd(inputs,_):

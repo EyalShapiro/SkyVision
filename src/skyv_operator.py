@@ -93,15 +93,6 @@ error_pic = cv2.imread("res/images/ERR.jpg")  # The frame that will be used for 
     "Convex Hull": operation("Convex Hull", OperationType.MISC, text_inputs=[operation_TextInput("cnt", "Contours"), ],
                              variable_outputs=[operation_TextInput("out", "Output")], ),
 
-    "Square Contours": operation("Square Contours", OperationType.MISC,
-                                 text_inputs=[operation_TextInput("cnt", "Contours"), ],
-                                 number_inputs=[operation_NumberInput("thres", "Threshold")],
-                                 variable_outputs=[operation_TextInput("out", "Output")], ),
-
-    "Average Circle Radius": operation("Average Circle Radius", OperationType.MISC,
-                                       text_inputs=[operation_TextInput("src", "Source")],
-                                       variable_outputs=[operation_TextInput("out", "Output")]),
-
     "Circle Coords": operation("Circle Coords", OperationType.MISC, text_inputs=[operation_TextInput("src", "circles")],
                                number_inputs=[operation_TextInput("onemeter", "Size at 1 meter")],
                                variable_outputs=[operation_TextInput("out","Output")]),
@@ -115,10 +106,6 @@ error_pic = cv2.imread("res/images/ERR.jpg")  # The frame that will be used for 
                        number_inputs=[operation_NumberInput("wth", "Width"), operation_NumberInput("height", "Height"),
                                       operation_NumberInput("thresh", "Threshold"), ],
                        variable_outputs=[operation_TextInput("out", "Output")]),
-
-    "Almost Equal Sides": operation("Almost Equal Sides", OperationType.ARITHMETIC, text_inputs=[operation_TextInput("cnts", "Contours")],
-                                    number_inputs=[operation_NumberInput("tol", "tolerance")],
-                                    variable_outputs=[operation_TextInput("out", "Output")]),
 
     "Network Send Num Var": operation("Network Send Num Var", OperationType.MISC, text_inputs=[operation_TextInput("key", "Key"),operation_TextInput("var", "Number Variable")]),
 }"""
