@@ -19,12 +19,15 @@ def getOperations() -> list[operation]:
         operation("Minimum Enclosing Circle",OperationType.SHAPE,minEnclosingCircle).addInputText("Contour").addOutput(),
         # ARITHMETIC
         operation("Bitwise And",OperationType.ARITHMETIC,bitwiseAnd).addInputText("Source 1").addInputText("Source 2").addInputText("Mask").addOutput(),
+        operation("Circle Coords",OperationType.ARITHMETIC,circleCoords).addInputText("Circle").addInputText("Frame").addInputText("Focal Length",value=str(10)).addInputText("Dot Pitch",value=str(9.84375)).addOutput("Out Angle"),
+        operation("ApproxPolyDP",OperationType.ARITHMETIC,approxPolyDP).addInputText("Contours").addInputText("Sides").addInputText("Tolerance").addOutput(),
         # DRAW
         operation("Draw Contours",OperationType.DRAW,drawContours).addInputText("Source").addInputText("Contours").addInputColor("Color").addInputText("Thickness"),
-        operation("Draw Circle",OperationType.DRAW,drawCircle).addInputText("Source").addInputText("X",value=0).addInputText("Y",value=0).addInputText("Radius",value=0).addInputText("Thickness").addInputColor("Color"),
+        operation("Draw Circle",OperationType.DRAW,drawCircle).addInputText("Source").addInputText("Position",value=0).addInputText("Radius",value=0).addInputText("Thickness").addInputColor("Color"),
         operation("Draw Rectangle",OperationType.DRAW,drawRect).addInputText("Source").addInputText("P1",value=(0,0)).addInputText("P2",value=(0,0)).addInputText("Thickness").addInputColor("Color"),
         # MISC
         operation("Flip",OperationType.MISC,flip).addInputText("Source").addInputRadio("Flip Mode",options=list({"Horizontal":1, "Vertical":0, "Horizontal and Vertical":-1})).addOutput(),
+        operation("NetworkTable Send Num",OperationType.MISC,ntSendNum).addInputText("Key").addInputText("Value")
     ]
 
 # INPUT
@@ -104,9 +107,11 @@ def largestContour(inputs,_):
     return []
 
 def minEnclosingCircle(inputs,_):
-    cnt = inputs["Contour"][0][0]
-    (x, y), radius = cv2.minEnclosingCircle(cnt)
-    return [((x,y),radius)]
+    if inputs["Contour"] is not None:
+        cnt = inputs["Contour"][0][0]
+        (x, y), radius = cv2.minEnclosingCircle(cnt)
+        return [((x,y),radius)]
+    return []
 
 # ARITHMETIC
 def bitwiseAnd(inputs,_):
@@ -115,6 +120,40 @@ def bitwiseAnd(inputs,_):
             return [cv2.bitwise_and(inputs["Source 1"],inputs["Source 2"],mask=inputs["Mask"])]
         return [cv2.bitwise_and(inputs["Source 1"],inputs["Source 2"])]
     return []
+
+def circleCoords(inputs,_):
+    circle = inputs["Circle"]
+    # onemeter = float(op.numberInputs[0].value)
+    if circle is not None:
+        # distance = onemeter / circ[2]
+        # print("Dist - " + str(distance) + "[", onemeter, circ[2], "]")
+        # print(circ)
+        Resolution = (inputs["Frame"].shape[1],inputs["Frame"].shape[0])
+        F_Length = inputs["Focal Length"]
+        Dot_Pitch = inputs["Dot Pitch"]
+
+        S_Width = Dot_Pitch * Resolution[1]  # in um
+        S_Width = S_Width / 1000  # in mm
+        F_Pix = (Resolution[0] / 2 / S_Width) * F_Length
+        Kval = np.array([[F_Pix, 0, Resolution[0] / 2], [0, F_Pix, Resolution[1] / 2],[0, 0, 1]])  # pinhole camera matrix
+        final_angle = np.degrees(RaysToAngle(FrameToWorldRay(circle[0][0], Resolution[1] / 2,Kval),FrameToWorldRay(Resolution[0] / 2, Resolution[1] / 2,Kval)))
+        dir = 1 if(circle[0][0] > Resolution[0] / 2) else -1
+        final_angle = dir * (final_angle)
+        return[final_angle]
+
+def approxPolyDP(inputs,_):
+    contours = inputs["Contours"]
+
+    sides = inputs["Sides"]
+    tolerance = inputs["Tolerance"]
+    
+
+    contour_list = []
+    for contour in contours[0]:
+        approx = cv2.approxPolyDP(contour, 0.01 * cv2.arcLength(contour, True), True)
+        if sides - tolerance <= len(approx) <= sides + tolerance:
+            contour_list.append(contour)
+    return [[contour_list,contours[1]]]
 
 # DRAW
 def drawContours(inputs,_):
@@ -129,7 +168,7 @@ def drawContours(inputs,_):
 def drawCircle(inputs,_):
     if inputs["Source"] is not None:
         clr = Color(hsv=(inputs["Color"][0]*2,inputs["Color"][1]/255,inputs["Color"][2]/255))
-        return [cv2.circle(inputs["Source"], (int(inputs["X"]),int(inputs["Y"])),inputs["Radius"], (clr.rgb[2],clr.rgb[1],clr.rgb[0]), thickness=int(inputs["Thickness"]))]
+        return [cv2.circle(inputs["Source"], (int(inputs["Position"][0]),int(inputs["Position"][1])),int(inputs["Radius"]), (clr.rgb[2],clr.rgb[1],clr.rgb[0]), thickness=int(inputs["Thickness"]))]
     return []
 
 def drawRect(inputs,_):
@@ -145,3 +184,20 @@ def flip(inputs,_):
         frame_flipped = cv2.flip(inputs["Source"], mode)
         return [frame_flipped]
     return []
+
+def ntSendNum(inputs,_):
+    if(inputs["Key"] is not None):
+        skyv_network.set_number(inputs["Key"],float(inputs["Value"]))
+
+
+# HELP
+def FrameToWorldRay(Fx, Fy,K):
+    Ki = np.linalg.inv(K)
+    r = Ki.dot([Fx, Fy, 1])
+    return r  # a "ray" in the sense that all the 3D points R = s * r, obtained by multiplying it for an arbitrary number s, will lie on the same line going through the camera center and pixel (x, y).
+
+def RaysToAngle(R1,
+                R2):  # calculate the angle between two rays using advanced math none of us understand. It is theoretically possible to find the 3D coords of a point and use simple trigonometry, but this looks nicer.
+    cos_angle = R1.dot(R2) / (np.linalg.norm(R1) * np.linalg.norm(R2))
+    angle_radians = np.arccos(cos_angle)
+    return angle_radians

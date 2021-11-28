@@ -21,10 +21,6 @@ error_pic = cv2.imread("res/images/ERR.jpg")  # The frame that will be used for 
     #   text_inputs=[operation_TextInput("html Name", " html Text")],
     #   number_inputs=[operation_NumberInput("html Name", "html Text")])
 
-    "LargestContour": operation("Largest Contour", OperationType.MISC,
-                                text_inputs=[operation_TextInput("cntrs", "Contours")],
-                                variable_outputs=[operation_TextInput("cntOut", "Output name")]),
-
     "Rotated Rectangle": operation("Rotated Rectangle", OperationType.MISC,
                                    text_inputs=[operation_TextInput("cntrs", "Contours")],
                                    variable_outputs=[operation_TextInput("cntOut", "Output name")]),
@@ -53,10 +49,6 @@ error_pic = cv2.imread("res/images/ERR.jpg")  # The frame that will be used for 
                                     color_inputs=[operation_ColorInput("clr", "Color")],
                                     number_inputs=[operation_NumberInput("num", "Thickness")]),
 
-    "Minimum Enclosing Circle": operation("Minimum Enclosing Circle", OperationType.MISC,
-                                          text_inputs=[operation_TextInput("src", "Source")],
-                                          variable_outputs=[operation_TextInput("out", "Output")]),
-
     "Minimum Contour Area": operation("Minimum Contour Area", OperationType.MISC,
                                       text_inputs=[operation_TextInput("src", "Source")],
                                       number_inputs=[operation_NumberInput("area", "Area")],
@@ -77,18 +69,10 @@ error_pic = cv2.imread("res/images/ERR.jpg")  # The frame that will be used for 
                                               operation_NumberInput("maxr", "Maximum Radius")],
                                variable_outputs=[operation_TextInput("out", "Output")]),
 
-    "Math Add": operation("Math Add", OperationType.ARITHMETIC, text_inputs=[operation_TextInput("val", "Value")],
-                          number_inputs=[operation_NumberInput("add", "Value to add")]),
-
     "Canny": operation("Canny", OperationType.COLORS, text_inputs=[operation_TextInput("src", "Source")],
                        number_inputs=[operation_NumberInput("thres1", "Threshold 1"),
                                       operation_NumberInput("thres2", "Threshold 2")],
                        variable_outputs=[operation_TextInput("out", "Output")]),
-
-    "ApproxPolyDP": operation("ApproxPolyDP", OperationType.MISC, text_inputs=[operation_TextInput("cnt", "Contours")],
-                              number_inputs=[operation_NumberInput("min", "Minimum Sides"),
-                                             operation_NumberInput("max", "Maximum Sides")],
-                              variable_outputs=[operation_TextInput("out", "Output")]),
 
     "Convex Hull": operation("Convex Hull", OperationType.MISC, text_inputs=[operation_TextInput("cnt", "Contours"), ],
                              variable_outputs=[operation_TextInput("out", "Output")], ),

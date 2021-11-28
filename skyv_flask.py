@@ -132,12 +132,12 @@ def loadFromFile(saveName):
             loadFromFile(saveName)
 
 # runs the main application
-def run(operations: list[operation],verbose = False):
+def run(operations: list[operation],verbose = False,networkTable=True):
     operator.loadOperationArray(operations)
     operator.verbose = verbose
     Thread(target=threadedProcess).start()
 
-    initWeb(network_table=False)
+    initWeb(network_table=networkTable)
     logMessage("STARTING WEB INTERFACE")
     time.sleep(1)
     app.run(debug=False, host='0.0.0.0',threaded=True)  # run the app on main
