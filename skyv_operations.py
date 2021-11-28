@@ -3,7 +3,7 @@ import cv2
 from src.skyv_operator import *
 import random
 
-def getOperations() -> list[operation]:
+def getOperations():
     return [
         # INPUT
         operation("Webcam Input",OperationType.INPUT,camInput).addInputNumber("Id",step=1).addOutput(),
