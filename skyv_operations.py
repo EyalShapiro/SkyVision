@@ -34,8 +34,9 @@ def getOperations():
 def camInput(inputs, operator):
     if operator.updating:
         operator.sources[operator.opOutputs[0]] = cv2.VideoCapture(int(inputs["Id"]))
-    _, frame = operator.sources[operator.opOutputs[0]].read()
-    if(frame is None): # input operations require specific error handling because of OpenCV behaviour
+    print(operator.opOutputs[0])
+    ret, frame = operator.sources[operator.opOutputs[0]].read()
+    if(not ret): # input operations require specific error handling because of OpenCV behaviour
             raise Exception("Error reading frame from \"" + str(operator.opOutputs[0]) +"\".")
     return [frame]
 
