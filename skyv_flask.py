@@ -132,7 +132,7 @@ def loadFromFile(saveName):
             loadFromFile(saveName)
 
 # runs the main application
-def run(operations: list[operation],verbose = False,networkTable=True):
+def run(operations,verbose = False,networkTable=True):
     operator.loadOperationArray(operations)
     operator.verbose = verbose
     Thread(target=threadedProcess).start()
