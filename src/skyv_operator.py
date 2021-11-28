@@ -991,7 +991,7 @@ class operation:
         return retdiv
 
 class operator:
-    def __init__(self,verbose) -> None:
+    def __init__(self,verbose):
         self.loaded_operations = {}  # array of blocks (operations)
         self.operations = []  # array of blocks (operations)
 
@@ -1057,7 +1057,7 @@ class operator:
         except:  # if setting output frame fails, set it to the error pic
             self.outputVideo = cv2.resize(error_pic,(int(error_pic.shape[1] * 0.25),int(error_pic.shape[0] * 0.25)))  # set the output frame to the error pic
 
-    def update(self, fromUpdate: bool = True):
+    def update(self, fromUpdate = True):
         if(self.currSave != ""):
             self.updating = True
             if fromUpdate:
@@ -1090,16 +1090,16 @@ class operator:
             if(self.verbose):
                 print(tColors.FAIL + getTime() + "UNABLE TO UPDATE, PLEASE LOAD FILE.")
         
-    def loadOperation(self, op: operation):
+    def loadOperation(self, op):
         self.loaded_operations[op.name] = op
         return
     
-    def loadOperationArray(self, ops: list[operation]):
+    def loadOperationArray(self, ops):
         for op in ops:
             self.loadOperation(op)
         # self.update(True)
 
-    def addOperation(self, op_name: str):
+    def addOperation(self, op_name):
         if op_name in self.loaded_operations:
             self.operations.append({'name'  : str(format((len(self.operations) + 1),'05d')) + op_name,
                                     "inputs" : self.loaded_operations[op_name].inputs,
@@ -1108,10 +1108,10 @@ class operator:
             if(self.verbose):
                 print(tColors.FAIL+getTime()+"Unable to add operation \"" + op_name + "\""+tColors.ENDC )
 
-    def removeOperation(self, op_id: int):
+    def removeOperation(self, op_id):
         self.operations.pop(op_id)
 
-    def moveOperation(self, op_id: int, direction: int):
+    def moveOperation(self, op_id, direction):
         self.update()
         self.operations.insert(max(0,op_id+direction), self.operations.pop(op_id))
 
