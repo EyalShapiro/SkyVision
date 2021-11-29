@@ -20,7 +20,7 @@ def getOperations():
         operation("Convex Hull",OperationType.SHAPE,cvxHull).addInputText("Contour").addOutput(),
         # ARITHMETIC
         operation("Bitwise And",OperationType.ARITHMETIC,bitwiseAnd).addInputText("Source 1").addInputText("Source 2").addInputText("Mask").addOutput(),
-        operation("Circle Coords",OperationType.ARITHMETIC,circleCoords).addInputText("Circle").addInputText("Frame").addInputText("Focal Length",value=str(10)).addInputText("Dot Pitch",value=str(9.84375)).addOutput("Out Angle"),
+        operation("Circle Coords",OperationType.ARITHMETIC,circleCoords).addInputText("Circle").addInputText("Frame").addInputText("Focal Length",value=str(10)).addInputText("Dot Pitch",value=str(9.84375)).addOutput("Out Angle").addInputText("Pixel Radius at meter").addOutput("Out Distance"),
         operation("ApproxPolyDP",OperationType.ARITHMETIC,approxPolyDP).addInputText("Contours").addInputText("Sides").addInputText("Tolerance").addOutput(),
         # DRAW
         operation("Draw Contours",OperationType.DRAW,drawContours).addInputText("Source").addInputText("Contours").addInputColor("Color").addInputText("Thickness"),
@@ -36,11 +36,8 @@ def getOperations():
 cam = cv2.VideoCapture(0)
 def camInput(inputs, operator):
     global cam
-    #if operator.updating:
-        #operator.sources[operator.opOutputs[0]] = cv2.VideoCapture(0)
-    #    cam = cv2.VideoCapture(inputs["Id"])
-    #cam = operator.sources[operator.opOutputs[0]]
-    #print("CAM",cam)
+    if operator.updating:
+        time.sleep(0.5)
     ret, frame = cam.read()
     if(not ret): # input operations require specific error handling because of OpenCV behaviour
             raise Exception("Error reading frame from \"" + str(operator.opOutputs[0]) +"\".")
@@ -132,11 +129,9 @@ def bitwiseAnd(inputs,_):
 
 def circleCoords(inputs,_):
     circle = inputs["Circle"]
-    # onemeter = float(op.numberInputs[0].value)
+    onemeter = inputs["Pixel Radius at meter"]
     if circle is not None:
-        # distance = onemeter / circ[2]
-        # print("Dist - " + str(distance) + "[", onemeter, circ[2], "]")
-        # print(circ)
+        distance = onemeter / circle[1]
         Resolution = (inputs["Frame"].shape[1],inputs["Frame"].shape[0])
         F_Length = inputs["Focal Length"]
         Dot_Pitch = inputs["Dot Pitch"]
@@ -148,7 +143,7 @@ def circleCoords(inputs,_):
         final_angle = np.degrees(RaysToAngle(FrameToWorldRay(circle[0][0], Resolution[1] / 2,Kval),FrameToWorldRay(Resolution[0] / 2, Resolution[1] / 2,Kval)))
         dir = 1 if(circle[0][0] > Resolution[0] / 2) else -1
         final_angle = dir * (final_angle)
-        return[final_angle]
+        return[final_angle,distance]
 
 def approxPolyDP(inputs,_):
     contours = inputs["Contours"]
