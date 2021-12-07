@@ -142,7 +142,7 @@ def circleCoords(inputs,_):
         Kval = np.array([[F_Pix, 0, Resolution[0] / 2], [0, F_Pix, Resolution[1] / 2],[0, 0, 1]])  # pinhole camera matrix
         final_angle = np.degrees(RaysToAngle(FrameToWorldRay(circle[0][0], Resolution[1] / 2,Kval),FrameToWorldRay(Resolution[0] / 2, Resolution[1] / 2,Kval)))
         dir = 1 if(circle[0][0] > Resolution[0] / 2) else -1
-        final_angle = dir * (final_angle)
+        final_angle = dir * (final_angle) + 90
         return[final_angle,distance]
 
 def approxPolyDP(inputs,_):
