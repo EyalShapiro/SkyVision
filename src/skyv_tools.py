@@ -15,8 +15,12 @@ def hex_to_hsv(hex):  # turn hex to hsv
     return c.hsv
 
 def hex_to_hsv(hex):  # turn hex to hsv
-    c = Color(hex=hex)
-    return (round(c.hsv[0]/2),round(c.hsv[1]*255),round(c.hsv[2]*255))
+    try:
+        c = Color(hex=hex)
+        return (round(c.hsv[0]/2),round(c.hsv[1]*255),round(c.hsv[2]*255))
+    except:
+        return (0,0,0)
+
 
 def hex_to_hls(hex):  # turn hex to hsv
     c = Color(hex=hex)
