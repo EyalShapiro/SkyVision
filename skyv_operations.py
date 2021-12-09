@@ -17,9 +17,10 @@ def getOperations():
         operation("Find Contours",OperationType.SHAPE,findContours).addInputText("Source").addOutput(),
         operation("Largest Contour",OperationType.SHAPE,largestContour).addInputText("Contours").addOutput(),
         operation("Minimum Enclosing Circle",OperationType.SHAPE,minEnclosingCircle).addInputText("Contour").addOutput(),
+        operation("Convex Hull",OperationType.SHAPE,cvxHull).addInputText("Contour").addOutput(),
         # ARITHMETIC
         operation("Bitwise And",OperationType.ARITHMETIC,bitwiseAnd).addInputText("Source 1").addInputText("Source 2").addInputText("Mask").addOutput(),
-        operation("Circle Coords",OperationType.ARITHMETIC,circleCoords).addInputText("Circle").addInputText("Frame").addInputText("Focal Length",value=str(10)).addInputText("Dot Pitch",value=str(9.84375)).addOutput("Out Angle"),
+        operation("Circle Coords",OperationType.ARITHMETIC,circleCoords).addInputText("Circle").addInputText("Frame").addInputText("Focal Length",value=str(10)).addInputText("Dot Pitch",value=str(9.84375)).addOutput("Out Angle").addInputText("Pixel Radius at meter").addOutput("Out Distance"),
         operation("ApproxPolyDP",OperationType.ARITHMETIC,approxPolyDP).addInputText("Contours").addInputText("Sides").addInputText("Tolerance").addOutput(),
         # DRAW
         operation("Draw Contours",OperationType.DRAW,drawContours).addInputText("Source").addInputText("Contours").addInputColor("Color").addInputText("Thickness"),
@@ -27,15 +28,16 @@ def getOperations():
         operation("Draw Rectangle",OperationType.DRAW,drawRect).addInputText("Source").addInputText("P1",value=(0,0)).addInputText("P2",value=(0,0)).addInputText("Thickness").addInputColor("Color"),
         # MISC
         operation("Flip",OperationType.MISC,flip).addInputText("Source").addInputRadio("Flip Mode",options=list({"Horizontal":1, "Vertical":0, "Horizontal and Vertical":-1})).addOutput(),
-        operation("NetworkTable Send Num",OperationType.MISC,ntSendNum).addInputText("Key").addInputText("Value")
+        operation("NetworkTable Send Num",OperationType.MISC,ntSendNum).addInputText("Key").addInputText("Value"),
+        operation("Print",OperationType.MISC,webPrint).addInputText("Value"),
     ]
 
 # INPUT
+cam = cv2.VideoCapture(0)
 def camInput(inputs, operator):
+    global cam
     if operator.updating:
-        operator.sources[operator.opOutputs[0]] = cv2.VideoCapture(int(inputs["Id"]))
-    cam = operator.sources[operator.opOutputs[0]]
-    print("CAM",cam)
+        time.sleep(0.5)
     ret, frame = cam.read()
     if(not ret): # input operations require specific error handling because of OpenCV behaviour
             raise Exception("Error reading frame from \"" + str(operator.opOutputs[0]) +"\".")
@@ -85,7 +87,8 @@ morphModes = {
 
 def findContours(inputs,_):
     if inputs["Source"] is not None:
-        return [cv2.findContours(inputs["Source"], cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)]
+        cnts, _ = cv2.findContours(inputs["Source"], cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        return [cnts]
     return []
 
 def morphEX(inputs, _):
@@ -99,25 +102,26 @@ def gaussianBlur(inputs, _):
     return []
 
 def largestContour(inputs,_):
-    largest = inputs["Contours"][0]
-    for cnt in inputs["Contours"][0]:
-        if(cnt is not None):
-            if(cv2.contourArea(cnt) > 5):
-                largest = cnt
-    if(largest is not None):
-        return [[[largest]]]
+    if(inputs["Contours"] is not None):
+        return [max(inputs["Contours"], key = cv2.contourArea)]
     return []
 
 def minEnclosingCircle(inputs,_):
     if inputs["Contour"] is not None:
-        cnt = inputs["Contour"][0][0]
+        cnt = inputs["Contour"]
         (x, y), radius = cv2.minEnclosingCircle(cnt)
         return [((x,y),radius)]
     return []
 
+def cvxHull(inputs,_):
+    if inputs["Contour"] is not None:
+        cnt = inputs["Contour"]
+        return [cv2.convexHull(cnt)]
+    return []
+
 # ARITHMETIC
 def bitwiseAnd(inputs,_):
-    if inputs["Source1"] is not None and inputs["Source2"] is not None:
+    if inputs["Source 1"] is not None and inputs["Source 2"] is not None:
         if(inputs["Mask"] is not None):
             return [cv2.bitwise_and(inputs["Source 1"],inputs["Source 2"],mask=inputs["Mask"])]
         return [cv2.bitwise_and(inputs["Source 1"],inputs["Source 2"])]
@@ -125,11 +129,9 @@ def bitwiseAnd(inputs,_):
 
 def circleCoords(inputs,_):
     circle = inputs["Circle"]
-    # onemeter = float(op.numberInputs[0].value)
+    onemeter = inputs["Pixel Radius at meter"]
     if circle is not None:
-        # distance = onemeter / circ[2]
-        # print("Dist - " + str(distance) + "[", onemeter, circ[2], "]")
-        # print(circ)
+        distance = onemeter / circle[1]
         Resolution = (inputs["Frame"].shape[1],inputs["Frame"].shape[0])
         F_Length = inputs["Focal Length"]
         Dot_Pitch = inputs["Dot Pitch"]
@@ -140,16 +142,13 @@ def circleCoords(inputs,_):
         Kval = np.array([[F_Pix, 0, Resolution[0] / 2], [0, F_Pix, Resolution[1] / 2],[0, 0, 1]])  # pinhole camera matrix
         final_angle = np.degrees(RaysToAngle(FrameToWorldRay(circle[0][0], Resolution[1] / 2,Kval),FrameToWorldRay(Resolution[0] / 2, Resolution[1] / 2,Kval)))
         dir = 1 if(circle[0][0] > Resolution[0] / 2) else -1
-        final_angle = dir * (final_angle)
-        return[final_angle]
+        final_angle = dir * (final_angle) + 90
+        return[final_angle,distance]
 
 def approxPolyDP(inputs,_):
     contours = inputs["Contours"]
-
     sides = inputs["Sides"]
     tolerance = inputs["Tolerance"]
-    
-
     contour_list = []
     for contour in contours[0]:
         approx = cv2.approxPolyDP(contour, 0.01 * cv2.arcLength(contour, True), True)
@@ -162,9 +161,9 @@ def drawContours(inputs,_):
     if inputs["Source"] is not None and inputs["Contours"] is not None:
         clr = Color(hsv=(inputs["Color"][0]*2,inputs["Color"][1]/255,inputs["Color"][2]/255))
         bgr = (clr.rgb[2],clr.rgb[1],clr.rgb[0])
-        if(len(inputs["Contours"][0]) > 0):
-            time.sleep(1)
-            return [cv2.drawContours(inputs["Source"], inputs["Contours"][0], -1, bgr, thickness=int(inputs["Thickness"]))]
+        if(len(inputs["Contours"]) > 0):
+            return [cv2.drawContours(inputs["Source"], inputs["Contours"], -1, bgr, thickness=int(inputs["Thickness"]))]
+        print(contours)
     return []
 
 def drawCircle(inputs,_):
@@ -191,7 +190,9 @@ def ntSendNum(inputs,_):
     if(inputs["Key"] is not None):
         skyv_network.set_number(inputs["Key"],float(inputs["Value"]))
 
-
+def webPrint(inputs,_):
+    if(inputs["Value"] is not None):
+        logMessage("USER PRINT - " + str(inputs["Value"]))
 # HELP
 def FrameToWorldRay(Fx, Fy,K):
     Ki = np.linalg.inv(K)
