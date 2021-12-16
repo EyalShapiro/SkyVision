@@ -163,7 +163,6 @@ def drawContours(inputs,_):
         bgr = (clr.rgb[2],clr.rgb[1],clr.rgb[0])
         if(len(inputs["Contours"]) > 0):
             return [cv2.drawContours(inputs["Source"], inputs["Contours"], -1, bgr, thickness=int(inputs["Thickness"]))]
-        print(contours)
     return []
 
 def drawCircle(inputs,_):
