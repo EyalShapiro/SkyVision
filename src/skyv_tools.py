@@ -4,33 +4,32 @@ from datetime import datetime
 import warnings
 import functools
 import colorsys
+from PIL import ImageColor
+import cv2
 
 def rgb_to_hls(rgb):
     r, g, b = rgb
     h, l, s = colorsys.rgb_to_hls(r, g, b)
     return (round(h*360), round(l/255*100),round(s*-100))
-
-def hex_to_hsv(hex):  # turn hex to hsv
-    c = Color(hex=hex)
-    return c.hsv
-
+    
 def hex_to_hsv(hex):  # turn hex to hsv
     try:
         c = Color(hex=hex)
         return (round(c.hsv[0]/2),round(c.hsv[1]*255),round(c.hsv[2]*255))
     except:
         return (0,0,0)
+    
 
 
-def hex_to_hls(hex):  # turn hex to hsv
+def hex_to_hls(hex):  # turn hex to hls
     c = Color(hex=hex)
     return rgb_to_hls(c.rgb)
 
-def hex_to_rgb(hex):  # turn hex to hsv
+def hex_to_rgb(hex):  # turn hex to rgb
     c = Color(hex=hex)
     return c.rgb
 
-def hex_to_bgr(hex):  # turn hex to hsv
+def hex_to_bgr(hex):  # turn hex to bgr
     c = Color(hex=hex)
     rgb = c.rgb
     bgr = (rgb[2], rgb[1], rgb[0])
