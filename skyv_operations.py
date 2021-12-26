@@ -18,6 +18,8 @@ def getOperations():
         operation("Largest Contour",OperationType.SHAPE,largestContour).addInputText("Contours").addOutput(),
         operation("Minimum Enclosing Circle",OperationType.SHAPE,minEnclosingCircle).addInputText("Contour").addOutput(),
         operation("Convex Hull",OperationType.SHAPE,cvxHull).addInputText("Contour").addOutput(),
+        operation("Rotated Rectangle",OperationType.SHAPE,rotatedRectangle).addInputText("Contours").addOutput(),
+        operation("Fit Ellipse",OperationType.SHAPE,)
         # ARITHMETIC
         operation("Bitwise And",OperationType.ARITHMETIC,bitwiseAnd).addInputText("Source 1").addInputText("Source 2").addInputText("Mask").addOutput(),
         operation("Circle Coords",OperationType.ARITHMETIC,circleCoords).addInputText("Circle").addInputText("Frame").addInputText("Focal Length",value=str(10)).addInputText("Dot Pitch",value=str(9.84375)).addOutput("Out Angle").addInputText("Pixel Radius at meter").addOutput("Out Distance"),
@@ -30,6 +32,7 @@ def getOperations():
         operation("Flip",OperationType.MISC,flip).addInputText("Source").addInputRadio("Flip Mode",options=list({"Horizontal":1, "Vertical":0, "Horizontal and Vertical":-1})).addOutput(),
         operation("NetworkTable Send Num",OperationType.MISC,ntSendNum).addInputText("Key").addInputText("Value"),
         operation("Print",OperationType.MISC,webPrint).addInputText("Value"),
+        operation("Blank Image",OperationType.MISC,blankImg).addInputText("Source").addOutput(),
     ]
 
 # INPUT
@@ -119,6 +122,10 @@ def cvxHull(inputs,_):
         return [cv2.convexHull(cnt)]
     return []
 
+# TODO: implement
+def rotatedRectangle(inputs,_):
+    pass
+
 # ARITHMETIC
 def bitwiseAnd(inputs,_):
     if inputs["Source 1"] is not None and inputs["Source 2"] is not None:
@@ -192,6 +199,11 @@ def ntSendNum(inputs,_):
 def webPrint(inputs,_):
     if(inputs["Value"] is not None):
         logMessage("USER PRINT - " + str(inputs["Value"]))
+
+# TODO: implement
+def blankImg(inputs,_):
+    pass
+
 # HELP
 def FrameToWorldRay(Fx, Fy,K):
     Ki = np.linalg.inv(K)

@@ -18,8 +18,6 @@ def hex_to_hsv(hex):  # turn hex to hsv
         return (round(c.hsv[0]/2),round(c.hsv[1]*255),round(c.hsv[2]*255))
     except:
         return (0,0,0)
-    
-
 
 def hex_to_hls(hex):  # turn hex to hls
     c = Color(hex=hex)
