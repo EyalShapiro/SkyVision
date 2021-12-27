@@ -8,9 +8,12 @@ def getOperations():
         # INPUT
         operation("Webcam Input",OperationType.INPUT,camInput).addInputNumber("Id",step=1).addOutput(),
         operation("Image Input",OperationType.INPUT,imageInput).addInputText("Path").addOutput(),
+        
         # COLOR
         operation("Convert Color",OperationType.COLORS,convertColor).addInputText("Source").addInputRadio("Type",options=list(colorModes.keys())).addOutput(),
         operation("Color Mask",OperationType.COLORS,colorMask).addInputText("Source").addInputColor("Lower").addInputColor("Higher").addOutput(),
+        operation("Canny",OperationType.COLOR,canny).addInputText("Source").addInputNumber("Threshold 1").addInputNumber("Threshold 2").addOutput("Output"),
+
         # SHAPE
         operation("Gaussian Blur",OperationType.SHAPE,gaussianBlur).addInputText("Source").addInputNumber("Kernel",value=3,step=1).addInputNumber("Iterations",1,step=1).addOutput(),
         operation("MorphologyEx",OperationType.SHAPE,morphEX).addInputText("Source").addInputRadio("Mode",options=list(morphModes.keys())).addInputNumber("Kernel",value=3,step=1).addInputNumber("Iterations",value=1,step=1).addOutput(),
@@ -19,20 +22,32 @@ def getOperations():
         operation("Minimum Enclosing Circle",OperationType.SHAPE,minEnclosingCircle).addInputText("Contour").addOutput(),
         operation("Convex Hull",OperationType.SHAPE,cvxHull).addInputText("Contour").addOutput(),
         operation("Rotated Rectangle",OperationType.SHAPE,rotatedRectangle).addInputText("Contours").addOutput(),
-        operation("Fit Ellipse",OperationType.SHAPE,)
+        operation("Fit Ellipse",OperationType.SHAPE,OperationType.SHAPE,fitEllipse).addInputText("Source").addOutput(),
+        operation("Bounding Rectangle",OperationType.SHAPE,boundingRectangle).addInputText("Source").addOutput("X").addOutput("Y").addOutput("W").addOutput("H"),
+
         # ARITHMETIC
         operation("Bitwise And",OperationType.ARITHMETIC,bitwiseAnd).addInputText("Source 1").addInputText("Source 2").addInputText("Mask").addOutput(),
         operation("Circle Coords",OperationType.ARITHMETIC,circleCoords).addInputText("Circle").addInputText("Frame").addInputText("Focal Length",value=str(10)).addInputText("Dot Pitch",value=str(9.84375)).addOutput("Out Angle").addInputText("Pixel Radius at meter").addOutput("Out Distance"),
         operation("ApproxPolyDP",OperationType.ARITHMETIC,approxPolyDP).addInputText("Contours").addInputText("Sides").addInputText("Tolerance").addOutput(),
+        operation("Split Channel",OperationType.ARITHMETIC,splitChannel).addInputText("Source").addInputNumber("Select Channel").addOutput("Output"),
+        operation("Ratio",OperationType.ARITHMETIC,ratio).addInputText("Contours").addInputNumber("Width").addInputNumber("Height").addInputNumber("Threshold").addOutput("Output"),
+
         # DRAW
         operation("Draw Contours",OperationType.DRAW,drawContours).addInputText("Source").addInputText("Contours").addInputColor("Color").addInputText("Thickness"),
         operation("Draw Circle",OperationType.DRAW,drawCircle).addInputText("Source").addInputText("Position",value=0).addInputText("Radius",value=0).addInputText("Thickness").addInputColor("Color"),
         operation("Draw Rectangle",OperationType.DRAW,drawRect).addInputText("Source").addInputText("P1",value=(0,0)).addInputText("P2",value=(0,0)).addInputText("Thickness").addInputColor("Color"),
+        operation("Draw Ellipse",OperationType.DRAW,drawEllipse).addInputText("Source").addInputText("Ellipse").addInputColor("Color").addInputNumber("Thickness"),
+
         # MISC
         operation("Flip",OperationType.MISC,flip).addInputText("Source").addInputRadio("Flip Mode",options=list({"Horizontal":1, "Vertical":0, "Horizontal and Vertical":-1})).addOutput(),
         operation("NetworkTable Send Num",OperationType.MISC,ntSendNum).addInputText("Key").addInputText("Value"),
+        operation("Network Send Num Var",OperationType.MISC,ntSendNumVar).addInputText("Key").addInputText("Number Variable"),
         operation("Print",OperationType.MISC,webPrint).addInputText("Value"),
         operation("Blank Image",OperationType.MISC,blankImg).addInputText("Source").addOutput(),
+        operation("Minimum Contour Area",OperationType.MISC,minContourArea).addInputText("Source").addInputNumber("Area").addOutput("Output"),
+        operation("Hough Circles",OperationType.MISC,houghCircles).addInputText("Source").addInputNumber("dp").addInputNumber("minDist").addInputNumber("Higher Threshold").addInputNumber("Accumulator Threshold").addInputNumber("Minimum Radius").addInputNumber("Maximum Radius").addOutput("Output"),
+        operation("Covex Hull",OperationType.MISC,covexHull).addInputText("Contours").addOutput("Output"),
+        operation("Circle Coords",OperationType.MISC,circleCoords).addInputText("Circles").addInputText("Size at 1 meter").addOutput("Output"),
     ]
 
 # INPUT
@@ -73,6 +88,10 @@ def colorMask(inputs, _):
     if inputs["Source"] is not None:
         return [cv2.inRange(inputs["Source"],np.array(inputs["Lower"]),np.array(inputs["Higher"]))]
     return []
+
+# TODO: implement
+def canny(inputs,_):
+    pass
 
 # SHAPE
 morphModes = {
@@ -126,6 +145,14 @@ def cvxHull(inputs,_):
 def rotatedRectangle(inputs,_):
     pass
 
+# TODO: implement
+def fitEllipse(inputs,_):
+    pass
+
+# TODO: implement
+def boundingRectangle(inputs,_):
+    pass
+
 # ARITHMETIC
 def bitwiseAnd(inputs,_):
     if inputs["Source 1"] is not None and inputs["Source 2"] is not None:
@@ -163,6 +190,14 @@ def approxPolyDP(inputs,_):
             contour_list.append(contour)
     return [[contour_list,contours[1]]]
 
+# TODO: implement
+def splitChannel(inputs,_):
+    pass
+
+# TODO: implement
+def ratio(inputs,_):
+    pass
+
 # DRAW
 def drawContours(inputs,_):
     if inputs["Source"] is not None and inputs["Contours"] is not None:
@@ -184,6 +219,10 @@ def drawRect(inputs,_):
         return [cv2.rectangle(inputs["Source"], (int(inputs["P1"][0]),int(inputs["P1"][1])),(int(inputs["P2"][0]),int(inputs["P2"][1])), (clr.rgb[2],clr.rgb[1],clr.rgb[0]), thickness=int(inputs["Thickness"]))]
     return []
 
+# TODO: implement
+def drawEllipse(inputs,_):
+    pass
+
 # MISC
 def flip(inputs,_):
     if(inputs["Source"] is not None):
@@ -196,12 +235,32 @@ def ntSendNum(inputs,_):
     if(inputs["Key"] is not None):
         skyv_network.set_number(inputs["Key"],float(inputs["Value"]))
 
+# TODO: immplement
+def ntSendNumVar(inputs,_):
+    pass
+
 def webPrint(inputs,_):
     if(inputs["Value"] is not None):
         logMessage("USER PRINT - " + str(inputs["Value"]))
 
 # TODO: implement
 def blankImg(inputs,_):
+    pass
+
+# TODO: implement
+def minContourArea(inputs,_):
+    pass
+
+# TODO: implement
+def houghCircles(inputs,_):
+    pass
+
+# TODO: implement
+def covexHull(inputs,_):
+    pass
+
+# TODO: implement
+def circleCoords(inputs,_):
     pass
 
 # HELP
