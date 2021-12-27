@@ -12,7 +12,7 @@ def getOperations():
         # COLOR
         operation("Convert Color",OperationType.COLORS,convertColor).addInputText("Source").addInputRadio("Type",options=list(colorModes.keys())).addOutput(),
         operation("Color Mask",OperationType.COLORS,colorMask).addInputText("Source").addInputColor("Lower").addInputColor("Higher").addOutput(),
-        operation("Canny",OperationType.COLOR,canny).addInputText("Source").addInputNumber("Threshold 1").addInputNumber("Threshold 2").addOutput("Output"),
+        operation("Canny",OperationType.COLORS,canny).addInputText("Source").addInputNumber("Threshold 1").addInputNumber("Threshold 2").addOutput("Output"),
 
         # SHAPE
         operation("Gaussian Blur",OperationType.SHAPE,gaussianBlur).addInputText("Source").addInputNumber("Kernel",value=3,step=1).addInputNumber("Iterations",1,step=1).addOutput(),
@@ -22,7 +22,7 @@ def getOperations():
         operation("Minimum Enclosing Circle",OperationType.SHAPE,minEnclosingCircle).addInputText("Contour").addOutput(),
         operation("Convex Hull",OperationType.SHAPE,cvxHull).addInputText("Contour").addOutput(),
         operation("Rotated Rectangle",OperationType.SHAPE,rotatedRectangle).addInputText("Contours").addOutput(),
-        operation("Fit Ellipse",OperationType.SHAPE,OperationType.SHAPE,fitEllipse).addInputText("Source").addOutput(),
+        operation("Fit Ellipse",OperationType.SHAPE,fitEllipse).addInputText("Source").addOutput(),
         operation("Bounding Rectangle",OperationType.SHAPE,boundingRectangle).addInputText("Source").addOutput("X").addOutput("Y").addOutput("W").addOutput("H"),
 
         # ARITHMETIC
