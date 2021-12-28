@@ -245,7 +245,9 @@ def webPrint(inputs,_):
 
 # TODO: implement
 def blankImg(inputs,_):
-    pass
+    if(inputs["Source"] is not None):
+        return [np.zeros(inputs["Source"].shape, np.uint8)]
+    return []
 
 # TODO: implement
 def minContourArea(inputs,_):
