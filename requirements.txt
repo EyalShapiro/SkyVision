@@ -3,12 +3,6 @@ Flask==1.1.2
 numpy==1.20.2
 opencv_python==4.5.1.48
 pynetworktables==2021.0.0
-json
 colorsys
-functools
-warnings
 colorutils
-datetime
 opencv-python
-enum
-random
