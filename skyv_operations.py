@@ -48,6 +48,8 @@ def getOperations():
         operation("Hough Circles",OperationType.MISC,houghCircles).addInputText("Source").addInputNumber("dp").addInputNumber("minDist").addInputNumber("Higher Threshold").addInputNumber("Accumulator Threshold").addInputNumber("Minimum Radius").addInputNumber("Maximum Radius").addOutput("Output"),
         operation("Covex Hull",OperationType.MISC,covexHull).addInputText("Contours").addOutput("Output"),
         operation("Circle Coords",OperationType.MISC,circleCoords).addInputText("Circles").addInputText("Size at 1 meter").addOutput("Output"),
+        operation("Circle Filter",OperationType.ARITHMETIC,circleFilter).addInputText("Contours").addInputNumber("Present").addOutput("Output"),
+        operation("Connect Contours",OperationType.SHAPE,connectContours).addInputText("Contours").addOutput("Output"),
     ]
 
 # INPUT
@@ -140,6 +142,41 @@ def cvxHull(inputs,_):
         cnt = inputs["Contour"]
         return [cv2.convexHull(cnt)]
     return []
+
+def circleFilter(inputs,_):
+    output = {}
+    cnts = inputs["Contours"]
+    present = inputs["Present"]
+    if len(cnts) > 0:
+        for cnt in cnts:
+            ((x, y), radius) = cv2.minEnclosingCircle(cnt)
+            if radius > 10:
+                M = cv2.moments(cnt)
+                a = cv2.contourArea(cnt) / 3.14
+                print(str(radius - present) +"<"+ str(math.sqrt(a)) +"<"+ str(radius + present))
+                if radius - present < math.sqrt(a) < radius + present:
+                    output.append(cnt)
+    return[output]
+
+def connectContours(inputs,_):
+        x_min = -1
+        y_min = -1
+        x_max = -1
+        y_max = -1
+        for i in inputs["Contours"]:
+            for c in i:
+                c = c[0]
+                if c[0] < x_min or x_min == -1:
+                    x_min = c[0]
+                if c[1] < y_min or y_min == -1:
+                    y_min = c[1]
+                if c[0] > x_max or x_max == -1:
+                    x_max = c[0]
+                if c[1] > y_max or y_max == -1:
+                    y_max = c[1]
+        return[((x_min,y_min),(x_max,y_max))]
+
+
 
 # TODO: implement
 def rotatedRectangle(inputs,_):
