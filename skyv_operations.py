@@ -48,6 +48,12 @@ def getOperations():
         operation("Hough Circles",OperationType.MISC,houghCircles).addInputText("Source").addInputNumber("dp").addInputNumber("minDist").addInputNumber("Higher Threshold").addInputNumber("Accumulator Threshold").addInputNumber("Minimum Radius").addInputNumber("Maximum Radius").addOutput("Output"),
         operation("Covex Hull",OperationType.MISC,covexHull).addInputText("Contours").addOutput("Output"),
         operation("Circle Coords",OperationType.MISC,circleCoords).addInputText("Circles").addInputText("Size at 1 meter").addOutput("Output"),
+
+        # Condition
+        operation("IF", OperationType.CONDITION, IF).addInputText("Condition"),
+        operation("ENDIF", OperationType.CONDITION, ENDIF),
+
+
     ]
 
 # INPUT
@@ -265,6 +271,14 @@ def covexHull(inputs,_):
 def circleCoords(inputs,_):
     pass
 
+# Condition
+def IF(inputs,_):
+    return [inputs["Condition"]]
+
+def ENDIF(inputs,_):
+    pass
+
+ 
 # HELP
 def FrameToWorldRay(Fx, Fy,K):
     Ki = np.linalg.inv(K)
@@ -276,3 +290,5 @@ def RaysToAngle(R1,
     cos_angle = R1.dot(R2) / (np.linalg.norm(R1) * np.linalg.norm(R2))
     angle_radians = np.arccos(cos_angle)
     return angle_radians
+
+    

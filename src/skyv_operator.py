@@ -673,6 +673,7 @@ class OperationType(Enum):  # operation type. mostly used for the operation's co
     COLORS = 4
     DRAW = 5
     MISC = 6
+    CONDITION = 7
 
 @deprecated
 class oldOperation:  # main class for operation
@@ -873,6 +874,7 @@ class operation:
         div_color = "#e100ff" if self.type == OperationType.COLORS else div_color
         div_color = "#ff0000" if self.type == OperationType.DRAW else div_color
         div_color = "#fff200" if self.type == OperationType.MISC else div_color
+        div_color = "#0000ff" if self.type == OperationType.CONDITION else div_color
 
         retdiv += div_color  # add div color
         retdiv += ";border-radius: 25px;\">"  # end div init
@@ -938,6 +940,10 @@ class operator:
         self.verbose = verbose
 
     def process(self):
+        level = 0
+        true_levels = [0]
+
+
         for op in self.operations:
             self.opValues.clear()
             self.opOutputs.clear()
@@ -968,17 +974,29 @@ class operator:
                         self.opValues[name] = value
                     elif "Output" in key:
                         self.opOutputs.append(value)
-            try:
-                op["ERR"]=False
-                op["ERRMSG"]=""
-                operation_outputs = self.getOperationSource(op).function(self.opValues,self)
-                if operation_outputs is not None:
-                    self.values.update(dict(zip(self.opOutputs,operation_outputs)))
-            except Exception as error:
-                op["ERR"]=True
-                op["ERRMSG"]=str(error)
-                if(self.verbose):
-                    print("\n" + tColors.FAIL + getTime() + "OPERATION ERROR [" + op["name"][5:] + "]\n" + str(error) + tColors.ENDC)
+            
+            if self.getOperationSource(op).name == "IF":
+                level += 1
+                if self.getOperationSource(op).function(self.opValues,self)[0]:
+                    true_levels.append(level)
+            elif self.getOperationSource(op).name == "ENDIF":
+                if level in true_levels:
+                    true_levels.remove(level)
+                level -= 1
+                
+
+            if(level in true_levels):
+                try:
+                    op["ERR"]=False
+                    op["ERRMSG"]=""
+                    operation_outputs = self.getOperationSource(op).function(self.opValues,self)
+                    if operation_outputs is not None:
+                        self.values.update(dict(zip(self.opOutputs,operation_outputs)))
+                except Exception as error:
+                    op["ERR"]=True
+                    op["ERRMSG"]=str(error)
+                    if(self.verbose):
+                        print("\n" + tColors.FAIL + getTime() + "OPERATION ERROR [" + op["name"][5:] + "]\n" + str(error) + tColors.ENDC)
         try:  # try to set the output frame to the required frame
             self.outputVideo = self.values[self.required_out]  # set the output to the required frame
             self.outputVideo = cv2.resize(self.outputVideo,(int(self.outputVideo.shape[1] * self.outResolution),int(self.outputVideo.shape[0] * self.outResolution)))
