@@ -125,6 +125,19 @@
                             </div>
                         </div>
 
+                        <div class="dropdown" style="padding-right: 5px;padding-left: 5px;">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-color:#0000ff;border-width: 3px;">
+                            <label style="color: #ebebeb;">Condition</label>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="text-align: left;background-color:rgba(0, 0, 0, 0.5);">
+                                {% for operation in opOptions%}
+                                    {% if(opOptions[operation]["type"].value == 7): %}
+                                    <input type="submit" name="action" value="{{operation}}" style="font-size: 20px;background-color:#6c757d;color:white" />
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+
                     </div><br>
 
                 </div><br>
