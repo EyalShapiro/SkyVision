@@ -41,6 +41,7 @@ def getOperations():
         # MISC
         operation("Flip",OperationType.MISC,flip).addInputText("Source").addInputRadio("Flip Mode",options=list({"Horizontal":1, "Vertical":0, "Horizontal and Vertical":-1})).addOutput(),
         operation("NetworkTable Send Num",OperationType.MISC,ntSendNum).addInputText("Key").addInputText("Value"),
+        operation("NetworkTable Get Num",OperationType.MISC,ntGetNum).addInputText("Key").addInputText("Store Variable"),
         operation("Network Send Num Var",OperationType.MISC,ntSendNumVar).addInputText("Key").addInputText("Number Variable"),
         operation("Print",OperationType.MISC,webPrint).addInputText("Value"),
         operation("Blank Image",OperationType.MISC,blankImg).addInputText("Source").addOutput(),
@@ -244,6 +245,10 @@ def ntSendNum(inputs,_):
 # TODO: immplement
 def ntSendNumVar(inputs,_):
     pass
+
+def ntGetNum(inputs,_):
+    if(inputs["Key"] is not None):
+        return [skyv_network.get_number(inputs["Key"], -1)]
 
 def webPrint(inputs,_):
     if(inputs["Value"] is not None):
