@@ -673,7 +673,7 @@ class OperationType(Enum):  # operation type. mostly used for the operation's co
     COLORS = 4
     DRAW = 5
     MISC = 6
-    CONDITION = 7
+    FlowControl = 7
 
 @deprecated
 class oldOperation:  # main class for operation
@@ -874,7 +874,7 @@ class operation:
         div_color = "#e100ff" if self.type == OperationType.COLORS else div_color
         div_color = "#ff0000" if self.type == OperationType.DRAW else div_color
         div_color = "#fff200" if self.type == OperationType.MISC else div_color
-        div_color = "#0000ff" if self.type == OperationType.CONDITION else div_color
+        div_color = "#0000ff" if self.type == OperationType.FlowControl else div_color
 
         retdiv += div_color  # add div color
         retdiv += ";border-radius: 25px;\">"  # end div init

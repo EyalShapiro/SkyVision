@@ -49,9 +49,9 @@ def getOperations():
         operation("Covex Hull",OperationType.MISC,covexHull).addInputText("Contours").addOutput("Output"),
         operation("Circle Coords",OperationType.MISC,circleCoords).addInputText("Circles").addInputText("Size at 1 meter").addOutput("Output"),
 
-        # Condition
-        operation("IF", OperationType.CONDITION, IF).addInputText("Condition"),
-        operation("ENDIF", OperationType.CONDITION, ENDIF),
+        # Flow Control
+        operation("IF", OperationType.FlowControl, IF).addInputText("Condition"),
+        operation("ENDIF", OperationType.FlowControl, ENDIF),
 
 
     ]
@@ -271,7 +271,7 @@ def covexHull(inputs,_):
 def circleCoords(inputs,_):
     pass
 
-# Condition
+# Flow Control
 def IF(inputs,_):
     return [inputs["Condition"]]
 
