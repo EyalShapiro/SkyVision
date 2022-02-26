@@ -12,7 +12,9 @@ def getOperations():
         # COLOR
         operation("Convert Color",OperationType.COLORS,convertColor).addInputText("Source").addInputRadio("Type",options=list(colorModes.keys())).addOutput(),
         operation("Color Mask",OperationType.COLORS,colorMask).addInputText("Source").addInputColor("Lower").addInputColor("Higher").addOutput(),
+        operation("Color Mask From String", OperationType.COLORS, colorMaskString).addInputText("Source").addInputText("Lower").addInputText("Higher").addOutput(),
         operation("Canny",OperationType.COLORS,canny).addInputText("Source").addInputNumber("Threshold 1").addInputNumber("Threshold 2").addOutput("Output"),
+        
 
         # SHAPE
         operation("Gaussian Blur",OperationType.SHAPE,gaussianBlur).addInputText("Source").addInputNumber("Kernel",value=3,step=1).addInputNumber("Iterations",1,step=1).addOutput(),
@@ -92,6 +94,11 @@ def convertColor(inputs, _):
     return []
 
 def colorMask(inputs, _):
+    if inputs["Source"] is not None:
+        return [cv2.inRange(inputs["Source"],np.array(inputs["Lower"]),np.array(inputs["Higher"]))]
+    return []
+
+def colorMaskString(inputs, _):
     if inputs["Source"] is not None:
         return [cv2.inRange(inputs["Source"],np.array(inputs["Lower"]),np.array(inputs["Higher"]))]
     return []
