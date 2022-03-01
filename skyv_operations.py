@@ -12,7 +12,9 @@ def getOperations():
         # COLOR
         operation("Convert Color",OperationType.COLORS,convertColor).addInputText("Source").addInputRadio("Type",options=list(colorModes.keys())).addOutput(),
         operation("Color Mask",OperationType.COLORS,colorMask).addInputText("Source").addInputColor("Lower").addInputColor("Higher").addOutput(),
+        operation("Color Mask From String", OperationType.COLORS, colorMaskString).addInputText("Source").addInputText("Lower").addInputText("Higher").addOutput(),
         operation("Canny",OperationType.COLORS,canny).addInputText("Source").addInputNumber("Threshold 1").addInputNumber("Threshold 2").addOutput("Output"),
+        
 
         # SHAPE
         operation("Gaussian Blur",OperationType.SHAPE,gaussianBlur).addInputText("Source").addInputNumber("Kernel",value=3,step=1).addInputNumber("Iterations",1,step=1).addOutput(),
@@ -41,6 +43,7 @@ def getOperations():
         # MISC
         operation("Flip",OperationType.MISC,flip).addInputText("Source").addInputRadio("Flip Mode",options=list({"Horizontal":1, "Vertical":0, "Horizontal and Vertical":-1})).addOutput(),
         operation("NetworkTable Send Num",OperationType.MISC,ntSendNum).addInputText("Key").addInputText("Value"),
+        operation("NetworkTable Get Num",OperationType.MISC,ntGetNum).addInputText("Key").addInputText("Store Variable"),
         operation("Network Send Num Var",OperationType.MISC,ntSendNumVar).addInputText("Key").addInputText("Number Variable"),
         operation("Print",OperationType.MISC,webPrint).addInputText("Value"),
         operation("Blank Image",OperationType.MISC,blankImg).addInputText("Source").addOutput(),
@@ -50,6 +53,12 @@ def getOperations():
         operation("Circle Coords",OperationType.MISC,circleCoords).addInputText("Circles").addInputText("Size at 1 meter").addOutput("Output"),
         operation("Circle Filter",OperationType.ARITHMETIC,circleFilter).addInputText("Contours").addInputNumber("Present").addOutput("Output"),
         operation("Connect Contours",OperationType.SHAPE,connectContours).addInputText("Contours").addOutput("Output"),
+
+        # Flow Control
+        operation("IF", OperationType.FlowControl, IF).addInputText("Condition"),
+        operation("ENDIF", OperationType.FlowControl, ENDIF),
+
+
     ]
 
 # INPUT
@@ -87,6 +96,11 @@ def convertColor(inputs, _):
     return []
 
 def colorMask(inputs, _):
+    if inputs["Source"] is not None:
+        return [cv2.inRange(inputs["Source"],np.array(inputs["Lower"]),np.array(inputs["Higher"]))]
+    return []
+
+def colorMaskString(inputs, _):
     if inputs["Source"] is not None:
         return [cv2.inRange(inputs["Source"],np.array(inputs["Lower"]),np.array(inputs["Higher"]))]
     return []
@@ -276,6 +290,10 @@ def ntSendNum(inputs,_):
 def ntSendNumVar(inputs,_):
     pass
 
+def ntGetNum(inputs,_):
+    if(inputs["Key"] is not None):
+        return [skyv_network.get_number(inputs["Key"], -1)]
+
 def webPrint(inputs,_):
     if(inputs["Value"] is not None):
         logMessage("USER PRINT - " + str(inputs["Value"]))
@@ -302,6 +320,14 @@ def covexHull(inputs,_):
 def circleCoords(inputs,_):
     pass
 
+# Flow Control
+def IF(inputs,_):
+    return [inputs["Condition"]]
+
+def ENDIF(inputs,_):
+    pass
+
+ 
 # HELP
 def FrameToWorldRay(Fx, Fy,K):
     Ki = np.linalg.inv(K)
@@ -313,3 +339,5 @@ def RaysToAngle(R1,
     cos_angle = R1.dot(R2) / (np.linalg.norm(R1) * np.linalg.norm(R2))
     angle_radians = np.arccos(cos_angle)
     return angle_radians
+
+    
