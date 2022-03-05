@@ -53,6 +53,8 @@ def getOperations():
         operation("Circle Coords",OperationType.MISC,circleCoords).addInputText("Circles").addInputText("Size at 1 meter").addOutput("Output"),
         operation("Circle Filter",OperationType.ARITHMETIC,circleFilter).addInputText("Contours").addInputNumber("Present").addOutput("Output"),
         operation("Connect Contours",OperationType.SHAPE,connectContours).addInputText("Contours").addOutput("Output"),
+        operation("Rotate", OperationType.MISC, rotate).addInputText("Source").addInputRadio("Amount",options=['90','180','270']).addOutput(),
+        
 
         # Flow Control
         operation("IF", OperationType.FlowControl, IF).addInputText("Condition"),
@@ -320,6 +322,19 @@ def covexHull(inputs,_):
 def circleCoords(inputs,_):
     pass
 
+def rotate(inputs, _):
+    if inputs["Amount"] == 'None':
+        return [None]
+    
+    a = int(inputs["Amount"])
+    if a == 90:
+        return [cv2.rotate(inputs["Source"], cv2.ROTATE_90_CLOCKWISE)]
+    elif a == 180:
+        return [cv2.rotate(inputs["Source"], cv2.ROTATE_180)]
+    elif a == 270:
+        return [cv2.rotate(inputs["Source"], cv2.ROTATE_90_COUNTERCLOCKWISE)]
+    
+
 # Flow Control
 def IF(inputs,_):
     return [inputs["Condition"]]
@@ -327,8 +342,7 @@ def IF(inputs,_):
 def ENDIF(inputs,_):
     pass
 
- 
-# HELP
+
 def FrameToWorldRay(Fx, Fy,K):
     Ki = np.linalg.inv(K)
     r = Ki.dot([Fx, Fy, 1])
@@ -339,5 +353,3 @@ def RaysToAngle(R1,
     cos_angle = R1.dot(R2) / (np.linalg.norm(R1) * np.linalg.norm(R2))
     angle_radians = np.arccos(cos_angle)
     return angle_radians
-
-    
