@@ -2,6 +2,7 @@ from colorutils import convert
 import cv2
 from src.skyv_operator import *
 import random
+import sympy
 
 def getOperations():
     return [
@@ -54,7 +55,7 @@ def getOperations():
         operation("Circle Filter",OperationType.ARITHMETIC,circleFilter).addInputText("Contours").addInputNumber("Present").addOutput("Output"),
         operation("Connect Contours",OperationType.SHAPE,connectContours).addInputText("Contours").addOutput("Output"),
         operation("Rotate", OperationType.MISC, rotate).addInputText("Source").addInputRadio("Amount",options=['90','180','270']).addOutput(),
-        
+        operation("Find Position", OperationType.MISC, find_pos).addInputNumber("d1").addInputNumber("d2").addOutput(),
 
         # Flow Control
         operation("IF", OperationType.FlowControl, IF).addInputText("Condition"),
@@ -333,6 +334,19 @@ def rotate(inputs, _):
         return [cv2.rotate(inputs["Source"], cv2.ROTATE_180)]
     elif a == 270:
         return [cv2.rotate(inputs["Source"], cv2.ROTATE_90_COUNTERCLOCKWISE)]
+    
+def find_pos(inputs,_):
+    x1, y1, d1 = skyv_network.get_number("x1", -1), skyv_network.get_number("y1", -1), inputs["d1"]
+    x2, y2, d2 = skyv_network.get_number("x2", -1), skyv_network.get_number("y2", -1), inputs["d2"]
+    
+    
+    x, y = sympy.symbols('x, y')
+    eq1 = sympy.Eq((x-x1)**2 + (y-y1)**2, d1**2)
+    eq2 = sympy.Eq((x-x2)**2 + (y-y2)**2, d2**2)
+    
+    sol = sympy.solve([eq1, eq2], (x, y))
+    
+    return [str(sol)]
     
 
 # Flow Control
